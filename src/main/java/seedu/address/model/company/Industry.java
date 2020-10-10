@@ -20,4 +20,10 @@ public class Industry extends AlphaNumericWord {
         super(industryType, MESSAGE_CONSTRAINTS);
     }
 
+    /**
+     * Returns true if a given string is a valid industry name.
+     */
+    public static boolean isValidIndustryName(String test) {
+        return isValidAlphaNumericWord(test);
+    }
 }

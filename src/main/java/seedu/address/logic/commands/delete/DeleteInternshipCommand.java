@@ -2,6 +2,8 @@ package seedu.address.logic.commands.delete;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.commands.util.CommandUtil.getCommandResult;
+import static seedu.address.logic.commands.util.CommandUtil.getInternshipFromCompany;
 import static seedu.address.logic.parser.clisyntax.ItemCliSyntax.PREFIX_INDEX;
 import static seedu.address.model.util.ItemUtil.INTERNSHIP_NAME;
 
@@ -9,7 +11,6 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.util.InternshipAccessor;
 import seedu.address.model.Model;
 import seedu.address.model.application.ApplicationItem;
 import seedu.address.model.internship.InternshipItem;
@@ -44,23 +45,20 @@ public class DeleteInternshipCommand extends DeleteCommandAbstract {
      * Executes the command and returns the result message.
      *
      * @param model {@code Model} which the command should operate on.
-     * @return feedback message of the operation result for display
+     * @return feedback message of the operation result for display.
      * @throws CommandException If an error occurs during command execution.
      */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-
-        InternshipItem internshipItem = InternshipAccessor.getInternship(model, companyIndex, internshipIndex);
+        InternshipItem internshipItem = getInternshipFromCompany(model, companyIndex, internshipIndex);
 
         // Delete applications for this deleted internship
         ApplicationItem applicationItemToDelete = new ApplicationItem(internshipItem);
         model.getApplicationList().deleteSameItem(applicationItemToDelete);
 
-        // Auto switch to companies tab after successful deletion
-        model.setTabName(TabName.COMPANY);
-
-        return new CommandResult(String.format(Messages.MESSAGE_DELETED_ITEM, INTERNSHIP_NAME, internshipItem));
+        return getCommandResult(model, String.format(Messages.MESSAGE_DELETED_ITEM, INTERNSHIP_NAME, internshipItem),
+                TabName.COMPANY);
     }
 
     @Override

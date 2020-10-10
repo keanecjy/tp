@@ -18,7 +18,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class AddCommandParserWrapper implements Parser<AddCommandAbstract> {
 
     private static final int ITEM_TYPE_INDEX = 0;
-    private static final int ITEM_PREFIX_INDEX = 1;
+    private static final int COMMAND_DETAILS_INDEX = 1;
     private static final int NUMBER_OF_ARGUMENTS_TYPES = 2;
 
     /**
@@ -32,39 +32,38 @@ public class AddCommandParserWrapper implements Parser<AddCommandAbstract> {
         String[] argumentTypes = args.strip().split(" ", NUMBER_OF_ARGUMENTS_TYPES);
         String itemType = argumentTypes[ITEM_TYPE_INDEX];
 
-        // comment out these 2 lines to access og addresss book
-        checkArgumentTypeSufficiency(argumentTypes);
-        String itemPrefixes = " " + argumentTypes[ITEM_PREFIX_INDEX];
+        checkItemTypePresent(itemType);
+        String commandDetails = getCommandDetails(argumentTypes);
         switch (itemType) {
         case ITEM_PREFIX_COMPANY:
-            return null;
-
+            return new AddCompanyCommandParser().parse(commandDetails);
         case ITEM_PREFIX_INTERNSHIP:
             // todo: create parser object and return command from within
             return new AddInternshipCommand("Not an internship added");
         case ITEM_PREFIX_APPLICATION:
-            return new AddApplicationCommandParser().parse(itemPrefixes);
-
+            return new AddApplicationCommandParser().parse(commandDetails);
         case ITEM_PREFIX_USER_PROFILE:
             return null;
-
         // Throw exception as item type is invalid
         default:
             throw new ParseException(MESSAGE_INVALID_ITEM_TYPE);
         }
     }
 
-    /**
-     * Checks if number of argument types are sufficient.
-     *
-     * @param argumentTypes is a list of arguments delimited by the
-     * first space in the user argument after stripping wrapping spaces.
-     */
-    private void checkArgumentTypeSufficiency(String[] argumentTypes) throws ParseException {
-        if (argumentTypes.length < NUMBER_OF_ARGUMENTS_TYPES) {
+    private void checkItemTypePresent(String itemType) throws ParseException {
+        if (itemType.trim().isEmpty()) {
             throw new ParseException(String.format(
                     MESSAGE_INVALID_COMMAND_FORMAT, AddCommandAbstract.MESSAGE_USAGE));
         }
     }
 
+    private String getCommandDetails(String[] argumentTypes) {
+        String dummy = "";
+        if (argumentTypes.length < NUMBER_OF_ARGUMENTS_TYPES) {
+            return dummy; // if the user only entered the command word and the item type (did not enter details),
+            // then provide this dummy string so that the relevant parser will show its error message.
+        } else {
+            return " " + argumentTypes[COMMAND_DETAILS_INDEX];
+        }
+    }
 }

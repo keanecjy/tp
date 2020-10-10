@@ -3,15 +3,17 @@ package seedu.address.logic.commands.add;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_DUPLICATE_ITEM;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.commands.util.CommandUtil.getCommandResult;
+import static seedu.address.logic.commands.util.CommandUtil.getInternshipFromCompany;
 import static seedu.address.logic.parser.clisyntax.ApplicationCliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.clisyntax.ApplicationCliSyntax.PREFIX_STATUS_DATE;
 import static seedu.address.logic.parser.clisyntax.ItemCliSyntax.PREFIX_INDEX;
+import static seedu.address.model.util.ItemUtil.APPLICATION_ALIAS;
 import static seedu.address.model.util.ItemUtil.APPLICATION_NAME;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.util.InternshipAccessor;
 import seedu.address.model.FilterableItemList;
 import seedu.address.model.Model;
 import seedu.address.model.application.ApplicationItem;
@@ -25,10 +27,9 @@ import seedu.address.ui.tabs.TabName;
  */
 public class AddApplicationCommand extends AddCommandAbstract {
 
-    public static final String MESSAGE_SUCCESS = "New application added: %s\n"
-            + "Type in 'switch app' to see the newly added application!";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an application to Internhunter. "
-            + "Parameters: INDEX (must be a positive integer) "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " " + APPLICATION_ALIAS + ": Adds an application to "
+            + "InternHunter.\nParameters: "
+            + "INDEX "
             + PREFIX_INDEX + "INDEX "
             + "[" + PREFIX_STATUS + "STATUS] "
             + "[" + PREFIX_STATUS_DATE + "STATUS_DATE]\n"
@@ -36,6 +37,9 @@ public class AddApplicationCommand extends AddCommandAbstract {
             + PREFIX_INDEX + "2 "
             + PREFIX_STATUS + "waiting "
             + PREFIX_STATUS_DATE + "23-12-20";
+
+    public static final String MESSAGE_SUCCESS = "New application added: %s\n"
+            + "Type in 'switch app' to see the newly added application!";
 
     private final Index companyIndex;
     private final Index internshipIndex;
@@ -57,14 +61,13 @@ public class AddApplicationCommand extends AddCommandAbstract {
      * Executes the command and returns the result message.
      *
      * @param model {@code Model} which the command should operate on.
-     * @return feedback message of the operation result for display
+     * @return feedback message of the operation result for display.
      * @throws CommandException If an error occurs during command execution.
      */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-
-        InternshipItem internshipItem = InternshipAccessor.getInternship(model, companyIndex, internshipIndex);
+        InternshipItem internshipItem = getInternshipFromCompany(model, companyIndex, internshipIndex);
         ApplicationItem applicationItem = new ApplicationItem(internshipItem, status, statusDate);
 
         FilterableItemList<ApplicationItem> applicationList = model.getApplicationList();
@@ -74,9 +77,8 @@ public class AddApplicationCommand extends AddCommandAbstract {
         }
 
         applicationList.addItem(applicationItem);
-        model.setTabName(TabName.APPLICATION);
-
-        return new CommandResult(String.format(MESSAGE_SUCCESS, applicationItem));
+        return getCommandResult(model, String.format(MESSAGE_SUCCESS, applicationItem),
+                TabName.APPLICATION);
     }
 
     @Override

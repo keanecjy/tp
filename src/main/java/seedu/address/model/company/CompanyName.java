@@ -20,4 +20,10 @@ public class CompanyName extends AlphaNumericWord {
         super(companyName, MESSAGE_CONSTRAINTS);
     }
 
+    /**
+     * Returns true if a given string is a valid company name.
+     */
+    public static boolean isValidCompanyName(String test) {
+        return isValidAlphaNumericWord(test);
+    }
 }
