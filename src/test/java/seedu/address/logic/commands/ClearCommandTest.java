@@ -22,9 +22,9 @@ public class ClearCommandTest {
 
     @Test
     public void execute_nonEmptyAddressBook_success() {
-        Model model = new ModelManager(getTypicalAddressBook(), new ItemList<>(), new ItemList<>(), new ItemList<>(),
+        Model model = new ModelManager(getTypicalAddressBook(), new ItemList<>(), new ItemList<>(),
                 new ItemList<>(), new UserPrefs());
-        Model expectedModel = new ModelManager(getTypicalAddressBook(), new ItemList<>(), new ItemList<>(),
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), new ItemList<>(),
                 new ItemList<>(), new ItemList<>(), new UserPrefs());
         expectedModel.getAddressBook().setItemList(new ItemList<>());
 

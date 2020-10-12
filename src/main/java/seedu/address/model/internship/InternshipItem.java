@@ -2,11 +2,11 @@ package seedu.address.model.internship;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.util.ItemUtil.INTERNSHIP_NAME;
-import static seedu.address.ui.PanelDisplayKeyword.COMPANY_DISPLAY_NAME;
-import static seedu.address.ui.PanelDisplayKeyword.JOB_TITLE_DISPLAY_NAME;
-import static seedu.address.ui.PanelDisplayKeyword.PERIOD_DISPLAY_NAME;
-import static seedu.address.ui.PanelDisplayKeyword.REQUIREMENTS_DISPLAY_NAME;
-import static seedu.address.ui.PanelDisplayKeyword.WAGE_DISPLAY_NAME;
+import static seedu.address.ui.panel.PanelDisplayKeyword.COMPANY_DISPLAY_NAME;
+import static seedu.address.ui.panel.PanelDisplayKeyword.JOB_TITLE_DISPLAY_NAME;
+import static seedu.address.ui.panel.PanelDisplayKeyword.PERIOD_DISPLAY_NAME;
+import static seedu.address.ui.panel.PanelDisplayKeyword.REQUIREMENTS_DISPLAY_NAME;
+import static seedu.address.ui.panel.PanelDisplayKeyword.WAGE_DISPLAY_NAME;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -16,6 +16,7 @@ import java.util.Set;
 
 import seedu.address.model.company.CompanyName;
 import seedu.address.model.item.Item;
+import seedu.address.storage.internship.JsonAdaptedInternshipItem;
 
 /**
  * Represents an InternshipItem in the InternHunter application.
@@ -24,7 +25,7 @@ import seedu.address.model.item.Item;
 public class InternshipItem extends Item {
 
     // Identity fields
-    private final CompanyName companyName;
+    private CompanyName companyName;
     private final JobTitle jobTitle;
     private final Period period;
 
@@ -47,6 +48,10 @@ public class InternshipItem extends Item {
 
     public CompanyName getCompanyName() {
         return companyName;
+    }
+
+    public void setCompanyName(CompanyName companyName) {
+        this.companyName = companyName;
     }
 
     public JobTitle getJobTitle() {
@@ -84,6 +89,7 @@ public class InternshipItem extends Item {
      *
      * @return Mapping of field names to fields for the InternshipItem.
      */
+    @Override
     public LinkedHashMap<String, Object> getMapping() {
         LinkedHashMap<String, Object> mapping = new LinkedHashMap<>();
         mapping.put(JOB_TITLE_DISPLAY_NAME, jobTitle);
@@ -148,16 +154,25 @@ public class InternshipItem extends Item {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getCompanyName())
-                .append(" Job title: ")
-                .append(getJobTitle())
+        builder.append(getJobTitle())
+                .append(", ")
+                .append(" Company Name: ")
+                .append(getCompanyName())
+                .append(", ")
                 .append(" Period: ")
                 .append(getPeriod())
+                .append(", ")
                 .append(" Wage: ")
                 .append(getWage())
+                .append(", ")
                 .append(" Requirements: ");
         getRequirements().forEach(builder::append);
         return builder.toString();
+    }
+
+    @Override
+    public JsonAdaptedInternshipItem getJsonAdaptedItem() {
+        return new JsonAdaptedInternshipItem(this);
     }
 
 }

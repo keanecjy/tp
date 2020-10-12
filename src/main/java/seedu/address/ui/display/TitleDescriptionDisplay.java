@@ -23,7 +23,7 @@ public class TitleDescriptionDisplay extends HBox {
 
     //FXML properties
     private static final String PROFILE_INFORMATION_WIDTH = "-fx-min-width: 95";
-    private static final String COMPANY_AND_APPLICATION_INFORMATION_WIDTH = "-fx-min-width: 75";
+    private static final String COMPANY_AND_APPLICATION_INFORMATION_WIDTH = "-fx-min-width: 105";
 
     @FXML
     private TextFlow title;

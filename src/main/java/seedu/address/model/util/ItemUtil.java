@@ -15,4 +15,5 @@ public class ItemUtil {
     public static final String APPLICATION_NAME = "application";
     public static final String PROFILE_NAME = "profile";
 
+    public static final String PROFILE_ITEM_NAME = "profile item";
 }

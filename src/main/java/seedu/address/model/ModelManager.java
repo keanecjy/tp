@@ -8,15 +8,17 @@ import java.util.logging.Logger;
 
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.application.ApplicationItem;
 import seedu.address.model.company.CompanyItem;
-import seedu.address.model.internship.InternshipItem;
 import seedu.address.model.item.ItemList;
 import seedu.address.model.item.ReadOnlyItemList;
 import seedu.address.model.person.Person;
 import seedu.address.model.profile.ProfileItem;
 import seedu.address.model.tab.Tab;
 import seedu.address.model.tab.TabManager;
+import seedu.address.model.view.View;
+import seedu.address.model.view.ViewManager;
 import seedu.address.ui.tabs.TabName;
 
 /**
@@ -27,11 +29,11 @@ public class ModelManager implements Model {
 
     private final FilterableItemList<Person> addressBook;
     private final FilterableItemList<CompanyItem> companyList;
-    private final FilterableItemList<InternshipItem> internshipList;
     private final FilterableItemList<ApplicationItem> applicationList;
     private final FilterableItemList<ProfileItem> profileList;
     private final UserPrefs userPrefs;
     private final Tab tabControl;
+    private final View viewControl;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -39,31 +41,29 @@ public class ModelManager implements Model {
     public ModelManager(
             ReadOnlyItemList<Person> addressBook,
             ReadOnlyItemList<CompanyItem> companyList,
-            ReadOnlyItemList<InternshipItem> internshipList,
             ReadOnlyItemList<ApplicationItem> applicationList,
             ReadOnlyItemList<ProfileItem> profileList,
             ReadOnlyUserPrefs userPrefs) {
         super();
-        requireAllNonNull(addressBook, companyList, internshipList, applicationList, profileList, userPrefs);
+        requireAllNonNull(addressBook, companyList, applicationList, profileList, userPrefs);
 
         logger.fine("Initializing with address book: " + addressBook
                 + " and company list " + companyList
-                + " and internship list " + internshipList
                 + " and application list " + applicationList
                 + " and profile list " + profileList
                 + " and user prefs " + userPrefs);
 
         this.addressBook = new ItemListManager<>(new ItemList<>(addressBook));
         this.companyList = new ItemListManager<>(new ItemList<>(companyList));
-        this.internshipList = new ItemListManager<>(new ItemList<>(internshipList));
         this.applicationList = new ItemListManager<>(new ItemList<>(applicationList));
         this.profileList = new ItemListManager<>(new ItemList<>(profileList));
         this.userPrefs = new UserPrefs(userPrefs);
         this.tabControl = new TabManager();
+        this.viewControl = new ViewManager();
     }
 
     public ModelManager() {
-        this(new ItemList<>(), new ItemList<>(), new ItemList<>(), new ItemList<>(), new ItemList<>(), new UserPrefs());
+        this(new ItemList<>(), new ItemList<>(), new ItemList<>(), new ItemList<>(), new UserPrefs());
     }
 
     //=========== Models Getters =============================================================================
@@ -78,10 +78,6 @@ public class ModelManager implements Model {
         return companyList;
     }
 
-    @Override
-    public FilterableItemList<InternshipItem> getInternshipList() {
-        return internshipList;
-    }
 
     @Override
     public FilterableItemList<ApplicationItem> getApplicationList() {
@@ -134,6 +130,7 @@ public class ModelManager implements Model {
     /**
      * Retrieves the current tab name.
      */
+    @Override
     public TabName getTabName() {
         return tabControl.getTabName();
     }
@@ -141,8 +138,27 @@ public class ModelManager implements Model {
     /**
      * Sets the current tab name with {@code tabName}.
      */
+    @Override
     public void setTabName(TabName tabName) {
         tabControl.setTabName(tabName);
+    }
+
+    //=========== View Control Accessors =============================================================
+
+    /**
+     * Retrieves the current index.
+     */
+    @Override
+    public Index getViewIndex() {
+        return viewControl.getViewIndex();
+    }
+
+    /**
+     * Sets the current index with {@code index}.
+     */
+    @Override
+    public void setViewIndex(Index index) {
+        viewControl.setViewIndex(index);
     }
 
     @Override
@@ -161,7 +177,6 @@ public class ModelManager implements Model {
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
                 && companyList.equals(other.companyList)
-                && internshipList.equals(other.internshipList)
                 && applicationList.equals(other.applicationList)
                 && profileList.equals(other.profileList)
                 && userPrefs.equals(other.userPrefs);

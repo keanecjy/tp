@@ -8,11 +8,12 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.item.Item;
 import seedu.address.model.item.ItemList;
 import seedu.address.model.item.ReadOnlyItemList;
+import seedu.address.storage.item.JsonAdaptedItem;
 
 /**
  * Represents a storage for {@link seedu.address.model.item.ItemList}.
  */
-public interface ListStorage<T extends Item> {
+public interface ListStorage<T extends Item, U extends JsonAdaptedItem> {
 
     /**
      * Returns the file path of the data file.
@@ -21,9 +22,10 @@ public interface ListStorage<T extends Item> {
 
     /**
      * Returns ItemList data as a {@link ItemList}.
-     *   Returns {@code Optional.empty()} if storage file is not found.
+     * Returns {@code Optional.empty()} if storage file is not found.
+     *
      * @throws DataConversionException if the data in storage is not in the expected format.
-     * @throws IOException if there was any problem when reading from the storage.
+     * @throws IOException             if there was any problem when reading from the storage.
      */
     Optional<ReadOnlyItemList<T>> readItemList() throws DataConversionException, IOException;
 
@@ -34,14 +36,15 @@ public interface ListStorage<T extends Item> {
 
     /**
      * Saves the given {@link ItemList} to the storage.
-     * @param addressBook cannot be null.
+     *
+     * @param itemList cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
-    void saveItemList(ReadOnlyItemList<T> addressBook) throws IOException;
+    void saveItemList(ReadOnlyItemList<T> itemList) throws IOException;
 
     /**
      * @see #saveItemList(ReadOnlyItemList)
      */
-    void saveItemList(ReadOnlyItemList<T> addressBook, Path filePath) throws IOException;
+    void saveItemList(ReadOnlyItemList<T> itemList, Path filePath) throws IOException;
 
 }

@@ -2,119 +2,142 @@ package seedu.address.ui.cards;
 
 import static seedu.address.ui.textstyle.TitleDescription.createTitleDescription;
 
-import java.util.Comparator;
+import java.util.LinkedHashMap;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import seedu.address.model.person.Person;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.item.Item;
 import seedu.address.ui.UiPart;
 import seedu.address.ui.textstyle.TitleDescription;
 
 /**
  * A UI component that displays information of a {@code Person}.
  */
-public abstract class Card extends UiPart<Region> {
+public abstract class Card<T extends Item> extends UiPart<Region> {
 
     //FXML
     private static final String FXML = "Card.fxml";
 
-    //Person's Attribute
-    private static final String ATTRIBUTE_PHONE = "Phone";
-    private static final String ATTRIBUTE_ADDRESS = "Address";
-    private static final String ATTRIBUTE_EMAIL = "Email";
-
-    public final Person person;
+    protected T item;
     protected int displayedIndex;
+    protected LinkedHashMap<String, Object> mapping;
 
     @FXML
     protected VBox statusBox;
     @FXML
     protected Label status;
     @FXML
-    protected ImageView calendar;
+    protected ImageView imageView;
     @FXML
     protected Label date;
     @FXML
-    private HBox cardPane;
-    @FXML
     private Label name;
+    @FXML
+    private FlowPane tags;
+    @FXML
+    private HBox cardPane;
     @FXML
     private Label id;
     @FXML
-    private TextFlow phone;
+    private TextFlow l1;
     @FXML
-    private TextFlow address;
+    private TextFlow l2;
     @FXML
-    private TextFlow email;
-    @FXML
-    private FlowPane tags;
+    private TextFlow l3;
 
     /**
      * todo Javadocs
      */
-    public Card(Person person, int displayedIndex) {
+    public Card(T item, int displayedIndex) {
         super(FXML);
-        this.person = person;
+        this.item = item;
         this.displayedIndex = displayedIndex;
-        //initializePersonCard(displayedIndex);
+        this.mapping = item.getMapping();
     }
 
     /**
      * todo Javadocs
      */
-    protected void initializeHeader(int displayedIndex) {
+    protected T getItem() {
+        return item;
+    }
+
+    /**
+     * todo Javadocs
+     */
+    protected void setName(String cardName) {
+        name.setText(cardName);
+    }
+
+    /**
+     * todo Javadocs
+     */
+    protected void setTags(String tagNames) {
+        String[] tagList = generateTags(tagNames);
+        setAllTags(tagList);
+    }
+
+    /**
+     * todo Javadocs
+     */
+    private String[] generateTags(String tagNames) {
+        int length = tagNames.length();
+        return tagNames.substring(1, length - 1).split(",");
+    }
+
+    /**
+     * todo Javadocs
+     */
+    private void setAllTags(String ... tagList) {
+        for (String tag : tagList) {
+            Label label = new Label(tag); // figure out how to text align
+            tags.getChildren().add(label);
+        }
+    }
+
+    /**
+     * todo Javadocs
+     */
+    protected void setId(int displayedIndex) {
         id.setText(displayedIndex + ". ");
-        name.setText(person.getName().fullName);
     }
 
     /**
      * todo Javadocs
      */
-    protected void initializeBody() {
-        setStyling(ATTRIBUTE_PHONE, person.getPhone().value);
-        setStyling(ATTRIBUTE_ADDRESS, person.getAddress().value);
-        setStyling(ATTRIBUTE_EMAIL, person.getEmail().value);
-    }
-
-    /**
-     * todo Javadocs
-     */
-    protected void initializeTags() {
-        person.getTags().stream()
-            .sorted(Comparator.comparing(Tag::getName))
-            .forEach(tag -> tags.getChildren().add(new Label(tag.getName())));
-    }
-
-
-    /**
-     * todo Javadocs
-     */
-    private void setStyling(String type, String description) {
-        TitleDescription titleDescription = createTitleDescription(type + ": ", description);
+    protected void setTextAt(String title, String description, LineNumber lineNumber) {
+        TitleDescription titleDescription = createTitleDescription(title + ": ", description);
         Text styledTitle = titleDescription.getTitle();
         Text styledDescription = titleDescription.getDescription();
-        switch (type) {
-        case ATTRIBUTE_PHONE:
-            phone.getChildren().addAll(styledTitle, styledDescription);
+        switch(lineNumber) {
+        case L1:
+            setLineText(l1, styledTitle, styledDescription);
             break;
-        case ATTRIBUTE_ADDRESS:
-            address.getChildren().addAll(styledTitle, styledDescription);
+        case L2:
+            setLineText(l2, styledTitle, styledDescription);
             break;
-        case ATTRIBUTE_EMAIL:
-            email.getChildren().addAll(styledTitle, styledDescription);
+        case L3:
+            setLineText(l3, styledTitle, styledDescription);
             break;
         default:
             assert false;
             break;
         }
+    }
+
+    /**
+     * todo Javadocs
+     */
+    private <K extends Pane> void setLineText(K textFlow, Text styledTitle, Text styledDescription) {
+        textFlow.getChildren().addAll(styledTitle, styledDescription);
     }
 
     @Override
@@ -129,9 +152,10 @@ public abstract class Card extends UiPart<Region> {
             return false;
         }
 
+        @SuppressWarnings("unchecked")
         // state check
-        Card card = (Card) other;
+        Card<T> card = (Card<T>) other;
         return id.getText().equals(card.id.getText())
-            && person.equals(card.person);
+            && item.equals(card.item);
     }
 }

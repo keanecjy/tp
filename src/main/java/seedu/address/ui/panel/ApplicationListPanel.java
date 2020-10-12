@@ -1,36 +1,37 @@
 package seedu.address.ui.panel;
 
+
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListCell;
-import seedu.address.model.person.Person;
+import seedu.address.model.application.ApplicationItem;
 import seedu.address.ui.cards.ApplicationCard;
 
 /**
  * todo Javadocs
  */
-public class ApplicationListPanel extends ListPanel {
+public class ApplicationListPanel extends ListPanel<ApplicationItem> {
 
     /**
      * todo Javadocs
      */
-    public ApplicationListPanel(ObservableList<Person> personList) {
-        super(personList);
-        personListView.setCellFactory(listView -> new ApplicationListViewCell());
+    public ApplicationListPanel(ObservableList<ApplicationItem> applicationItemList) {
+        super(applicationItemList);
+        itemListView.setCellFactory(listView -> new ApplicationListViewCell());
     }
 
     /**
      * todo Javadocs
      */
-    class ApplicationListViewCell extends ListCell<Person> {
+    class ApplicationListViewCell extends ListCell<ApplicationItem> {
         @Override
-        protected void updateItem(Person person, boolean empty) {
-            super.updateItem(person, empty);
+        protected void updateItem(ApplicationItem applicationItem, boolean empty) {
+            super.updateItem(applicationItem, empty);
 
-            if (empty || person == null) {
+            if (empty || applicationItem == null) {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new ApplicationCard(person, getIndex() + 1).getRoot());
+                setGraphic(new ApplicationCard(applicationItem, getIndex() + 1).getRoot());
             }
         }
     }

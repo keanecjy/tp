@@ -84,11 +84,7 @@ public class UniqueItemList<T extends Item> implements Iterable<T> {
      */
     public void removeSameItem(T toRemove) {
         requireNonNull(toRemove);
-        for (T item : internalList) {
-            if (item.isSameItem(toRemove)) {
-                internalList.remove(toRemove);
-            }
-        }
+        internalList.removeIf(item -> item.isSameItem(toRemove));
     }
 
     public void setItems(UniqueItemList<T> replacement) {

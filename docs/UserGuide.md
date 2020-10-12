@@ -265,7 +265,7 @@ Format: `add me c/CATEGORY t/TITLE [d/DESCRIPTOR]...`
 Examples:
 * `add me c/experience t/Internship at Govtech d/Implemented automate testing 
 using TravisCI d/Implemented dashboard to track code coverage`
-* `add me c/achievement t/special recognition in Hack n Roll!`
+* `add me c/achievement t/special recognition in Hack n Roll`
 * `add me c/skill t/HTML d/Learn how to create divs`
 
 #### Deleting item in profile: `delete me`

@@ -16,9 +16,12 @@ import seedu.address.logic.commands.SwitchCommand;
 import seedu.address.logic.commands.add.AddCommand;
 import seedu.address.logic.commands.delete.DeleteCommand;
 import seedu.address.logic.commands.edit.EditCommand;
+import seedu.address.logic.commands.view.ViewCommand;
 import seedu.address.logic.parser.add.AddCommandParserWrapper;
 import seedu.address.logic.parser.delete.DeleteCommandParser;
+import seedu.address.logic.parser.edit.EditCommandParserWrapper;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.view.ViewCommandParser;
 
 /**
  * Parses user input.
@@ -48,10 +51,12 @@ public class MainParser {
         switch (commandWord) {
         case AddCommand.COMMAND_WORD:
             return new AddCommandParserWrapper().parse(arguments);
-        case EditCommand.COMMAND_WORD:
-            return new EditCommandParser().parse(arguments);
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
+        case EditCommand.COMMAND_WORD:
+            return new EditCommandParserWrapper().parse(arguments);
+        case ViewCommand.COMMAND_WORD:
+            return new ViewCommandParser().parse(arguments);
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
         case FindCommand.COMMAND_WORD:

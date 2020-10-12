@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.add.AddCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.FilterableItemList;
@@ -18,7 +19,6 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.application.ApplicationItem;
 import seedu.address.model.company.CompanyItem;
-import seedu.address.model.internship.InternshipItem;
 import seedu.address.model.person.Person;
 import seedu.address.model.profile.ProfileItem;
 import seedu.address.testutil.PersonBuilder;
@@ -119,11 +119,6 @@ public class AddCommandTest {
         }
 
         @Override
-        public FilterableItemList<InternshipItem> getInternshipList() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
         public FilterableItemList<ApplicationItem> getApplicationList() {
             throw new AssertionError("This method should not be called.");
         }
@@ -140,6 +135,16 @@ public class AddCommandTest {
 
         @Override
         public TabName getTabName() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setViewIndex(Index index) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Index getViewIndex() {
             throw new AssertionError("This method should not be called.");
         }
 

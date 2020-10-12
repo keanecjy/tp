@@ -20,14 +20,20 @@ public class CommandResult {
     /** The application should switch tab. */
     private final boolean isSwitchTab;
 
+    /** The application should switch display. */
+    private final boolean isSwitchDisplay;
+
     /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
-    public CommandResult(String feedbackToUser, boolean isShowHelp, boolean isExit, boolean isSwitchTab) {
+    public CommandResult(String feedbackToUser, boolean isShowHelp, boolean isExit, boolean isSwitchTab,
+        boolean isSwitchDisplay) {
+
         this.feedbackToUser = requireNonNull(feedbackToUser);
         this.isShowHelp = isShowHelp;
         this.isExit = isExit;
         this.isSwitchTab = isSwitchTab;
+        this.isSwitchDisplay = isSwitchDisplay;
     }
 
     /**
@@ -35,7 +41,7 @@ public class CommandResult {
      * and other fields set to their default value.
      */
     public CommandResult(String feedbackToUser) {
-        this(feedbackToUser, false, false, false);
+        this(feedbackToUser, false, false, false, true);
     }
 
     public String getFeedbackToUser() {
@@ -54,6 +60,10 @@ public class CommandResult {
         return isSwitchTab;
     }
 
+    public boolean isSwitchDisplay() {
+        return isSwitchDisplay;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -69,12 +79,13 @@ public class CommandResult {
         return feedbackToUser.equals(otherCommandResult.feedbackToUser)
                 && isShowHelp == otherCommandResult.isShowHelp
                 && isExit == otherCommandResult.isExit
-                && isSwitchTab == otherCommandResult.isSwitchTab;
+                && isSwitchTab == otherCommandResult.isSwitchTab
+                && isSwitchDisplay == otherCommandResult.isSwitchDisplay;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(feedbackToUser, isShowHelp, isExit, isSwitchTab);
+        return Objects.hash(feedbackToUser, isShowHelp, isExit, isSwitchTab, isSwitchDisplay);
     }
 
 }

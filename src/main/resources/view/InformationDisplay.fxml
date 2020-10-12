@@ -3,7 +3,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
-<VBox fx:id="informationDisplay" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" styleClass="information_display">
+<?import javafx.scene.control.ScrollPane?>
+<ScrollPane fx:id="informationDisplay" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" styleClass="information_display" vbarPolicy="NEVER" hbarPolicy="NEVER">
     <GridPane HBox.hgrow="ALWAYS">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
@@ -16,4 +17,4 @@
             <VBox fx:id="information" styleClass="information_container"/>
         </VBox>
     </GridPane>
-</VBox>
+</ScrollPane>

@@ -53,4 +53,14 @@ public class Index {
                 && zeroBasedIndex == ((Index) other).zeroBasedIndex); // state check
     }
 
+    /**
+     * Represents an Index in using the one-based indexing.
+     *
+     * @return String representation of one-based index.
+     */
+    @Override
+    public String toString() {
+        return String.valueOf(getOneBased());
+    }
+
 }

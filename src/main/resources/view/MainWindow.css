@@ -69,8 +69,8 @@
     -fx-background-color: transparent;
     -fx-fit-to-width: true;
     -fx-translate-y: 1;
-    -fx-min-height: 60;
-    -fx-max-height: 60;
+    -fx-min-height: 80;
+    -fx-max-height: 80;
     -fx-vbar-policy: never;
     -fx-hbar-policy: never;
     -fx-pannable: true;
@@ -78,9 +78,9 @@
 
 .display_container_style {
     -fx-translate-y: 16;
-    -fx-pref-width: 350;
+    -fx-pref-width: 400;
     -fx-translate-x: -5;
-    -fx-pref-height: 510;
+    -fx-pref-height: 410;
 }
 
 .cards_container_style {
@@ -90,8 +90,8 @@
 
 .cards_container_inner_style {
     -fx-translate-x: -2;
-    -fx-pref-width: 400;
-    -fx-pref-height: 700;
+    -fx-pref-width: 350;
+    -fx-pref-height: 600;
 }
 
 
@@ -171,10 +171,17 @@
     -fx-alignment: baseline-center;
 }
 
+.information_display > .viewport {
+    -fx-background-color: transparent;
+}
+
 .information_display{
     -fx-background-color: #fdfdfd;
     -fx-pref-height: 510;
     -fx-translate-x: -4;
+    -fx-border-color: transparent;
+    -fx-fit-to-height: true;
+    -fx-fit-to-width: true;
 }
 
 .information_container {

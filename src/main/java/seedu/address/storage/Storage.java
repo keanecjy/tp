@@ -1,19 +1,24 @@
 package seedu.address.storage;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.Optional;
 
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.item.ReadOnlyItemList;
+import seedu.address.model.application.ApplicationItem;
+import seedu.address.model.company.CompanyItem;
 import seedu.address.model.person.Person;
+import seedu.address.model.profile.ProfileItem;
+import seedu.address.storage.application.JsonAdaptedApplicationItem;
+import seedu.address.storage.company.JsonAdaptedCompanyItem;
+import seedu.address.storage.person.JsonAdaptedPerson;
+import seedu.address.storage.profile.JsonAdaptedProfileItem;
 
 /**
  * API of the Storage component
  */
-public interface Storage extends ListStorage<Person>, UserPrefsStorage {
+public interface Storage extends UserPrefsStorage {
 
     @Override
     Optional<UserPrefs> readUserPrefs() throws DataConversionException, IOException;
@@ -21,13 +26,32 @@ public interface Storage extends ListStorage<Person>, UserPrefsStorage {
     @Override
     void saveUserPrefs(ReadOnlyUserPrefs userPrefs) throws IOException;
 
-    @Override
-    Path getItemListFilePath();
+    /**
+     * Gets the address book storage.
+     *
+     * @return address book storage.
+     */
+    ListStorage<Person, JsonAdaptedPerson> getAddressBookStorage();
 
-    @Override
-    Optional<ReadOnlyItemList<Person>> readItemList() throws DataConversionException, IOException;
+    /**
+     * Gets the application item list storage.
+     *
+     * @return application item list storage.
+     */
+    ListStorage<ApplicationItem, JsonAdaptedApplicationItem> getApplicationItemListStorage();
 
-    @Override
-    void saveItemList(ReadOnlyItemList<Person> addressBook) throws IOException;
+    /**
+     * Gets the company item list storage.
+     *
+     * @return company item list storage.
+     */
+    ListStorage<CompanyItem, JsonAdaptedCompanyItem> getCompanyItemListStorage();
+
+    /**
+     * Gets the profile item list storage.
+     *
+     * @return profile item list storage.
+     */
+    ListStorage<ProfileItem, JsonAdaptedProfileItem> getProfileItemListStorage();
 
 }

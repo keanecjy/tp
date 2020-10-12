@@ -22,6 +22,9 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.model.item.Item;
+import seedu.address.storage.JsonSerializableItemList;
+import seedu.address.storage.item.JsonAdaptedItem;
 
 /**
  * Converts a Java object instance to JSON and vice versa
@@ -48,10 +51,18 @@ public class JsonUtil {
         return fromJsonString(FileUtil.readFromFile(jsonFile), classOfObjectToDeserialize);
     }
 
+    static <T extends Item, U extends JsonAdaptedItem> JsonSerializableItemList<T, U> deserializeObjectFromJsonFile(
+            Path jsonFile, Class<T> contentClass,
+            Class<U> jsonClass)
+            throws IOException {
+        return fromJsonString(FileUtil.readFromFile(jsonFile), contentClass, jsonClass);
+    }
+
     /**
      * Returns the Json object from the given file or {@code Optional.empty()} object if the file is not found.
      * If any values are missing from the file, default values will be used, as long as the file is a valid json file.
-     * @param filePath cannot be null.
+     *
+     * @param filePath                   cannot be null.
      * @param classOfObjectToDeserialize Json file has to correspond to the structure in the class given here.
      * @throws DataConversionException if the file format is not as expected.
      */
@@ -77,8 +88,40 @@ public class JsonUtil {
     }
 
     /**
+     * Returns the Json object from the given file or {@code Optional.empty()} object if the file is not found.
+     * If any values are missing from the file, default values will be used, as long as the file is a valid json file.
+     * This method is used to circumvent Classnot allowing parameterized type.
+     *
+     * @param filePath     cannot be null.
+     * @param contentClass Json file has to correspond to the structure in the class given here.
+     * @param jsonClass    the json class of contentClass.
+     * @throws DataConversionException if the file format is not as expected.
+     */
+    public static <T extends Item, U extends JsonAdaptedItem> Optional<JsonSerializableItemList<T, U>> readJsonFile(
+            Path filePath, Class<T> contentClass, Class<U> jsonClass) throws DataConversionException {
+        requireNonNull(filePath);
+
+        if (!Files.exists(filePath)) {
+            logger.info("Json file " + filePath + " not found");
+            return Optional.empty();
+        }
+
+        JsonSerializableItemList<T, U> jsonFile;
+
+        try {
+            jsonFile = deserializeObjectFromJsonFile(filePath, contentClass, jsonClass);
+        } catch (IOException e) {
+            logger.warning("Error reading from jsonFile file " + filePath + ": " + e);
+            throw new DataConversionException(e);
+        }
+
+        return Optional.of(jsonFile);
+    }
+
+    /**
      * Saves the Json object to the specified file.
      * Overwrites existing file if it exists, creates a new file if it doesn't.
+     *
      * @param jsonFile cannot be null
      * @param filePath cannot be null
      * @throws IOException if there was an error during writing to the file
@@ -93,6 +136,7 @@ public class JsonUtil {
 
     /**
      * Converts a given string representation of a JSON data to instance of a class
+     *
      * @param <T> The generic type to create an instance of
      * @return The instance of T with the specified values in the JSON string
      */
@@ -101,9 +145,22 @@ public class JsonUtil {
     }
 
     /**
-     * Converts a given instance of a class into its JSON data string representation
-     * @param instance The T object to be converted into the JSON string
+     * Converts a given string representation of a JSON data to instance of a class
+     *
      * @param <T> The generic type to create an instance of
+     * @return The instance of T with the specified values in the JSON string
+     */
+    public static <T extends Item, U extends JsonAdaptedItem> JsonSerializableItemList<T, U> fromJsonString(
+            String json, Class<T> contentClass, Class<U> jsonClass) throws IOException {
+        return objectMapper.readValue(json, objectMapper.getTypeFactory().constructParametricType(
+                JsonSerializableItemList.class, contentClass, jsonClass));
+    }
+
+    /**
+     * Converts a given instance of a class into its JSON data string representation
+     *
+     * @param instance The T object to be converted into the JSON string
+     * @param <T>      The generic type to create an instance of
      * @return JSON data representation of the given class instance, in string
      */
     public static <T> String toJsonString(T instance) throws JsonProcessingException {
@@ -128,7 +185,6 @@ public class JsonUtil {
          * Gets the logging level that matches loggingLevelString
          * <p>
          * Returns null if there are no matches
-         *
          */
         private Level getLoggingLevel(String loggingLevelString) {
             return Level.parse(loggingLevelString);

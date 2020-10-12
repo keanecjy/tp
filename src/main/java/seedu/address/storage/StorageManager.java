@@ -9,8 +9,14 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.item.ReadOnlyItemList;
+import seedu.address.model.application.ApplicationItem;
+import seedu.address.model.company.CompanyItem;
 import seedu.address.model.person.Person;
+import seedu.address.model.profile.ProfileItem;
+import seedu.address.storage.application.JsonAdaptedApplicationItem;
+import seedu.address.storage.company.JsonAdaptedCompanyItem;
+import seedu.address.storage.person.JsonAdaptedPerson;
+import seedu.address.storage.profile.JsonAdaptedProfileItem;
 
 /**
  * Manages storage of ItemList data in local storage.
@@ -18,15 +24,25 @@ import seedu.address.model.person.Person;
 public class StorageManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
-    private ListStorage<Person> addressBookStorage;
-    private UserPrefsStorage userPrefsStorage;
+    private final ListStorage<Person, JsonAdaptedPerson> addressBookStorage;
+    private final ListStorage<ApplicationItem, JsonAdaptedApplicationItem> applicationItemListStorage;
+    private final ListStorage<CompanyItem, JsonAdaptedCompanyItem> companyItemListStorage;
+    private final ListStorage<ProfileItem, JsonAdaptedProfileItem> profileItemListStorage;
+    private final UserPrefsStorage userPrefsStorage;
 
     /**
      * Creates a {@code StorageManager} with the given {@code ItemListStorage} and {@code UserPrefStorage}.
      */
-    public StorageManager(ListStorage<Person> addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(ListStorage<Person, JsonAdaptedPerson> addressBookStorage,
+            ListStorage<ApplicationItem, JsonAdaptedApplicationItem> applicationItemListStorage,
+            ListStorage<CompanyItem, JsonAdaptedCompanyItem> companyItemListStorage,
+            ListStorage<ProfileItem, JsonAdaptedProfileItem> profileItemListStorage,
+            UserPrefsStorage userPrefsStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
+        this.applicationItemListStorage = applicationItemListStorage;
+        this.companyItemListStorage = companyItemListStorage;
+        this.profileItemListStorage = profileItemListStorage;
         this.userPrefsStorage = userPrefsStorage;
     }
 
@@ -47,34 +63,26 @@ public class StorageManager implements Storage {
         userPrefsStorage.saveUserPrefs(userPrefs);
     }
 
-
-    // ================ ItemList methods ==============================
+    // ================ Get ListStorage ==============================
 
     @Override
-    public Path getItemListFilePath() {
-        return addressBookStorage.getItemListFilePath();
+    public ListStorage<Person, JsonAdaptedPerson> getAddressBookStorage() {
+        return addressBookStorage;
     }
 
     @Override
-    public Optional<ReadOnlyItemList<Person>> readItemList() throws DataConversionException, IOException {
-        return readItemList(addressBookStorage.getItemListFilePath());
+    public ListStorage<ApplicationItem, JsonAdaptedApplicationItem> getApplicationItemListStorage() {
+        return applicationItemListStorage;
     }
 
     @Override
-    public Optional<ReadOnlyItemList<Person>> readItemList(Path filePath) throws DataConversionException, IOException {
-        logger.fine("Attempting to read data from file: " + filePath);
-        return addressBookStorage.readItemList(filePath);
+    public ListStorage<CompanyItem, JsonAdaptedCompanyItem> getCompanyItemListStorage() {
+        return companyItemListStorage;
     }
 
     @Override
-    public void saveItemList(ReadOnlyItemList<Person> addressBook) throws IOException {
-        saveItemList(addressBook, addressBookStorage.getItemListFilePath());
-    }
-
-    @Override
-    public void saveItemList(ReadOnlyItemList<Person> addressBook, Path filePath) throws IOException {
-        logger.fine("Attempting to write to data file: " + filePath);
-        addressBookStorage.saveItemList(addressBook, filePath);
+    public ListStorage<ProfileItem, JsonAdaptedProfileItem> getProfileItemListStorage() {
+        return profileItemListStorage;
     }
 
 }

@@ -2,6 +2,9 @@ package seedu.address.model.profile;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.util.ItemUtil.PROFILE_NAME;
+import static seedu.address.ui.panel.PanelDisplayKeyword.DESCRIPTORS_DISPLAY_NAME;
+import static seedu.address.ui.panel.PanelDisplayKeyword.TITLE_DISPLAY_NAME;
+import static seedu.address.ui.panel.PanelDisplayKeyword.TYPE_DISPLAY_NAME;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -10,6 +13,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.model.item.Item;
+import seedu.address.storage.item.JsonAdaptedItem;
+import seedu.address.storage.profile.JsonAdaptedProfileItem;
 
 /**
  * Represents a Profile Item in the UserProfile.
@@ -18,8 +23,8 @@ import seedu.address.model.item.Item;
 public class ProfileItem extends Item {
 
     // Identity fields
-    private final String title;
-    private final ProfileItemType type;
+    private final Title title;
+    private final ProfileItemCategory category;
 
     // Data fields
     private final Set<Descriptor> descriptors = new HashSet<>();
@@ -27,21 +32,22 @@ public class ProfileItem extends Item {
     /**
      * Every field must be present and not null.
      */
-    public ProfileItem(String title, ProfileItemType type, Set<Descriptor> descriptors) {
-        requireAllNonNull(type, title, descriptors);
-        this.type = type;
+    public ProfileItem(Title title, ProfileItemCategory category, Set<Descriptor> descriptors) {
+        requireAllNonNull(category, title, descriptors);
+        this.category = category;
         this.title = title;
         this.descriptors.addAll(descriptors);
     }
 
 
-    public String getTitle() {
+    public Title getTitle() {
         return title;
     }
 
-    public ProfileItemType getType() {
-        return type;
+    public ProfileItemCategory getCategory() {
+        return category;
     }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -51,7 +57,7 @@ public class ProfileItem extends Item {
     }
 
     /**
-     * Returns true if both items are the have the same name and type.
+     * Returns true if both items are the have the same name and category.
      * This defines a weaker notion of equality between two ProfileItemObjects.
      *
      * @param otherItem item to compare to.
@@ -70,7 +76,7 @@ public class ProfileItem extends Item {
         ProfileItem otherProfileItem = (ProfileItem) otherItem;
 
         return otherItem != null
-                && otherProfileItem.getType().equals(getType())
+                && otherProfileItem.getCategory().equals(getCategory())
                 && (otherProfileItem.getTitle().equals(getTitle()));
     }
 
@@ -89,7 +95,7 @@ public class ProfileItem extends Item {
         }
         ProfileItem otherProfileItem = (ProfileItem) other;
         return otherProfileItem != null
-                && otherProfileItem.getType().equals(getType())
+                && otherProfileItem.getCategory().equals(getCategory())
                 && (otherProfileItem.getTitle().equals(getTitle()))
                 && (otherProfileItem.getDescriptors().equals(getDescriptors()));
     }
@@ -97,7 +103,7 @@ public class ProfileItem extends Item {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(title, type, descriptors);
+        return Objects.hash(title, category, descriptors);
     }
 
     @Override
@@ -105,7 +111,7 @@ public class ProfileItem extends Item {
         final StringBuilder builder = new StringBuilder();
         builder.append(getTitle())
                 .append(" Type: ")
-                .append(getType())
+                .append(getCategory())
                 .append(" Descriptors: ");
         getDescriptors().forEach(builder::append);
         return builder.toString();
@@ -130,10 +136,15 @@ public class ProfileItem extends Item {
     @Override
     public LinkedHashMap<String, Object> getMapping() {
         LinkedHashMap<String, Object> mapping = new LinkedHashMap<>();
-        mapping.put("Title", title);
-        mapping.put("Type", type);
-        mapping.put("Descriptors", descriptors);
+        mapping.put(TITLE_DISPLAY_NAME, title);
+        mapping.put(TYPE_DISPLAY_NAME, category);
+        mapping.put(DESCRIPTORS_DISPLAY_NAME, descriptors);
         return mapping;
+    }
+
+    @Override
+    public JsonAdaptedItem getJsonAdaptedItem() {
+        return new JsonAdaptedProfileItem(this);
     }
 }
 

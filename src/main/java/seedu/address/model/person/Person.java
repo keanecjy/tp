@@ -10,6 +10,7 @@ import java.util.Set;
 
 import seedu.address.model.item.Item;
 import seedu.address.model.tag.Tag;
+import seedu.address.storage.person.JsonAdaptedPerson;
 
 /**
  * Represents a Person in the address book.
@@ -66,6 +67,7 @@ public class Person extends Item {
      * Returns true if both persons of the same name have at least one other identity field that is the same.
      * This defines a weaker notion of equality between two persons.
      */
+    @Override
     public boolean isSameItem(Item otherItem) {
         if (this == otherItem) {
             return true;
@@ -139,6 +141,11 @@ public class Person extends Item {
         mapping.put("Address", address);
         mapping.put("Tags", tags);
         return mapping;
+    }
+
+    @Override
+    public JsonAdaptedPerson getJsonAdaptedItem() {
+        return new JsonAdaptedPerson(this);
     }
 
 }

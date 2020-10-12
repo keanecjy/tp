@@ -1,12 +1,6 @@
-package seedu.address.logic.parser;
+package seedu.address.logic.parser.util;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.util.StatusUtil.ACCEPTED_KEYWORD;
-import static seedu.address.model.util.StatusUtil.APPLIED_KEYWORD;
-import static seedu.address.model.util.StatusUtil.INTERVIEW_KEYWORD;
-import static seedu.address.model.util.StatusUtil.OFFERED_KEYWORD;
-import static seedu.address.model.util.StatusUtil.REJECTED_KEYWORD;
-import static seedu.address.model.util.StatusUtil.WAITING_KEYWORD;
 
 import java.time.LocalDateTime;
 
@@ -15,13 +9,12 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.application.Status;
 import seedu.address.model.application.StatusDate;
 import seedu.address.model.util.DateUtil;
+import seedu.address.model.util.StatusUtil;
 
 /**
  * ApplicationParserUtil class which parses all the fields in an ApplicationItem.
  */
 public class ApplicationParserUtil {
-
-    private static final String ERROR_MESSAGE = "Checks for status validity failed";
 
     /**
      * Parses a {@code String status} into a {@code Status}.
@@ -36,24 +29,7 @@ public class ApplicationParserUtil {
         if (!Status.isValidStatus(trimmedStatus)) {
             throw new ParseException(Status.MESSAGE_CONSTRAINTS);
         }
-
-        switch (trimmedStatus) {
-        case APPLIED_KEYWORD:
-            return Status.APPLIED;
-        case INTERVIEW_KEYWORD:
-            return Status.INTERVIEW;
-        case WAITING_KEYWORD:
-            return Status.WAITING;
-        case REJECTED_KEYWORD:
-            return Status.REJECTED;
-        case OFFERED_KEYWORD:
-            return Status.OFFERED;
-        case ACCEPTED_KEYWORD:
-            return Status.ACCEPTED;
-        default:
-            assert false : ERROR_MESSAGE;
-            return null;
-        }
+        return StatusUtil.convertToStatus(trimmedStatus);
     }
 
     /**

@@ -52,8 +52,4 @@ public class DeleteCommand extends DeleteCommandAbstract {
                 && targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
     }
 
-    @Override
-    public String getItemType() {
-        return "person";
-    }
 }

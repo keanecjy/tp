@@ -14,12 +14,16 @@ import seedu.address.commons.core.GuiSettings;
 public class UserPrefs implements ReadOnlyUserPrefs {
 
     private GuiSettings guiSettings = new GuiSettings();
-    private Path addressBookFilePath = Paths.get("data" , "addressbook.json");
+    private Path addressBookFilePath = Paths.get("data", "addressbook.json");
+    private Path applicationItemListFilePath = Paths.get("data", "applicationitemlist.json");
+    private Path companyItemListFilePath = Paths.get("data", "companyitemlist.json");
+    private Path profileItemListFilePath = Paths.get("data", "profileitemlist.json");
 
     /**
      * Creates a {@code UserPrefs} with default values.
      */
-    public UserPrefs() {}
+    public UserPrefs() {
+    }
 
     /**
      * Creates a {@code UserPrefs} with the prefs in {@code userPrefs}.
@@ -38,6 +42,7 @@ public class UserPrefs implements ReadOnlyUserPrefs {
         setAddressBookFilePath(newUserPrefs.getAddressBookFilePath());
     }
 
+    @Override
     public GuiSettings getGuiSettings() {
         return guiSettings;
     }
@@ -47,6 +52,7 @@ public class UserPrefs implements ReadOnlyUserPrefs {
         this.guiSettings = guiSettings;
     }
 
+    @Override
     public Path getAddressBookFilePath() {
         return addressBookFilePath;
     }
@@ -54,6 +60,33 @@ public class UserPrefs implements ReadOnlyUserPrefs {
     public void setAddressBookFilePath(Path addressBookFilePath) {
         requireNonNull(addressBookFilePath);
         this.addressBookFilePath = addressBookFilePath;
+    }
+
+    public Path getApplicationItemListFilePath() {
+        return applicationItemListFilePath;
+    }
+
+    public void setApplicationItemListFilePath(Path applicationItemListFilePath) {
+        requireNonNull(applicationItemListFilePath);
+        this.applicationItemListFilePath = applicationItemListFilePath;
+    }
+
+    public Path getCompanyItemListFilePath() {
+        return companyItemListFilePath;
+    }
+
+    public void setCompanyItemListFilePath(Path companyItemListFilePath) {
+        requireNonNull(companyItemListFilePath);
+        this.companyItemListFilePath = companyItemListFilePath;
+    }
+
+    public Path getProfileItemListFilePath() {
+        return profileItemListFilePath;
+    }
+
+    public void setProfileItemListFilePath(Path profileItemListFilePath) {
+        requireNonNull(companyItemListFilePath);
+        this.profileItemListFilePath = profileItemListFilePath;
     }
 
     @Override
@@ -78,10 +111,8 @@ public class UserPrefs implements ReadOnlyUserPrefs {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Gui Settings : " + guiSettings);
-        sb.append("\nLocal data file location : " + addressBookFilePath);
-        return sb.toString();
+        return "Gui Settings : " + guiSettings
+                + "\nLocal data file location : " + addressBookFilePath;
     }
 
 }

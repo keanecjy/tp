@@ -24,7 +24,7 @@ public class AddCommandIntegrationTest {
 
     @BeforeEach
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new ItemList<>(), new ItemList<>(), new ItemList<>(),
+        model = new ModelManager(getTypicalAddressBook(), new ItemList<>(), new ItemList<>(),
                 new ItemList<>(), new UserPrefs());
     }
 
@@ -33,7 +33,7 @@ public class AddCommandIntegrationTest {
         Person validPerson = new PersonBuilder().build();
 
         Model expectedModel = new ModelManager(model.getAddressBook().getUnfilteredItemList(), new ItemList<>(),
-                new ItemList<>(), new ItemList<>(), new ItemList<>(), new UserPrefs());
+                new ItemList<>(), new ItemList<>(), new UserPrefs());
         expectedModel.getAddressBook().addItem(validPerson);
 
         assertCommandSuccess(new AddCommand(validPerson), model,

@@ -3,7 +3,7 @@ package seedu.address.model.item.exceptions;
 import seedu.address.model.item.Item;
 
 /**
- * Signals that the operation will result in duplicate Persons (Persons are considered duplicates if they have the same
+ * Signals that the operation will result in duplicate Items (Items are considered duplicates if they have the same
  * identity).
  */
 public class DuplicateItemException extends RuntimeException {

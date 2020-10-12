@@ -25,8 +25,8 @@ public class SwitchCommand extends Command {
      */
     public SwitchCommand(TabName tabName) {
         this.tabName = tabName;
-        sameScreenText = String.format("Already in %s tab", capitalizeFirstLetterOnly(tabName.toString()));
-        switchedScreenText = String.format("Switching to %s tab", capitalizeFirstLetterOnly(tabName.toString()));
+        sameScreenText = String.format("Already in %s tab", tabName.toString());
+        switchedScreenText = String.format("Switching to %s tab", tabName.toString());
     }
 
     @Override
@@ -41,16 +41,7 @@ public class SwitchCommand extends Command {
             resultMessage = switchedScreenText;
             model.setTabName(tabName);
         }
-        return new CommandResult(resultMessage, false, false, true);
-    }
-
-    /**
-     * Capitalize only the first letter of {@code string}.
-     */
-    private String capitalizeFirstLetterOnly(String string) {
-        String firstLetter = string.substring(0, 1);
-        String rest = string.substring(1);
-        return firstLetter + rest.toLowerCase();
+        return new CommandResult(resultMessage, false, false, true, false);
     }
 
     @Override

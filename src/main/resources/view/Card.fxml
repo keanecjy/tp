@@ -29,17 +29,17 @@
         </Label>
         <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
       </HBox>
-      <FlowPane fx:id="tags" />
-      <TextFlow fx:id="phone" styleClass="cell_small_label"/>
-      <TextFlow fx:id="address" styleClass="cell_small_label" />
-      <TextFlow fx:id="email" styleClass="cell_small_label" />
+      <FlowPane fx:id="tags"/>
+      <TextFlow fx:id="l1" styleClass="cell_small_label"/>
+      <TextFlow fx:id="l2" styleClass="cell_small_label" />
+      <TextFlow fx:id="l3" styleClass="cell_small_label" />
     </VBox>
   </GridPane>
   <VBox styleClass="cell_right_portion" minHeight="-Infinity">
     <VBox fx:id="statusBox" styleClass="cell_status_box_label">
       <Label fx:id="status" styleClass="cell_status_label"/>
     </VBox>
-    <ImageView fitHeight="23.0" fitWidth="23.0" fx:id="calendar" translateY="25"/>
+    <ImageView fx:id="imageView" translateY="25"/>
     <Label fx:id="date" styleClass="cell_date_label"/>
   </VBox>
 </HBox>

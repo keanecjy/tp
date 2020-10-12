@@ -66,8 +66,4 @@ public class AddCommand extends AddCommandAbstract {
                 && toAdd.equals(((AddCommand) other).toAdd));
     }
 
-    @Override
-    public String getItemType() {
-        return "person";
-    }
 }
