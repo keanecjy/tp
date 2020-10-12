@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.Model;
 import seedu.address.ui.tabs.TabName;
 
@@ -41,6 +42,7 @@ public class SwitchCommand extends Command {
             resultMessage = switchedScreenText;
             model.setTabName(tabName);
         }
+        model.setViewIndex(Index.fromZeroBased(0));
         return new CommandResult(resultMessage, false, false, true, false);
     }
 

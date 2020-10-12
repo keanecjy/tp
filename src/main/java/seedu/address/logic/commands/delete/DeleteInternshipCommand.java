@@ -23,7 +23,7 @@ import seedu.address.ui.tabs.TabName;
  */
 public class DeleteInternshipCommand extends DeleteCommandAbstract {
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " " + INTERNSHIP_ALIAS
             + ": Deletes the internship identified by the index number used in the displayed internship list in a "
             + "company.\n"
             + "The application (if any) made with this internship will also be deleted.\n"

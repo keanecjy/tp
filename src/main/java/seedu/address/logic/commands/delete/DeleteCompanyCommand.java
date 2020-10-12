@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_DELETED_ITEM;
 import static seedu.address.logic.commands.util.CommandUtil.getCommandResult;
 import static seedu.address.logic.commands.util.CommandUtil.getCompany;
+import static seedu.address.model.util.ItemUtil.COMPANY_ALIAS;
 import static seedu.address.model.util.ItemUtil.COMPANY_NAME;
 
 import seedu.address.commons.core.index.Index;
@@ -17,6 +18,15 @@ import seedu.address.ui.tabs.TabName;
  * Deletes a Company from the Model's Company list. todo javadocs (shawn)
  */
 public class DeleteCompanyCommand extends DeleteCommandAbstract {
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " " + COMPANY_ALIAS
+            + ": Deletes a "
+            + COMPANY_NAME
+            + " from InternHunter by the index number used in the displayed list.\n"
+            + "Parameters: INDEX\n"
+            + "Note: INDEX must be a positive integer.\n"
+            + "Example: "
+            + COMMAND_WORD + " " + COMPANY_ALIAS + " 1\n";
 
     private final Index targetIndex;
 

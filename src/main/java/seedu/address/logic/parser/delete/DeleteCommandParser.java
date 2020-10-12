@@ -1,8 +1,10 @@
 package seedu.address.logic.parser.delete;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_ITEM_TYPE;
 import static seedu.address.logic.parser.util.GeneralParserUtil.getCommandDetails;
 import static seedu.address.logic.parser.util.GeneralParserUtil.getItemType;
+import static seedu.address.logic.parser.util.GeneralParserUtil.isValidItemType;
 import static seedu.address.model.util.ItemUtil.APPLICATION_ALIAS;
 import static seedu.address.model.util.ItemUtil.COMPANY_ALIAS;
 import static seedu.address.model.util.ItemUtil.INTERNSHIP_ALIAS;
@@ -32,13 +34,16 @@ public class DeleteCommandParser implements Parser<DeleteCommandAbstract> {
         String itemType = getItemType(args, DeleteCommandAbstract.MESSAGE_USAGE);
         String commandDetails = getCommandDetails(args);
 
+        isValidItemType(itemType);
+
         // Internship has a different parse requirement
         if (itemType.equals(INTERNSHIP_ALIAS)) {
             return new DeleteInternshipCommandParser().parse(commandDetails);
         }
 
-        Index index = GeneralParserUtil.parseIndex(commandDetails);
+        checkCommandDetailsIsNotBlank(commandDetails, itemType);
 
+        Index index = GeneralParserUtil.parseIndex(commandDetails);
         switch (itemType) {
         case COMPANY_ALIAS:
             return new DeleteCompanyCommand(index);
@@ -52,6 +57,28 @@ public class DeleteCommandParser implements Parser<DeleteCommandAbstract> {
         default:
             // Invalid item type
             throw new ParseException(MESSAGE_INVALID_ITEM_TYPE);
+        }
+    }
+
+    private void checkCommandDetailsIsNotBlank(String commandDetails, String itemType) throws ParseException {
+        if (commandDetails.isBlank()) {
+            switch (itemType) {
+            case COMPANY_ALIAS:
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        DeleteCompanyCommand.MESSAGE_USAGE));
+
+            case APPLICATION_ALIAS:
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        DeleteApplicationCommand.MESSAGE_USAGE));
+
+            case PROFILE_ALIAS:
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        DeleteProfileCommand.MESSAGE_USAGE));
+
+            default:
+                // Invalid item type
+                throw new ParseException(MESSAGE_INVALID_ITEM_TYPE);
+            }
         }
     }
 }

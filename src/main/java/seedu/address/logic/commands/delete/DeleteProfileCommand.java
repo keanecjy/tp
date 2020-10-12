@@ -2,6 +2,8 @@ package seedu.address.logic.commands.delete;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.commands.util.CommandUtil.getCommandResult;
+import static seedu.address.model.util.ItemUtil.PROFILE_ALIAS;
+import static seedu.address.model.util.ItemUtil.PROFILE_ITEM_NAME;
 import static seedu.address.model.util.ItemUtil.PROFILE_NAME;
 
 import java.util.List;
@@ -16,6 +18,14 @@ import seedu.address.ui.tabs.TabName;
 
 public class DeleteProfileCommand extends DeleteCommandAbstract {
 
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " " + PROFILE_ALIAS
+            + ": Deletes a "
+            + PROFILE_ITEM_NAME
+            + " from InternHunter by the index number used in the displayed list.\n"
+            + "Parameters: INDEX\n"
+            + "Note: INDEX must be a positive integer.\n"
+            + "Example: "
+            + COMMAND_WORD + " " + PROFILE_ALIAS + " 1\n";
 
     private final Index targetIndex;
 

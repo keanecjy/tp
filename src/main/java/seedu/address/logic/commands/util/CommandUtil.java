@@ -62,6 +62,7 @@ public class CommandUtil {
     public static CommandResult getCommandResult(Model model, String message, TabName tabName) {
         if (model.getTabName() != tabName) {
             model.setTabName(tabName);
+            model.setViewIndex(Index.fromZeroBased(0));
             return new CommandResult(message, false, false, true, true);
         } else {
             return new CommandResult(message);
