@@ -9,18 +9,21 @@ import java.util.regex.Pattern;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SwitchCommand;
 import seedu.address.logic.commands.add.AddCommand;
 import seedu.address.logic.commands.delete.DeleteCommand;
 import seedu.address.logic.commands.edit.EditCommand;
+import seedu.address.logic.commands.find.FindCommand;
+import seedu.address.logic.commands.list.ListCommand;
 import seedu.address.logic.commands.view.ViewCommand;
 import seedu.address.logic.parser.add.AddCommandParserWrapper;
 import seedu.address.logic.parser.delete.DeleteCommandParser;
 import seedu.address.logic.parser.edit.EditCommandParserWrapper;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.find.FindCommandParser;
+import seedu.address.logic.parser.list.ListCommandParser;
+import seedu.address.logic.parser.switchparser.SwitchCommandParser;
 import seedu.address.logic.parser.view.ViewCommandParser;
 
 /**
@@ -62,7 +65,7 @@ public class MainParser {
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
         case ListCommand.COMMAND_WORD:
-            return new ListCommand();
+            return new ListCommandParser().parse(arguments);
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
         case HelpCommand.COMMAND_WORD:

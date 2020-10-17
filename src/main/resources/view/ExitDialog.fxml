@@ -23,10 +23,10 @@
       <VBox spacing="20.0">
          <children>
             <Label text="Are you sure you want to exit?" textFill="#8e8fb5" />
-            <ButtonBar buttonOrder="">
+            <ButtonBar>
               <buttons>
-                  <Button fx:id="yesButton" alignment="CENTER" mnemonicParsing="false" onAction="#confirmExit" style="-fx-background-color: #363f80;" text="Yes" textFill="WHITE" />
-                  <Button fx:id="noButton" alignment="CENTER" mnemonicParsing="false" onAction="#cancelExit" style="-fx-background-color: #8E8FB5;" text="No" textFill="WHITE" />
+                  <Button id="yesButton" fx:id="yesButton" alignment="CENTER" mnemonicParsing="false" onAction="#confirmExit" stylesheets="@ExitDialog.css" text="Yes" textFill="WHITE" />
+                  <Button id="noButton" fx:id="noButton" alignment="CENTER" mnemonicParsing="false" onAction="#cancelExit" stylesheets="@ExitDialog.css" text="No" textFill="WHITE" />
               </buttons>
             </ButtonBar>
          </children>

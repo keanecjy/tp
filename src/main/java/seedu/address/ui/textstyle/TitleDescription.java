@@ -49,4 +49,19 @@ public class TitleDescription {
         text.setFont(Font.font(DISPLAY_FONT, FontWeight.BOLD, DISPLAY_SIZE));
         text.setFill(color);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if (!(obj instanceof TitleDescription)) {
+            return false;
+        }
+
+        TitleDescription other = (TitleDescription) obj;
+        return title.toString().equals(other.title.toString())
+                && description.toString().equals(other.description.toString());
+    }
 }

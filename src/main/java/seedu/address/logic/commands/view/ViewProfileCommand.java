@@ -3,6 +3,7 @@ package seedu.address.logic.commands.view;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_ITEM_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_VIEW_SUCCESS;
+import static seedu.address.logic.commands.util.CommandUtil.getCommandResult;
 import static seedu.address.model.util.ItemUtil.PROFILE_ALIAS;
 import static seedu.address.model.util.ItemUtil.PROFILE_ITEM_NAME;
 import static seedu.address.model.util.ItemUtil.PROFILE_NAME;
@@ -26,10 +27,15 @@ public class ViewProfileCommand extends ViewCommand {
             + PROFILE_ALIAS
             + " 5";
 
+    private final String messageViewSuccess;
+    private final String messageAlreadyViewing;
     private final Index targetIndex;
 
+    /** todo javadocs */
     public ViewProfileCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
+        this.messageViewSuccess = String.format(MESSAGE_VIEW_SUCCESS, PROFILE_ITEM_NAME, targetIndex);
+        this.messageAlreadyViewing = String.format(MESSAGE_ALREADY_VIEWING, PROFILE_ITEM_NAME, targetIndex);
     }
 
     /**
@@ -49,14 +55,11 @@ public class ViewProfileCommand extends ViewCommand {
             throw new CommandException(String.format(MESSAGE_INVALID_ITEM_DISPLAYED_INDEX, PROFILE_NAME));
         }
 
-        boolean shouldSwitchTab = false;
-        if (model.getTabName() != TabName.PROFILE) {
-            model.setTabName(TabName.PROFILE);
-            shouldSwitchTab = true;
+        if (model.getTabName() == TabName.PROFILE && model.getProfileViewIndex().equals(targetIndex)) {
+            return new CommandResult(messageAlreadyViewing, false, false , false, false);
         }
-        model.setViewIndex(targetIndex);
-        String viewSuccessMessage = String.format(MESSAGE_VIEW_SUCCESS, PROFILE_NAME, targetIndex);
-        return new CommandResult(viewSuccessMessage, false, false , shouldSwitchTab, true);
+        model.setProfileViewIndex(targetIndex);
+        return getCommandResult(model, messageViewSuccess, TabName.PROFILE);
     }
 
     @Override

@@ -1,10 +1,5 @@
 package seedu.address.model.item;
 
-import static seedu.address.model.util.ItemUtil.APPLICATION_ALIAS;
-import static seedu.address.model.util.ItemUtil.COMPANY_ALIAS;
-import static seedu.address.model.util.ItemUtil.INTERNSHIP_ALIAS;
-import static seedu.address.model.util.ItemUtil.PROFILE_ALIAS;
-
 import java.util.LinkedHashMap;
 
 import seedu.address.storage.item.JsonAdaptedItem;
@@ -37,19 +32,6 @@ public abstract class Item {
      * @return Mapping of field names to fields for the item.
      */
     public abstract LinkedHashMap<String, Object> getMapping();
-
-    /**
-     * Returns true if a given string is a valid item type.
-     *
-     * @param type Input type.
-     * @return True if given string is a valid item type, false otherwise.
-     */
-    public static boolean isValidItem(String type) {
-        return type.equals(COMPANY_ALIAS)
-                || type.equals(INTERNSHIP_ALIAS)
-                || type.equals(APPLICATION_ALIAS)
-                || type.equals(PROFILE_ALIAS);
-    }
 
     /**
      * Gets the json adapted version of item.

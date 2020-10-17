@@ -24,6 +24,7 @@ import seedu.address.model.item.ItemList;
 import seedu.address.model.item.ReadOnlyItemList;
 import seedu.address.model.person.Person;
 import seedu.address.model.profile.ProfileItem;
+import seedu.address.model.util.ItemUtil;
 import seedu.address.storage.ListStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.UserPrefsStorage;
@@ -45,22 +46,23 @@ public class MainAppUtil {
      * @return initial item list.
      */
     public static <T extends Item, U extends JsonAdaptedItem> ReadOnlyItemList<T> initItemList(
-            ListStorage<T, U> itemListStorage) {
+            ListStorage<T, U> itemListStorage, String itemType) {
         Optional<ReadOnlyItemList<T>> itemListOptional;
         ReadOnlyItemList<T> initialItemListData;
         try {
             itemListOptional = itemListStorage.readItemList();
             if (itemListOptional.isEmpty()) {
-                //to do more specific logging
-                logger.info("Data file not found. Will be starting with a sample item list");
+                logger.info("Data file not found. Will be starting with a sample " + itemType + " item list");
             }
             //to do sample data
             initialItemListData = itemListOptional.orElse(new ItemList<>());
         } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty item list");
+            logger.warning("Data file not in the correct format. Will be starting with an empty "
+                    + itemType + "item list");
             initialItemListData = new ItemList<>();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty item list");
+            logger.warning("Problem while reading from the file. Will be starting with an empty "
+                    + itemType + "item list");
             initialItemListData = new ItemList<>();
         }
 
@@ -105,17 +107,18 @@ public class MainAppUtil {
      * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
      */
     public static Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
-
-        ItemList<Person> addressBook = new ItemList<>(initItemList(storage.getAddressBookStorage()));
-        ItemList<CompanyItem> companyItemList = new ItemList<>(initItemList(storage.getCompanyItemListStorage()));
+        ItemList<Person> addressBook = new ItemList<>(initItemList(storage.getAddressBookStorage(), "AB3"));
+        ItemList<CompanyItem> companyItemList = new ItemList<>(initItemList(storage.getCompanyItemListStorage(),
+                ItemUtil.COMPANY_NAME));
         ItemList<ApplicationItem> applicationItemList =
-                new ItemList<>(initItemList(storage.getApplicationItemListStorage()));
-        ItemList<ProfileItem> profileItemList = new ItemList<>(initItemList(storage.getProfileItemListStorage()));
+                new ItemList<>(initItemList(storage.getApplicationItemListStorage(), ItemUtil.APPLICATION_NAME));
+        ItemList<ProfileItem> profileItemList = new ItemList<>(initItemList(storage.getProfileItemListStorage(),
+                ItemUtil.PROFILE_ITEM_NAME));
 
         try {
             matchInternships(applicationItemList, companyItemList);
         } catch (InconsistentInternshipException e) {
-            logger.warning("Applications' internships are not matched with the ones in the companies' lists.");
+            logger.warning(e.getMessage());
         }
 
         return new ModelManager(addressBook, companyItemList, applicationItemList, profileItemList, userPrefs);

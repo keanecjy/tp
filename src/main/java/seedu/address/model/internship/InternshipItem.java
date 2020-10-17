@@ -1,6 +1,12 @@
 package seedu.address.model.internship;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.commons.util.GeneralStringUtil.COMMA_WITH_SPACE;
+import static seedu.address.commons.util.GeneralStringUtil.DASH;
+import static seedu.address.model.util.InternshipItemUtil.COMPANY_OUTPUT_NAME;
+import static seedu.address.model.util.InternshipItemUtil.PERIOD_OUTPUT_NAME;
+import static seedu.address.model.util.InternshipItemUtil.REQUIREMENTS_OUTPUT_NAME;
+import static seedu.address.model.util.InternshipItemUtil.WAGE_OUTPUT_NAME;
 import static seedu.address.model.util.ItemUtil.INTERNSHIP_NAME;
 import static seedu.address.ui.panel.PanelDisplayKeyword.COMPANY_DISPLAY_NAME;
 import static seedu.address.ui.panel.PanelDisplayKeyword.JOB_TITLE_DISPLAY_NAME;
@@ -26,15 +32,21 @@ public class InternshipItem extends Item {
 
     // Identity fields
     private CompanyName companyName;
-    private final JobTitle jobTitle;
-    private final Period period;
+    private JobTitle jobTitle;
+    private Period period;
 
     // Data fields
-    private final Wage wage;
-    private final Set<Requirement> requirements = new HashSet<>();
+    private Wage wage;
+    private Set<Requirement> requirements = new HashSet<>();
 
     /**
-     * Every field must be present and not null.
+     * Constructs an InternshipItem object. Every field must be present and not null.
+     *
+     * @param companyName Company name.
+     * @param jobTitle Job title.
+     * @param period Period.
+     * @param wage Wage.
+     * @param requirements Requirements.
      */
     public InternshipItem(CompanyName companyName, JobTitle jobTitle, Period period, Wage wage,
             Set<Requirement> requirements) {
@@ -46,38 +58,101 @@ public class InternshipItem extends Item {
         this.requirements.addAll(requirements);
     }
 
+    /**
+     * Retrieves the company name of this InternshipItem.
+     *
+     * @return Company name of this InternshipItem.
+     */
     public CompanyName getCompanyName() {
         return companyName;
     }
 
+    /**
+     * Sets the company name of this InternshipItem.
+     *
+     * @param companyName Company name to set.
+     */
     public void setCompanyName(CompanyName companyName) {
         this.companyName = companyName;
     }
 
+    /**
+     * Retrieves the job title of this InternshipItem.
+     *
+     * @return Job Title of this InternshipItem.
+     */
     public JobTitle getJobTitle() {
         return jobTitle;
     }
 
+    /**
+     * Sets the job title of this InternshipItem.
+     *
+     * @param jobTitle Job title to set.
+     */
+    public void setJobTitle(JobTitle jobTitle) {
+        this.jobTitle = jobTitle;
+    }
+
+    /**
+     * Retrieves the period of this InternshipItem.
+     *
+     * @return Period of this InternshipItem.
+     */
     public Period getPeriod() {
         return period;
     }
 
+    /**
+     * Sets the period of this InternshipItem.
+     *
+     * @param period Job title to set.
+     */
+    public void setPeriod(Period period) {
+        this.period = period;
+    }
+
+    /**
+     * Retrieves the wage of this InternshipItem.
+     *
+     * @return Wage of this InternshipItem.
+     */
     public Wage getWage() {
         return wage;
     }
 
     /**
+     * Sets the wage of this InternshipItem.
+     *
+     * @param wage Wage to set.
+     */
+    public void setWage(Wage wage) {
+        this.wage = wage;
+    }
+
+    /**
      * Returns an immutable requirement set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
+     *
+     * @return Immutable requirement set.
      */
     public Set<Requirement> getRequirements() {
         return Collections.unmodifiableSet(requirements);
     }
 
     /**
-     * Obtains the name of the item.
+     * Sets the requirements of this InternshipItem.
      *
-     * @return Item name.
+     * @param requirements Requirements to set.
+     */
+    public void setRequirements(Set<Requirement> requirements) {
+        this.requirements = requirements;
+    }
+
+    /**
+     * Obtains the name of this InternshipItem.
+     *
+     * @return InternshipItem name.
      */
     @Override
     public String getItemName() {
@@ -104,7 +179,7 @@ public class InternshipItem extends Item {
      * Returns true if both InternshipItems have the same jobTitle and period.
      * This defines a weaker notion of equality between two InternshipItems.
      *
-     * @param otherItem Other InternShipItem to compare to.
+     * @param otherItem Other InternshipItem to compare to.
      * @return True if and only if the 2 InternshipItems have the same identity fields.
      */
     @Override
@@ -126,6 +201,9 @@ public class InternshipItem extends Item {
     /**
      * Returns true if both InternshipItems have the same identity and data fields.
      * This defines a stronger notion of equality between two InternshipItems.
+     *
+     * @param other Object object to compare to.
+     * @return True if the other InternshipItem object has the same identity and data fields as this one.
      */
     @Override
     public boolean equals(Object other) {
@@ -145,31 +223,46 @@ public class InternshipItem extends Item {
                 && otherInternshipItem.getRequirements().equals(getRequirements());
     }
 
+    /**
+     * Returns the hashcode of this InternshipItem object, which is the hashcode of its fields.
+     *
+     * @return Hashcode of this InternshipItem object.
+     */
     @Override
     public int hashCode() {
-        // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(companyName, jobTitle, period, wage, requirements);
     }
 
+    /**
+     * Returns the string representation of this InternshipItem object.
+     *
+     * @return String representation of this InternshipItem object.
+     */
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getJobTitle())
-                .append(", ")
-                .append(" Company Name: ")
+                .append(COMMA_WITH_SPACE)
+                .append(COMPANY_OUTPUT_NAME)
                 .append(getCompanyName())
-                .append(", ")
-                .append(" Period: ")
+                .append(COMMA_WITH_SPACE)
+                .append(PERIOD_OUTPUT_NAME)
                 .append(getPeriod())
-                .append(", ")
-                .append(" Wage: ")
+                .append(COMMA_WITH_SPACE)
+                .append(WAGE_OUTPUT_NAME)
                 .append(getWage())
-                .append(", ")
-                .append(" Requirements: ");
-        getRequirements().forEach(builder::append);
+                .append(COMMA_WITH_SPACE)
+                .append(REQUIREMENTS_OUTPUT_NAME)
+                .append(getRequirements().isEmpty() ? DASH : getRequirements())
+                .append(System.lineSeparator());
         return builder.toString();
     }
 
+    /**
+     * Gets the json adapted version of this InternshipItem.
+     *
+     * @return Json adapted InternshipItem.
+     */
     @Override
     public JsonAdaptedInternshipItem getJsonAdaptedItem() {
         return new JsonAdaptedInternshipItem(this);

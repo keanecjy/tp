@@ -146,19 +146,51 @@ public class ModelManager implements Model {
     //=========== View Control Accessors =============================================================
 
     /**
-     * Retrieves the current index.
+     * Retrieves the current index of company view.
      */
     @Override
-    public Index getViewIndex() {
-        return viewControl.getViewIndex();
+    public Index getCompanyViewIndex() {
+        return viewControl.getCompanyViewIndex();
     }
 
     /**
-     * Sets the current index with {@code index}.
+     * Retrieves the current index of application view.
      */
     @Override
-    public void setViewIndex(Index index) {
-        viewControl.setViewIndex(index);
+    public Index getApplicationViewIndex() {
+        return viewControl.getApplicationViewIndex();
+    }
+
+    /**
+     * Retrieves the current index of profile view.
+     */
+    @Override
+    public Index getProfileViewIndex() {
+        return viewControl.getProfileViewIndex();
+    }
+
+    /**
+     * Sets the current company view index with {@code index}.
+     */
+    @Override
+    public void setCompanyViewIndex(Index index) {
+        viewControl.setCompanyViewIndex(index);
+    }
+
+    /**
+     * Sets the current application view index with {@code index}.
+     */
+    @Override
+    public void setApplicationViewIndex(Index index) {
+        viewControl.setApplicationViewIndex(index);
+    }
+
+    /**
+     * Sets the current profile view index with {@code index}.
+     */
+    @Override
+    public void setProfileViewIndex(Index index) {
+        viewControl.setProfileViewIndex(index);
     }
 
     @Override
@@ -179,6 +211,8 @@ public class ModelManager implements Model {
                 && companyList.equals(other.companyList)
                 && applicationList.equals(other.applicationList)
                 && profileList.equals(other.profileList)
-                && userPrefs.equals(other.userPrefs);
+                && userPrefs.equals(other.userPrefs)
+                && tabControl.equals(other.tabControl)
+                && viewControl.equals(other.viewControl);
     }
 }

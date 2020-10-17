@@ -36,14 +36,14 @@ public class ProfileDisplay extends InformationDisplay<ProfileItem> {
      * todo Javadocs
      */
     private void initializeProfileDisplayGui() {
-        setInformationTitle();
-        setAllInformation();
+        setDisplayName();
+        setProfileInformation();
     }
 
     /**
      * todo Javadocs
      */
-    private void setInformationTitle() {
+    private void setDisplayName() {
         Object jobTitle = mapping.get(TITLE_DISPLAY_NAME);
         setInformationTitle(jobTitle.toString());
     }
@@ -51,7 +51,7 @@ public class ProfileDisplay extends InformationDisplay<ProfileItem> {
     /**
      * todo javadocs
      */
-    private void setAllInformation() {
+    private void setProfileInformation() {
         Predicate<String> isDescriptors = key -> key.equals(DESCRIPTORS_DISPLAY_NAME);
         Function<String, String> editString = string -> string.substring(1, string.length() - 1).replaceAll(", ", "\n");
         setInformation(editString, isDescriptors, TabName.PROFILE, PROFILE_DISPLAY_KEY_LIST);

@@ -38,6 +38,7 @@ public class DeleteCompanyCommand extends DeleteCommandAbstract {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         CompanyItem companyToDelete = getCompany(model, targetIndex);
+        TabName currentTabName = model.getTabName();
 
         // Delete all internships in the company
         deleteAllInternshipsInCompany(model, companyToDelete);
@@ -45,8 +46,8 @@ public class DeleteCompanyCommand extends DeleteCommandAbstract {
         // Delete the company
         model.getCompanyList().deleteItem(companyToDelete);
 
-        String message = String.format(MESSAGE_DELETED_ITEM, COMPANY_NAME, companyToDelete);
-        return getCommandResult(model, message, TabName.COMPANY);
+        String deleteSuccessMessage = String.format(MESSAGE_DELETED_ITEM, COMPANY_NAME, companyToDelete);
+        return getCommandResult(model, deleteSuccessMessage, currentTabName, TabName.COMPANY, targetIndex);
     }
 
     private void deleteAllInternshipsInCompany(Model model, CompanyItem company) throws CommandException {

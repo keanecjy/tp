@@ -28,7 +28,7 @@ public class InternshipParserUtil {
     public static JobTitle parseJobTitle(String title) throws ParseException {
         requireNonNull(title);
         String trimmedTitle = title.trim();
-        if (!JobTitle.isValidAlphaNumericWord(trimmedTitle)) {
+        if (!JobTitle.isValidJobTitle(trimmedTitle)) {
             throw new ParseException(JobTitle.MESSAGE_CONSTRAINTS);
         }
         return new JobTitle(trimmedTitle);
@@ -43,7 +43,7 @@ public class InternshipParserUtil {
     public static Period parsePeriod(String period) throws ParseException {
         requireNonNull(period);
         String trimmedPeriod = period.trim();
-        if (!Period.isValidNonEmptyString(trimmedPeriod)) {
+        if (!Period.isValidPeriod(trimmedPeriod)) {
             throw new ParseException(Period.MESSAGE_CONSTRAINTS);
         }
         return new Period(trimmedPeriod);
@@ -58,7 +58,7 @@ public class InternshipParserUtil {
     public static Wage parseWage(String wage) throws ParseException {
         requireNonNull(wage);
         String trimmedWage = wage.trim();
-        if (!Wage.isValidPositiveNumber(trimmedWage)) {
+        if (!Wage.isValidWage(trimmedWage)) {
             throw new ParseException(Wage.MESSAGE_CONSTRAINTS);
         }
         return new Wage(trimmedWage);
@@ -73,7 +73,7 @@ public class InternshipParserUtil {
     public static Requirement parseRequirement(String requirement) throws ParseException {
         requireNonNull(requirement);
         String trimmedRequirement = requirement.trim();
-        if (!Requirement.isValidNonEmptyString(trimmedRequirement)) {
+        if (!Requirement.isValidRequirement(trimmedRequirement)) {
             throw new ParseException(Requirement.MESSAGE_CONSTRAINTS);
         }
         return new Requirement(trimmedRequirement);

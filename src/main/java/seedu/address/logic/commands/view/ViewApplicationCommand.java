@@ -3,6 +3,7 @@ package seedu.address.logic.commands.view;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_ITEM_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_VIEW_SUCCESS;
+import static seedu.address.logic.commands.util.CommandUtil.getCommandResult;
 import static seedu.address.model.util.ItemUtil.APPLICATION_ALIAS;
 import static seedu.address.model.util.ItemUtil.APPLICATION_NAME;
 
@@ -25,10 +26,15 @@ public class ViewApplicationCommand extends ViewCommand {
             + APPLICATION_ALIAS
             + " 2";
 
+    private final String messageViewSuccess;
+    private final String messageAlreadyViewing;
     private final Index targetIndex;
 
+    /** todo javadocs */
     public ViewApplicationCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
+        this.messageViewSuccess = String.format(MESSAGE_VIEW_SUCCESS, APPLICATION_NAME, targetIndex);
+        this.messageAlreadyViewing = String.format(MESSAGE_ALREADY_VIEWING, APPLICATION_NAME, targetIndex);
     }
 
     /**
@@ -48,14 +54,11 @@ public class ViewApplicationCommand extends ViewCommand {
             throw new CommandException(String.format(MESSAGE_INVALID_ITEM_DISPLAYED_INDEX, APPLICATION_NAME));
         }
 
-        boolean shouldSwitchTab = false;
-        if (model.getTabName() != TabName.APPLICATION) {
-            model.setTabName(TabName.APPLICATION);
-            shouldSwitchTab = true;
+        if (model.getTabName() == TabName.APPLICATION && model.getApplicationViewIndex().equals(targetIndex)) {
+            return new CommandResult(messageAlreadyViewing, false, false , false, false);
         }
-        model.setViewIndex(targetIndex);
-        String viewSuccessMessage = String.format(MESSAGE_VIEW_SUCCESS, APPLICATION_NAME, targetIndex);
-        return new CommandResult(viewSuccessMessage, false, false , shouldSwitchTab, true);
+        model.setApplicationViewIndex(targetIndex);
+        return getCommandResult(model, messageViewSuccess, TabName.APPLICATION);
     }
 
     @Override

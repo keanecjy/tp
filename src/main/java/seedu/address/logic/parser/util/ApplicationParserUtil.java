@@ -9,7 +9,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.application.Status;
 import seedu.address.model.application.StatusDate;
 import seedu.address.model.util.DateUtil;
-import seedu.address.model.util.StatusUtil;
 
 /**
  * ApplicationParserUtil class which parses all the fields in an ApplicationItem.
@@ -29,7 +28,7 @@ public class ApplicationParserUtil {
         if (!Status.isValidStatus(trimmedStatus)) {
             throw new ParseException(Status.MESSAGE_CONSTRAINTS);
         }
-        return StatusUtil.convertToStatus(trimmedStatus);
+        return Status.valueOf(trimmedStatus.toUpperCase());
     }
 
     /**

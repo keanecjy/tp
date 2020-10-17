@@ -7,7 +7,9 @@ import seedu.address.model.item.Item;
  * identity).
  */
 public class DuplicateItemException extends RuntimeException {
+
     public DuplicateItemException(Item item) {
         super(String.format("Operation would result in duplicate %s items", item.getItemName()));
     }
+
 }

@@ -28,4 +28,5 @@ public abstract class ViewCommand extends Command {
             + "Example: "
             + COMMAND_WORD + " " + COMPANY_ALIAS + " 3\n";
 
+    public static final String MESSAGE_ALREADY_VIEWING = "Already viewing %1$s %2$s";
 }

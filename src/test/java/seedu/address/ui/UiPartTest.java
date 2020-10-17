@@ -75,6 +75,17 @@ public class UiPartTest {
         assertThrows(AssertionError.class, () -> new TestUiPart<Object>(INVALID_FILE_PATH, new Object()));
     }
 
+    @Test
+    public void constructor_validFileString_loadsFile() {
+        assertEquals(VALID_FILE_ROOT, new TestUiPart<TestFxmlObject>(VALID_FILE_PATH).getRoot());
+    }
+
+    @Test
+    public void constructor_validFileWithFxRootString_loadsFile() {
+        TestFxmlObject root = new TestFxmlObject();
+        assertEquals(VALID_FILE_ROOT, new TestUiPart<TestFxmlObject>(VALID_FILE_WITH_FX_ROOT_PATH, root).getRoot());
+    }
+
     private URL getTestFileUrl(String testFilePath) {
         String testFilePathInView = "/view/" + testFilePath;
         URL testFileUrl = MainApp.class.getResource(testFilePathInView);

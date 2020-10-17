@@ -6,6 +6,8 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.commands.util.CommandUtil.getCommandResult;
 import static seedu.address.logic.commands.util.CommandUtil.getCompany;
 import static seedu.address.logic.parser.clisyntax.ItemCliSyntax.PREFIX_INDEX;
+import static seedu.address.model.util.ItemUtil.APPLICATION_NAME;
+import static seedu.address.model.util.ItemUtil.COMPANY_NAME;
 import static seedu.address.model.util.ItemUtil.INTERNSHIP_ALIAS;
 import static seedu.address.model.util.ItemUtil.INTERNSHIP_NAME;
 
@@ -23,13 +25,14 @@ import seedu.address.ui.tabs.TabName;
  */
 public class DeleteInternshipCommand extends DeleteCommandAbstract {
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + " " + INTERNSHIP_ALIAS
-            + ": Deletes the internship identified by the index number used in the displayed internship list in a "
-            + "company.\n"
-            + "The application (if any) made with this internship will also be deleted.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Deletes the " + INTERNSHIP_NAME + " identified by the index number used in the displayed "
+            + INTERNSHIP_NAME + " list in a " + COMPANY_NAME + ".\n"
+            + "The " + APPLICATION_NAME + " (if any) made with this " + INTERNSHIP_NAME + " will also be deleted.\n"
+
             + "Parameters: INDEX " + PREFIX_INDEX + "INDEX\n"
-            + "Note: Select a company with the first INDEX and an internship within that company with the "
-            + "second INDEX. "
+            + "Note: Select a " + COMPANY_NAME + " with the first INDEX and an " + INTERNSHIP_NAME + " within that "
+            + COMPANY_NAME + " with the second INDEX. "
             + "INDEX must be a positive integer.\n"
             + "Example: " + COMMAND_WORD + " " + INTERNSHIP_ALIAS + " 1 " + PREFIX_INDEX + "2";
 

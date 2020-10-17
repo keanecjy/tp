@@ -2,7 +2,6 @@ package seedu.address.ui.tabs;
 
 import java.io.IOException;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -10,7 +9,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import seedu.address.logic.Logic;
 import seedu.address.ui.MainWindow;
 
@@ -53,16 +51,14 @@ public class Tabs extends VBox {
     @FXML
     private ImageView profileIcon;
 
-    private Stage stage;
     private MainWindow mainWindow;
     private Logic logic;
 
     /**
      * Constructs the {@code Tabs} in the given {@code primaryStage} of the {@code mainWindow}.
      */
-    private Tabs(MainWindow mainWindow, Stage primaryStage, Logic logic) {
+    private Tabs(MainWindow mainWindow, Logic logic) {
         try {
-            stage = primaryStage;
             this.mainWindow = mainWindow;
             this.logic = logic;
 
@@ -83,43 +79,23 @@ public class Tabs extends VBox {
     /**
      * Creates the {@code Tabs} information in the {@code primaryStage} of the {@code mainWindow}.
      */
-    public static Tabs getTabs(MainWindow mainWindow, Stage primaryStage, Logic logic) {
-        return new Tabs(mainWindow, primaryStage, logic);
-    }
-
-    /**
-     * Handles the click {@code event} on the tabs.
-     */
-    @FXML
-    public void handleClick(ActionEvent event) {
-        if (event.getSource() == applicationButton) {
-            selectApplication(stage);
-            logic.setTabName(TabName.APPLICATION);
-        } else if (event.getSource() == companyButton) {
-            selectCompany(stage);
-            logic.setTabName(TabName.COMPANY);
-        } else if (event.getSource() == profileButton) {
-            selectProfile(stage);
-            logic.setTabName(TabName.PROFILE);
-        } else {
-            assert false : "Invalid button";
-        }
+    public static Tabs getTabs(MainWindow mainWindow, Logic logic) {
+        return new Tabs(mainWindow, logic);
     }
 
     /**
      * Switch tabs.
      */
-    public void switchTab() {
-        TabName tabName = logic.getTabName();
+    public void switchTab(TabName tabName) {
         switch (tabName) {
         case COMPANY:
-            selectCompany(stage);
+            selectCompany();
             break;
         case APPLICATION:
-            selectApplication(stage);
+            selectApplication();
             break;
         case PROFILE:
-            selectProfile(stage);
+            selectProfile();
             break;
         default:
             assert false;
@@ -144,42 +120,33 @@ public class Tabs extends VBox {
      * Sets the display and tab to be of {@code application} in the {@code stage}
      * Currently it only switches the information display.
      */
-    public void selectApplication(Stage stage) {
+    private void selectApplication() {
         // adjust tab bar position
         setColor(application, APPLICATION_Y_TRANSLATE);
         setTransparent(company, COMPANY_Y_TRANSLATE);
         setTransparent(profile, PROFILE_Y_TRANSLATE);
-
-        // adjust the display of the gui
-        mainWindow.changeTabView(TabName.APPLICATION, stage);
     }
 
     /**
      * Sets the display and tab to be of {@code company} in the {@code stage}
      * Currently it only switches the information display.
      */
-    public void selectCompany(Stage stage) {
+    private void selectCompany() {
         // adjust tab bar position
         setTransparent(application, APPLICATION_Y_TRANSLATE);
         setColor(company, COMPANY_Y_TRANSLATE);
         setTransparent(profile, PROFILE_Y_TRANSLATE);
-
-        // adjust the display of the gui
-        mainWindow.changeTabView(TabName.COMPANY, stage);
     }
 
     /**
      * Sets the display and tab to be of {@code profile} in the {@code stage}
      * Currently it only switches the information display.
      */
-    public void selectProfile(Stage stage) {
+    private void selectProfile() {
         // adjust tab bar position
         setTransparent(application, APPLICATION_Y_TRANSLATE);
         setTransparent(company, COMPANY_Y_TRANSLATE);
         setColor(profile, PROFILE_Y_TRANSLATE);
-
-        // adjust the display of the gui
-        mainWindow.changeTabView(TabName.PROFILE, stage);
     }
 
     /**

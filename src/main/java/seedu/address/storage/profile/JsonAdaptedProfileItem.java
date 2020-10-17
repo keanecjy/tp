@@ -39,7 +39,7 @@ public class JsonAdaptedProfileItem extends JsonAdaptedItem {
      * Converts a given {@code ProfileItem} into this class for Jackson use.
      */
     public JsonAdaptedProfileItem(ProfileItem source) {
-        title = source.getTitle().value;
+        title = source.getTitle().getValue();
         profileType = source.getCategory().toString();
         descriptors.addAll(source.getDescriptors().stream()
                 .map(JsonAdaptedDescriptor::new)

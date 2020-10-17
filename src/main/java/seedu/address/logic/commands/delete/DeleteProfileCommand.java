@@ -36,6 +36,7 @@ public class DeleteProfileCommand extends DeleteCommandAbstract {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        TabName currentTabName = model.getTabName();
         List<ProfileItem> lastShownList = model.getProfileList().getFilteredItemList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
@@ -45,8 +46,8 @@ public class DeleteProfileCommand extends DeleteCommandAbstract {
         ProfileItem profileToDelete = lastShownList.get(targetIndex.getZeroBased());
         model.getProfileList().deleteItem(profileToDelete);
 
-        return getCommandResult(model, String.format(Messages.MESSAGE_DELETED_ITEM,
-            PROFILE_NAME, profileToDelete), TabName.PROFILE);
+        String deleteSuccessMessage = String.format(Messages.MESSAGE_DELETED_ITEM, PROFILE_NAME, profileToDelete);
+        return getCommandResult(model, deleteSuccessMessage, currentTabName, TabName.PROFILE, targetIndex);
     }
 
     @Override

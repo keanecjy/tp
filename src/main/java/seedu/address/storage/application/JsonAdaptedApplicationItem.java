@@ -9,7 +9,6 @@ import seedu.address.model.application.Status;
 import seedu.address.model.application.StatusDate;
 import seedu.address.model.internship.InternshipItem;
 import seedu.address.model.util.DateUtil;
-import seedu.address.model.util.StatusUtil;
 import seedu.address.storage.internship.JsonAdaptedInternshipItem;
 import seedu.address.storage.item.JsonAdaptedItem;
 
@@ -53,6 +52,11 @@ public class JsonAdaptedApplicationItem extends JsonAdaptedItem {
     @Override
     public ApplicationItem toModelType() throws IllegalValueException {
 
+        if (internshipItem == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    InternshipItem.class.getSimpleName()));
+        }
+
         final InternshipItem itemInternship = internshipItem.toModelType();
 
         if (status == null) {
@@ -62,8 +66,7 @@ public class JsonAdaptedApplicationItem extends JsonAdaptedItem {
         if (!Status.isValidStatus(status)) {
             throw new IllegalValueException(Status.MESSAGE_CONSTRAINTS);
         }
-
-        final Status itemStatus = StatusUtil.convertToStatus(status);
+        final Status itemStatus = Status.valueOf(status.toUpperCase());
 
         if (statusDate == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,

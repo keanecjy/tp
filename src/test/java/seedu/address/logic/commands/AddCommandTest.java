@@ -139,15 +139,34 @@ public class AddCommandTest {
         }
 
         @Override
-        public void setViewIndex(Index index) {
+        public void setCompanyViewIndex(Index index) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public Index getViewIndex() {
+        public void setProfileViewIndex(Index index) {
             throw new AssertionError("This method should not be called.");
         }
 
+        @Override
+        public void setApplicationViewIndex(Index index) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Index getCompanyViewIndex() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Index getApplicationViewIndex() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Index getProfileViewIndex() {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**

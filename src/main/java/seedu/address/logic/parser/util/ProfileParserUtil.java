@@ -46,13 +46,12 @@ public class ProfileParserUtil {
     public static ProfileItemCategory parseCategory(String category) throws ParseException {
         requireNonNull(category);
         String trimmedCategory = category.trim();
-        String trimmedLowerCaseCategory = trimmedCategory.toLowerCase();
 
-        if (!ProfileItemCategory.isValidProfileItemCategory(trimmedLowerCaseCategory)) {
+        if (!ProfileItemCategory.isValidProfileItemCategory(trimmedCategory.toUpperCase())) {
             throw new ParseException(ProfileItemCategory.MESSAGE_CONSTRAINTS);
         }
 
-        switch (trimmedLowerCaseCategory) {
+        switch (trimmedCategory.toLowerCase()) {
         case ACHIEVEMENT_KEYWORD:
             return ProfileItemCategory.ACHIEVEMENT;
         case EXPERIENCE_KEYWORD:

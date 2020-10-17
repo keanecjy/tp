@@ -10,8 +10,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
   */
 public class Descriptor {
     public static final String MESSAGE_CONSTRAINTS = "descriptors should be alphanumeric,"
-        + "punctuations limited to .,?!:;+# and non-empty";
-    public static final String VALIDATION_REGEX = "^[A-Za-z0-9 .,!?:;+#]*+$";
+        + "punctuations limited to .,?!:;+#% and non-empty";
+    public static final String VALIDATION_REGEX = "^[A-Za-z0-9 .,!?:;+#%]+$";
 
     public final String descriptor;
 
@@ -49,6 +49,6 @@ public class Descriptor {
      * Format descriptor as text for viewing.
      */
     public String toString() {
-        return "\u2022 " + descriptor;
+        return descriptor;
     }
 }

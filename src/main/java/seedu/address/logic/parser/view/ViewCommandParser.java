@@ -1,8 +1,10 @@
 package seedu.address.logic.parser.view;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_ITEM_TYPE;
 import static seedu.address.logic.parser.util.GeneralParserUtil.getCommandDetails;
 import static seedu.address.logic.parser.util.GeneralParserUtil.getItemType;
+import static seedu.address.logic.parser.util.GeneralParserUtil.isValidItemType;
 import static seedu.address.model.util.ItemUtil.APPLICATION_ALIAS;
 import static seedu.address.model.util.ItemUtil.COMPANY_ALIAS;
 import static seedu.address.model.util.ItemUtil.PROFILE_ALIAS;
@@ -20,8 +22,6 @@ import seedu.address.logic.parser.util.GeneralParserUtil;
  * Parses input arguments and creates a new ViewCommand object
  */
 public class ViewCommandParser implements Parser<ViewCommand> {
-
-    private static final String MESSAGE_INVALID_ITEM_TYPE = "Item type has to be either 'com', 'app' or 'me'";
 
     /**
      * Parses the given {@code String} of arguments in the context of the ViewCommand
@@ -50,14 +50,6 @@ public class ViewCommandParser implements Parser<ViewCommand> {
 
         default:
             // Invalid item type
-            throw new ParseException(MESSAGE_INVALID_ITEM_TYPE);
-        }
-    }
-
-    private void isValidItemType(String itemType) throws ParseException {
-        if (!itemType.equals(COMPANY_ALIAS)
-                && !itemType.equals(APPLICATION_ALIAS)
-                && !itemType.equals(PROFILE_ALIAS)) {
             throw new ParseException(MESSAGE_INVALID_ITEM_TYPE);
         }
     }

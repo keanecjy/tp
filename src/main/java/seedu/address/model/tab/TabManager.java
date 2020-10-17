@@ -30,4 +30,18 @@ public class TabManager implements Tab {
         this.tabName = tabName;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(obj instanceof TabManager)) {
+            return false;
+        }
+
+        TabManager other = (TabManager) obj;
+        return tabName.equals(other.tabName);
+    }
 }

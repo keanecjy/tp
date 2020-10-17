@@ -37,10 +37,11 @@ public class DeleteApplicationCommand extends DeleteCommandAbstract {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        TabName currentTabName = model.getTabName();
         ApplicationItem applicationToDelete = getApplication(model, targetIndex);
         model.getApplicationList().deleteItem(applicationToDelete);
         String deleteSuccessMessage = String.format(MESSAGE_DELETED_ITEM, APPLICATION_NAME, applicationToDelete);
-        return getCommandResult(model, deleteSuccessMessage, TabName.APPLICATION);
+        return getCommandResult(model, deleteSuccessMessage, currentTabName, TabName.APPLICATION, targetIndex);
     }
 
     @Override

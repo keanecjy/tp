@@ -72,12 +72,32 @@ public interface Logic {
     void setTabName(TabName tabName);
 
     /**
-     * Returns the current view Index.
+     * Returns the current company view Index.
      */
-    Index getViewIndex();
+    Index getCompanyViewIndex();
 
     /**
-     * Sets the current index to {@code index}.
+     * Returns the current application view Index.
      */
-    void setViewIndex(Index index);
+    Index getApplicationViewIndex();
+
+    /**
+     * Returns the current profile view Index.
+     */
+    Index getProfileViewIndex();
+
+    /**
+     * Sets the current company view index to {@code index}.
+     */
+    void setCompanyViewIndex(Index index);
+
+    /**
+     * Sets the current application view index to {@code index}.
+     */
+    void setApplicationViewIndex(Index index);
+
+    /**
+     * Sets the current profile view index to {@code index}.
+     */
+    void setProfileViewIndex(Index index);
 }

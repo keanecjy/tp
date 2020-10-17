@@ -2,6 +2,9 @@ package seedu.address.model.application;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.commons.util.GeneralStringUtil.COMMA_WITH_SPACE;
+import static seedu.address.model.util.ApplicationItemUtil.DATE_OUTPUT_NAME;
+import static seedu.address.model.util.ApplicationItemUtil.STATUS_OUTPUT_NAME;
 import static seedu.address.model.util.ItemUtil.APPLICATION_NAME;
 import static seedu.address.ui.panel.PanelDisplayKeyword.DATE_DISPLAY_NAME;
 import static seedu.address.ui.panel.PanelDisplayKeyword.STATUS_DISPLAY_NAME;
@@ -30,6 +33,9 @@ public class ApplicationItem extends Item {
 
     /**
      * Every field must be present and not null.
+     * @param internshipItem Internship item.
+     * @param status Status.
+     * @param statusDate Status date.
      */
     public ApplicationItem(InternshipItem internshipItem, Status status, StatusDate statusDate) {
         requireAllNonNull(internshipItem, status, statusDate);
@@ -40,7 +46,7 @@ public class ApplicationItem extends Item {
 
     /**
      * Creates an application item using the internship item.
-     * Method is used to match internships with their application.
+     * Constructor is used to match internships with their application.
      *
      * @param internshipItem Internship item.
      */
@@ -51,22 +57,37 @@ public class ApplicationItem extends Item {
         this.statusDate = new StatusDate(LocalDateTime.now());
     }
 
+    /**
+     * Retrieves the InternshipItem of this ApplicationItem.
+     *
+     * @return InternshipItem of this ApplicationItem.
+     */
     public InternshipItem getInternshipItem() {
         return internshipItem;
     }
 
+    /**
+     * Retrieves the status of this ApplicationItem.
+     *
+     * @return Status of this ApplicationItem.
+     */
     public Status getStatus() {
         return status;
     }
 
+    /**
+     * Retrieves the status date of this ApplicationItem.
+     *
+     * @return Status date of this ApplicationItem.
+     */
     public StatusDate getStatusDate() {
         return statusDate;
     }
 
     /**
-     * Obtains the name of the item.
+     * Obtains the name of the ApplicationItem.
      *
-     * @return Item name.
+     * @return ApplicationItem name.
      */
     @Override
     public String getItemName() {
@@ -110,8 +131,11 @@ public class ApplicationItem extends Item {
     }
 
     /**
-     * Returns true if both Applications have the same data fields.
+     * Returns true if both ApplicationItems have the same data fields.
      * This defines a stronger notion of equality between two ApplicationItem objects.
+     *
+     * @param other Object object to compare to.
+     * @return True if the other ApplicationItem object has the same identity and data fields as this one.
      */
     @Override
     public boolean equals(Object other) {
@@ -129,25 +153,38 @@ public class ApplicationItem extends Item {
                 && otherApplication.getStatusDate().equals(getStatusDate());
     }
 
+    /**
+     * Returns the hashcode of this ApplicationItem object, which is the hashcode of its fields.
+     *
+     * @return Hashcode of this ApplicationItem object.
+     */
     @Override
     public int hashCode() {
-        // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(internshipItem, status, statusDate);
     }
 
+    /**
+     * Returns the string representation of this ApplicationItem object.
+     *
+     * @return String representation of this ApplicationItem object.
+     */
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getInternshipItem())
-                .append(", ")
-                .append(" Status: ")
+                .append(STATUS_OUTPUT_NAME)
                 .append(getStatus())
-                .append(", ")
-                .append(" Date: ")
+                .append(COMMA_WITH_SPACE)
+                .append(DATE_OUTPUT_NAME)
                 .append(getStatusDate());
         return builder.toString();
     }
 
+    /**
+     * Gets the json adapted version of this ApplicationItem.
+     *
+     * @return Json adapted ApplicationItem.
+     */
     @Override
     public JsonAdaptedItem getJsonAdaptedItem() {
         return new JsonAdaptedApplicationItem(this);

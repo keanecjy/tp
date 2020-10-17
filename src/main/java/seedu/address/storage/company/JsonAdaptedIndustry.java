@@ -24,7 +24,7 @@ class JsonAdaptedIndustry {
      * Converts a given {@code Industry} into this class for Jackson use.
      */
     public JsonAdaptedIndustry(Industry source) {
-        industryType = source.value;
+        industryType = source.getValue();
     }
 
     @JsonValue

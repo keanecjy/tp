@@ -37,14 +37,14 @@ public class CompanyDisplay extends InformationDisplay<CompanyItem> {
      * todo Javadocs
      */
     private void initializeCompanyDisplayGui() {
-        setInformationTitle();
-        setInformation();
+        setCompanyName();
+        setCompanyInformation();
     }
 
     /**
      * todo Javadocs
      */
-    private void setInformationTitle() {
+    private void setCompanyName() {
         Object jobTitle = mapping.get(COMPANY_DISPLAY_NAME);
         setInformationTitle(jobTitle.toString());
     }
@@ -52,7 +52,7 @@ public class CompanyDisplay extends InformationDisplay<CompanyItem> {
     /**
      * todo javadocs
      */
-    private void setInformation() {
+    private void setCompanyInformation() {
         Predicate<String> isIndustriesOrInternship = key -> key.equals(INDUSTRIES_DISPLAY_NAME)
             || key.equals(INTERNSHIPS_DISPLAY_NAME);
         Function<String, String> editString = string -> string.substring(1, string.length() - 1);

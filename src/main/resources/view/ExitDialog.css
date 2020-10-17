@@ -1,0 +1,23 @@
+#yesButton{
+    -fx-background-color: #363f80;
+}
+
+#yesButton:hover{
+    -fx-background-color: #5B6297;
+}
+
+#yesButton:focused{
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 0.0);
+}
+
+#noButton{
+    -fx-background-color: #8E8FB5;
+}
+
+#noButton:hover{
+    -fx-background-color: #ADAEC9;
+}
+
+#noButton:focused{
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 0.0);
+}

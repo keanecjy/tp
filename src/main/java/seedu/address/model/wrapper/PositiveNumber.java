@@ -4,14 +4,14 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a positive number object.
+ * Represents a positive number object. TODO: Possibly remove in the future
  * Guarantees: immutable; is valid as declared in {@link #isValidPositiveNumber(String)}
  */
-public class PositiveNumber {
+public abstract class PositiveNumber {
 
     public static final String VALIDATION_REGEX = "^[1-9]\\d*";
 
-    public final String value;
+    private final String value;
 
     /**
      * Constructs a {@code PositiveNumber}.
@@ -30,6 +30,10 @@ public class PositiveNumber {
      */
     public static boolean isValidPositiveNumber(String test) {
         return test.matches(VALIDATION_REGEX);
+    }
+
+    public String getValue() {
+        return value;
     }
 
     @Override

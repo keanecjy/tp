@@ -3,6 +3,7 @@ package seedu.address.logic.commands.view;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_ITEM_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_VIEW_SUCCESS;
+import static seedu.address.logic.commands.util.CommandUtil.getCommandResult;
 import static seedu.address.model.util.ItemUtil.COMPANY_ALIAS;
 import static seedu.address.model.util.ItemUtil.COMPANY_NAME;
 
@@ -25,10 +26,15 @@ public class ViewCompanyCommand extends ViewCommand {
             + COMPANY_ALIAS
             + " 3";
 
+    private final String messageViewSuccess;
+    private final String messageAlreadyViewing;
     private final Index targetIndex;
 
+    /** todo javadocs (shawn) */
     public ViewCompanyCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
+        this.messageViewSuccess = String.format(MESSAGE_VIEW_SUCCESS, COMPANY_NAME, targetIndex);
+        this.messageAlreadyViewing = String.format(MESSAGE_ALREADY_VIEWING, COMPANY_NAME, targetIndex);
     }
 
     /**
@@ -48,14 +54,11 @@ public class ViewCompanyCommand extends ViewCommand {
             throw new CommandException(String.format(MESSAGE_INVALID_ITEM_DISPLAYED_INDEX, COMPANY_NAME));
         }
 
-        boolean shouldSwitchTab = false;
-        if (model.getTabName() != TabName.COMPANY) {
-            model.setTabName(TabName.COMPANY);
-            shouldSwitchTab = true;
+        if (model.getTabName() == TabName.COMPANY && model.getCompanyViewIndex().equals(targetIndex)) {
+            return new CommandResult(messageAlreadyViewing, false, false , false, false);
         }
-        model.setViewIndex(targetIndex);
-        String viewSuccessMessage = String.format(MESSAGE_VIEW_SUCCESS, COMPANY_NAME, targetIndex);
-        return new CommandResult(viewSuccessMessage, false, false , shouldSwitchTab, true);
+        model.setCompanyViewIndex(targetIndex);
+        return getCommandResult(model, messageViewSuccess, TabName.COMPANY);
     }
 
     @Override

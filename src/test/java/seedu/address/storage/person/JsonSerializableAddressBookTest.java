@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.address.storage.person;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.address.testutil.Assert.assertThrows;
@@ -12,7 +12,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.JsonUtil;
 import seedu.address.model.item.ItemList;
 import seedu.address.model.person.Person;
-import seedu.address.storage.person.JsonAdaptedPerson;
+import seedu.address.storage.JsonSerializableItemList;
 import seedu.address.testutil.TypicalPersons;
 
 public class JsonSerializableAddressBookTest {

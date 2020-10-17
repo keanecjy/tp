@@ -21,7 +21,7 @@ public class AddCommandParserWrapper implements Parser<AddCommandAbstract> {
      * Parses the given {@code String} of arguments for the item type
      * and returns an AddCommand object for execution.
      *
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not conformClear the expected format
      */
     public AddCommandAbstract parse(String args) throws ParseException {
         String itemType = getItemType(args, AddCommandAbstract.MESSAGE_USAGE);

@@ -39,17 +39,19 @@ public class JsonAdaptedInternshipItem extends JsonAdaptedItem {
         this.jobTitle = jobTitle;
         this.period = period;
         this.wage = wage;
-        this.requirements.addAll(requirements);
+        if (requirements != null) {
+            this.requirements.addAll(requirements);
+        }
     }
 
     /**
      * Converts a given {@code InternshipItem} into this class for Jackson use.
      */
     public JsonAdaptedInternshipItem(InternshipItem source) {
-        companyName = source.getCompanyName().value;
-        jobTitle = source.getJobTitle().value;
-        period = source.getPeriod().value;
-        wage = source.getWage().value;
+        companyName = source.getCompanyName().getValue();
+        jobTitle = source.getJobTitle().getValue();
+        period = source.getPeriod().getValue();
+        wage = source.getWage().getValue();
         requirements.addAll(source.getRequirements().stream()
                 .map(JsonAdaptedRequirement::new)
                 .collect(Collectors.toList()));
@@ -76,7 +78,7 @@ public class JsonAdaptedInternshipItem extends JsonAdaptedItem {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     JobTitle.class.getSimpleName()));
         }
-        if (!JobTitle.isValidAlphaNumericWord(jobTitle)) {
+        if (!JobTitle.isValidJobTitle(jobTitle)) {
             throw new IllegalValueException(JobTitle.MESSAGE_CONSTRAINTS);
         }
         final JobTitle itemJobTitle = new JobTitle(jobTitle);
@@ -85,7 +87,7 @@ public class JsonAdaptedInternshipItem extends JsonAdaptedItem {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Period.class.getSimpleName()));
         }
-        if (!Period.isValidNonEmptyString(period)) {
+        if (!Period.isValidPeriod(period)) {
             throw new IllegalValueException(Period.MESSAGE_CONSTRAINTS);
         }
         final Period itemPeriod = new Period(period);
@@ -93,7 +95,7 @@ public class JsonAdaptedInternshipItem extends JsonAdaptedItem {
         if (wage == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Wage.class.getSimpleName()));
         }
-        if (!Wage.isValidPositiveNumber(wage)) {
+        if (!Wage.isValidWage(wage)) {
             throw new IllegalValueException(Wage.MESSAGE_CONSTRAINTS);
         }
         final Wage itemWage = new Wage(wage);

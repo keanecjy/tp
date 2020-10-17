@@ -76,12 +76,32 @@ public interface Model {
     TabName getTabName();
 
     /**
-     * Replaces the current index with {@code index}.
+     * Replaces the current company view index with {@code index}.
      */
-    void setViewIndex(Index index);
+    void setCompanyViewIndex(Index index);
 
     /**
-     * Retrieves the current view Index.
+     * Replaces the current application view index with {@code index}.
      */
-    Index getViewIndex();
+    void setApplicationViewIndex(Index index);
+
+    /**
+     * Replaces the current profile view index with {@code index}.
+     */
+    void setProfileViewIndex(Index index);
+
+    /**
+     * Retrieves the current company view Index.
+     */
+    Index getCompanyViewIndex();
+
+    /**
+     * Retrieves the current application view Index.
+     */
+    Index getApplicationViewIndex();
+
+    /**
+     * Retrieves the current profile view Index.
+     */
+    Index getProfileViewIndex();
 }

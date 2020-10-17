@@ -171,17 +171,25 @@
     -fx-alignment: baseline-center;
 }
 
-.information_display > .viewport {
-    -fx-background-color: transparent;
+.information_display {
+    -fx-min-height: 105;
+    -fx-border-color: transparent;
+    -fx-background-color: #fdfdfd;
 }
 
-.information_display{
+.information_display_container_scrollable {
     -fx-background-color: #fdfdfd;
     -fx-pref-height: 510;
     -fx-translate-x: -4;
     -fx-border-color: transparent;
-    -fx-fit-to-height: true;
+    -fx-pannable: true;
+    -fx-vbar-policy: never;
+    -fx-hbar-policy: never;
     -fx-fit-to-width: true;
+}
+
+.information_display_container_scrollable > .viewport {
+    -fx-background-color: transparent;
 }
 
 .information_container {
@@ -195,7 +203,7 @@
 .title_description_container {
     -fx-border-width: 0 0 1 0;
     -fx-border-color: #6A9DF7 transparent #6A9DF7 transparent;
-    -fx-min-height: 30;
+    -fx-min-height: 35;
 }
 
 .title_information {
@@ -223,7 +231,8 @@
     -fx-fill-width: true;
     -fx-spacing: 5;
     -fx-alignment: center;
-    -fx-pref-height: 90;
+    -fx-min-height: 90;
+    -fx-max-height: 90;
 }
 
 #cardPane {

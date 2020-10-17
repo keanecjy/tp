@@ -36,14 +36,14 @@ public class ApplicationDisplay extends InformationDisplay<ApplicationItem> {
      * todo Javadocs
      */
     private void initializeApplicationDisplayGui() {
-        setInformationTitle();
-        setInformation();
+        setJobTitle();
+        setApplicationInformation();
     }
 
     /**
      * todo Javadocs
      */
-    private void setInformationTitle() {
+    private void setJobTitle() {
         Object jobTitle = mapping.get(JOB_TITLE_DISPLAY_NAME);
         setInformationTitle(jobTitle.toString());
     }
@@ -51,7 +51,7 @@ public class ApplicationDisplay extends InformationDisplay<ApplicationItem> {
     /**
      * todo Javadocs
      */
-    private void setInformation() {
+    private void setApplicationInformation() {
         Predicate<String> isRequirements = key -> key.equals(REQUIREMENTS_DISPLAY_NAME);
         Function<String, String> editString = string -> string.substring(1, string.length() - 1);
         setInformation(editString, isRequirements, TabName.APPLICATION, APPLICATION_DISPLAY_KEY_LIST);

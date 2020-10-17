@@ -2,6 +2,7 @@ package seedu.address.logic.commands.edit;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_EDIT_SUCCESS;
+import static seedu.address.logic.commands.util.CommandUtil.getCommandResult;
 import static seedu.address.logic.commands.util.CommandUtil.getCompany;
 import static seedu.address.logic.parser.clisyntax.CompanyCliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.clisyntax.CompanyCliSyntax.PREFIX_COMPANY_NAME;
@@ -23,6 +24,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.FilterableItemList;
 import seedu.address.model.Model;
 import seedu.address.model.company.Address;
 import seedu.address.model.company.CompanyItem;
@@ -31,6 +33,7 @@ import seedu.address.model.company.Email;
 import seedu.address.model.company.Industry;
 import seedu.address.model.company.Phone;
 import seedu.address.model.internship.InternshipItem;
+import seedu.address.ui.tabs.TabName;
 
 /** todo javadocs (shawn) */
 public class EditCompanyCommand extends EditCommandAbstract {
@@ -45,6 +48,7 @@ public class EditCompanyCommand extends EditCommandAbstract {
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_INDUSTRY + "INDUSTRY_TYPE]...\n"
+            + "Note: At least one of the optional fields must be provided. INDEX must be a positive integer.\n"
             + "Example: " + COMMAND_WORD + " " + COMPANY_ALIAS + " 5 "
             + PREFIX_COMPANY_NAME + "Amazon Inc "
             + PREFIX_PHONE + "61234567 "
@@ -72,13 +76,16 @@ public class EditCompanyCommand extends EditCommandAbstract {
         CompanyItem companyToEdit = getCompany(model, index);
         CompanyItem editedCompany = createEditedCompany(companyToEdit, editCompanyDescriptor);
 
-        if (!companyToEdit.isSameItem(editedCompany) && model.getCompanyList().hasItem(editedCompany)) {
+        FilterableItemList<CompanyItem> companyList = model.getCompanyList();
+
+        if (!companyToEdit.isSameItem(editedCompany) && companyList.hasItem(editedCompany)) {
             throw new CommandException(String.format(Messages.MESSAGE_DUPLICATE_ITEM, COMPANY_NAME));
         }
 
-        model.getCompanyList().setItem(companyToEdit, editedCompany);
-        model.getCompanyList().updateFilteredItemList(PREDICATE_SHOW_ALL_ITEMS);
-        return new CommandResult(String.format(MESSAGE_EDIT_SUCCESS, COMPANY_NAME, editedCompany));
+        companyList.setItem(companyToEdit, editedCompany);
+        companyList.updateFilteredItemList(PREDICATE_SHOW_ALL_ITEMS);
+        String editSuccessMessage = String.format(MESSAGE_EDIT_SUCCESS, COMPANY_NAME, editedCompany);
+        return getCommandResult(model, editSuccessMessage, TabName.COMPANY);
     }
 
     /**

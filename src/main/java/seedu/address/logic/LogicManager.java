@@ -87,7 +87,6 @@ public class LogicManager implements Logic {
         return model.getProfileList().getFilteredItemList();
     }
 
-
     @Override
     public Path getAddressBookFilePath() {
         return model.getInternHunterFilePath();
@@ -114,12 +113,32 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public Index getViewIndex() {
-        return model.getViewIndex();
+    public Index getCompanyViewIndex() {
+        return model.getCompanyViewIndex();
     }
 
     @Override
-    public void setViewIndex(Index index) {
-        model.setViewIndex(index);
+    public Index getApplicationViewIndex() {
+        return model.getApplicationViewIndex();
+    }
+
+    @Override
+    public Index getProfileViewIndex() {
+        return model.getProfileViewIndex();
+    }
+
+    @Override
+    public void setCompanyViewIndex(Index index) {
+        model.setCompanyViewIndex(index);
+    }
+
+    @Override
+    public void setApplicationViewIndex(Index index) {
+        model.setApplicationViewIndex(index);
+    }
+
+    @Override
+    public void setProfileViewIndex(Index index) {
+        model.setProfileViewIndex(index);
     }
 }

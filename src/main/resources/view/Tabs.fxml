@@ -6,7 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" prefHeight="100.0" prefWidth="95.0">
     <HBox styleClass="tab_parameter_style">
-        <Button onAction="#handleClick" fx:id="companyButton" mnemonicParsing="false" styleClass="tab_button_style">
+        <Button fx:id="companyButton" mnemonicParsing="false" styleClass="tab_button_style">
             <graphic>
                 <VBox styleClass="tab_container_style">
                     <ImageView fitHeight="26.0" fitWidth="26.0" fx:id="companyIcon" translateY="5"/>
@@ -18,7 +18,7 @@
         <VBox fx:id="company" styleClass="tab_bar_style"/>
     </HBox>
     <HBox styleClass="tab_parameter_style">
-        <Button translateY = "-13.5" onAction="#handleClick" fx:id="applicationButton" mnemonicParsing="false" styleClass="tab_button_style">
+        <Button translateY = "-13.5" fx:id="applicationButton" mnemonicParsing="false" styleClass="tab_button_style">
             <graphic>
                 <VBox styleClass="tab_container_style">
                     <ImageView fitHeight="27.0" fitWidth="27.0" fx:id="applicationIcon" translateY="10" translateX="2"/>
@@ -30,7 +30,7 @@
         <VBox fx:id="application" styleClass="tab_bar_style"/>
     </HBox>
     <HBox styleClass="tab_parameter_style">
-        <Button translateY = "-27" onAction="#handleClick" fx:id="profileButton" mnemonicParsing="false" styleClass="tab_button_style">
+        <Button translateY = "-27" fx:id="profileButton" mnemonicParsing="false" styleClass="tab_button_style">
             <graphic>
                 <VBox  styleClass="tab_container_style">
                     <ImageView fitHeight="23.0" fitWidth="23.0" fx:id="profileIcon" translateY="5"/>

@@ -1,7 +1,6 @@
 package seedu.address.logic.parser.edit;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.clisyntax.ApplicationCliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.clisyntax.ApplicationCliSyntax.PREFIX_STATUS_DATE;
 import static seedu.address.logic.parser.util.ApplicationParserUtil.parseStatus;
@@ -42,8 +41,7 @@ public class EditApplicationCommandParser implements Parser<EditApplicationComma
         }
 
         if (!editApplicationDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    EditApplicationCommand.MESSAGE_USAGE));
+            throw new ParseException(EditApplicationCommand.MESSAGE_USAGE);
         }
 
         return new EditApplicationCommand(index, editApplicationDescriptor);

@@ -2,7 +2,6 @@ package seedu.address.model.application;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.util.DateUtil.DATE_TIME_LONG_FORMAT;
-import static seedu.address.model.util.DateUtil.DATE_TIME_SHORT_FORMAT;
 import static seedu.address.model.util.DateUtil.formatterDateTime;
 import static seedu.address.model.util.DateUtil.isDateFormat;
 import static seedu.address.model.util.DateUtil.isDateTimeFormat;
@@ -53,14 +52,11 @@ public class StatusDate {
     }
 
     /**
-     * Returns the short statusDate format for main screen view.
+     * Returns true if both StatusDates have the same year and day.
      *
-     * @return Short statusDate format.
+     * @param other Object object to compare to.
+     * @return True if the other StatusDate object has the same year and day as this one.
      */
-    public String getShortDate() {
-        return statusDate.format(formatterDateTime(DATE_TIME_SHORT_FORMAT));
-    }
-
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -68,15 +64,20 @@ public class StatusDate {
                 && sameDate(((StatusDate) other).statusDate)); // state check
     }
 
+    /**
+     * Returns the hashcode of this StatusDate object, which is the hashcode of its statusDate field.
+     *
+     * @return Hashcode of this StatusDate object.
+     */
     @Override
     public int hashCode() {
         return statusDate.hashCode();
     }
 
     /**
-     * Returns the long statusDate format for right pane view.
+     * Returns the string representation of this StatusDate object.
      *
-     * @return Long statusDate format.
+     * @return String representation of this StatusDate object.
      */
     @Override
     public String toString() {

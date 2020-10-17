@@ -2,9 +2,6 @@
 layout: page
 title: User Guide
 ---
-
-# InternHunter User Guide
-
 ---
 
 ## Table Of Contents
@@ -60,7 +57,7 @@ Profile Item | me | category, title, descriptors | An item in your profile
 
 1. Ensure you have Java `11` or above installed in your Computer.
 
-1. Download the latest `InternHunter.jar` from here.
+1. Download the latest `InternHunter.jar` from [here](https://github.com/AY2021S1-CS2103T-T15-4/tp/releases/tag/v1.2).
 
 1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
 
@@ -82,7 +79,7 @@ The tab you must be on to execute a certain command is stated under each relevan
   are parameters which can be used as `add com n/Google p/65218000 e/GoogleHire@gmail.com a/70 Pasir Panjang Rd, #03-71 t/Cloud Computing t/Artificial Industry`.
 
 * Items in square brackets are optional.<br>
-  e.g `add int INDEX j/JOB_TITLE [p/PERIOD] [w/WAGE] [r/REQUIREMENT]...` can be used as <br/> `add int 1 j/Software Engineer` or
+  e.g `add int INDEX j/JOB_TITLE w/WAGE [p/PERIOD] [r/REQUIREMENT]...` can be used as <br/> `add int 1 j/Software Engineer` or
   `add int 3 j/Web Developer r/React w/3000 r/HTML5`.
 
 * Items with `...`​ after them can be used multiple times including zero times.<br>
@@ -145,11 +142,12 @@ Note: You must be on the **Company** tab in order to execute these commands.
 
 Adds an internship to a company.
 
-Format: `add int INDEX j/JOB_TITLE [p/PERIOD] [w/WAGE] [r/REQUIREMENT]...`
+Format: `add int INDEX j/JOB_TITLE w/WAGE [p/PERIOD] [r/REQUIREMENT]...`
+- `PERIOD` can refer to any word (e.g. 3 months, Summer break)
 
 Examples:
-- `add int 1 j/Software Engineer`
-- `add int 3 j/Web Developer r/React w/3000 r/HTML5`
+- `add int 1 j/Software Engineer w/1512`
+- `add int 3 j/Web Developer w/3000 r/React r/HTML5`
 
 #### Deleting an internship: `delete int`
 
@@ -166,13 +164,13 @@ Example:
 
 Edits an internship from a company.
 
-Format:  `edit int INDEX i/INDEX [j/JOB_TITLE] [p/PERIOD] [w/WAGE] [r/REQUIREMENT]...`
+Format:  `edit int INDEX i/INDEX [j/JOB_TITLE] [w/WAGE] [p/PERIOD] [r/REQUIREMENT]...`
 - `INDEX` refers to the index of the company in the company list, and `i/INDEX` refers to the index of the
 internship in the company’s list of internships.
 - At least one of the optional fields must be provided.
 
 Examples:
-- `edit int 7 i/1 r/Java r/Python w/2000`
+- `edit int 7 i/1 w/2000 r/Java r/Python`
 - `edit int 4 i/4 j/ML Engineer`
 
 ### Application
@@ -180,7 +178,7 @@ Examples:
 Note: You must be on the **Company** tab in order to execute the add app command. To execute all other commands of type Application, you
 must be on the **Application** tab.
 
-Each application comes with a `STATUS` and `STATUS_DATE` field that indicates the date that the status was set/changed.
+Each application comes with a `STATUS` and `STATUS_DATE` field that indicates the date that the status was set/updated.
 
 Valid `STATUS` specifiers:
 - `applied`
@@ -336,7 +334,7 @@ Type            | Action     | Format
 &nbsp;          | **Delete** | `delete com INDEX`
 &nbsp;          | **Edit**   | `edit com INDEX [n/COMPANY_NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/INDUSTRY]...`
 &nbsp;          | **View**   | `view com INDEX`
-**Internship**  | **Add**    | `add int INDEX j/JOB_TITLE [p/PERIOD] [w/WAGE] [r/REQUIREMENT]...`
+**Internship**  | **Add**    | `add int INDEX j/JOB_TITLE w/WAGE [p/PERIOD] [r/REQUIREMENT]...`
 &nbsp;          | **Delete** | `delete int INDEX i/INDEX`
 &nbsp;          | **Edit**   | `edit int INDEX i/INDEX [j/JOB_TITLE] [p/PERIOD] [w/WAGE] [r/REQUIREMENT]...`
 **Application** | **Add**    | `add app INDEX i/INDEX [s/STATUS] [d/STATUS_DATE]`

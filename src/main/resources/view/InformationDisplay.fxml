@@ -4,13 +4,13 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.control.ScrollPane?>
-<ScrollPane fx:id="informationDisplay" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" styleClass="information_display" vbarPolicy="NEVER" hbarPolicy="NEVER">
+<ScrollPane fx:id="scrollableInformationDisplay" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" styleClass="information_display_container_scrollable">
     <GridPane HBox.hgrow="ALWAYS">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
         </columnConstraints>
-        <VBox minHeight="105" GridPane.columnIndex="0">
-            <VBox styleClass="information_display_container">
+        <VBox fx:id="informationDisplay" GridPane.columnIndex="0" styleClass="information_display">
+            <VBox fx:id="informationDisplayContainer"  styleClass="information_display_container">
                 <Label fx:id="informationTitle" styleClass="information_display_title"/>
                 <HBox fx:id="nameBar" styleClass="information_display_bar"/>
             </VBox>

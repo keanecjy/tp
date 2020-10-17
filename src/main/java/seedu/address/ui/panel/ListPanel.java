@@ -10,12 +10,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.item.Item;
 import seedu.address.ui.UiPart;
 
 /**
  * todo Javadocs
  */
-public abstract class ListPanel<T extends Object> extends UiPart<Region> {
+public abstract class ListPanel<T extends Item> extends UiPart<Region> {
 
     private static final String FXML = "ListPanel.fxml";
 

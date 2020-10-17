@@ -1,13 +1,13 @@
 package seedu.address.logic.parser.edit;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.edit.EditCompanyCommand.EditCompanyDescriptor;
 import static seedu.address.logic.parser.clisyntax.CompanyCliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.clisyntax.CompanyCliSyntax.PREFIX_COMPANY_NAME;
 import static seedu.address.logic.parser.clisyntax.CompanyCliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.clisyntax.CompanyCliSyntax.PREFIX_INDUSTRY;
 import static seedu.address.logic.parser.clisyntax.CompanyCliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.util.GeneralParserUtil.getIndexInPreamble;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -20,7 +20,6 @@ import seedu.address.logic.commands.edit.EditCompanyCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.Parser;
-import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.parser.util.CompanyParserUtil;
 import seedu.address.model.company.Industry;
@@ -37,18 +36,10 @@ public class EditCompanyCommandParser implements Parser<EditCommandAbstract> {
      */
     public EditCompanyCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_COMPANY_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_INDUSTRY);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_COMPANY_NAME, PREFIX_PHONE,
+                PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_INDUSTRY);
 
-        Index index;
-
-        try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCompanyCommand.MESSAGE_USAGE),
-                    pe);
-        }
+        Index index = getIndexInPreamble(argMultimap, EditCompanyCommand.MESSAGE_USAGE);
 
         EditCompanyDescriptor editCompanyDescriptor = new EditCompanyDescriptor();
         if (argMultimap.getValue(PREFIX_COMPANY_NAME).isPresent()) {

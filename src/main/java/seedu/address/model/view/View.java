@@ -8,13 +8,33 @@ import seedu.address.commons.core.index.Index;
 public interface View {
 
     /**
-     * Replaces the current {@code Index} name with {@code index}.
+     * Replaces the current {@code companyIndex} with {@code index}.
      */
-    void setViewIndex(Index index);
+    void setCompanyViewIndex(Index index);
 
     /**
-     * Retrieves the current Index.
+     * Replaces the current {@code applicationIndex} with {@code index}.
      */
-    Index getViewIndex();
+    void setApplicationViewIndex(Index index);
+
+    /**
+     * Replaces the current {@code profileIndex} with {@code index}.
+     */
+    void setProfileViewIndex(Index index);
+
+    /**
+     * Retrieves the current Index of company.
+     */
+    Index getCompanyViewIndex();
+
+    /**
+     * Retrieves the current Index of application.
+     */
+    Index getApplicationViewIndex();
+
+    /**
+     * Retrieves the current Index of profile.
+     */
+    Index getProfileViewIndex();
 
 }
