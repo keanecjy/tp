@@ -132,4 +132,25 @@ public class GeneralParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
+    /**
+     * todo javadocs
+     */
+    public static void checkCommandDetailsIsNotBlank(String commandDetails, String itemType, String message)
+        throws ParseException {
+
+        if (commandDetails.isBlank()) {
+            switch (itemType) {
+            case COMPANY_ALIAS:
+                // fallthrough
+            case APPLICATION_ALIAS:
+                // fallthrough
+            case PROFILE_ALIAS:
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, message));
+            default:
+                // Invalid item type
+                throw new ParseException(MESSAGE_INVALID_ITEM_TYPE);
+            }
+        }
+    }
+
 }

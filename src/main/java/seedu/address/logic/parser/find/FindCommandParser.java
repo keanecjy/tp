@@ -29,49 +29,26 @@ public class FindCommandParser implements Parser<FindCommand> {
         String commandDetails = getCommandDetails(args);
 
         isValidItemType(itemType);
-        checkCommandDetailsIsNotBlank(commandDetails, itemType);
 
         switch (itemType) {
         case COMPANY_ALIAS:
             // todo shawn
+            //checkCommandDetailsIsNotBlank(commandDetails, itemType, FindCompanyCommand.MESSAGE_USAGE);
             //return new FindCompanyCommand(commandDetails);
             return null;
         case APPLICATION_ALIAS:
             // todo sean
+            //checkCommandDetailsIsNotBlank(commandDetails, itemType, FindApplicationCommand.MESSAGE_USAGE);
             //return new FindApplicationCommand(commandDetails);
             return null;
         case PROFILE_ALIAS:
             // todo isaac
+            //checkCommandDetailsIsNotBlank(commandDetails, itemType, FindProfileCommand.MESSAGE_USAGE);
             //return new FindProfileCommand(commandDetails);
             return null;
         default:
             // Invalid item type
             throw new ParseException(MESSAGE_INVALID_ITEM_TYPE);
-        }
-    }
-
-    /**
-     * todo javadocs
-     */
-    private void checkCommandDetailsIsNotBlank(String commandDetails, String itemType) throws ParseException {
-        if (commandDetails.isBlank()) {
-            switch (itemType) {
-            case COMPANY_ALIAS:
-                //throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                //    FindCompanyCommand.MESSAGE_USAGE));
-
-            case APPLICATION_ALIAS:
-                //throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                //   FindApplicationCommand.MESSAGE_USAGE));
-
-            case PROFILE_ALIAS:
-                //throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                //   FindProfileCommand.MESSAGE_USAGE));
-
-            default:
-                // Invalid item type
-                throw new ParseException(MESSAGE_INVALID_ITEM_TYPE);
-            }
         }
     }
 
