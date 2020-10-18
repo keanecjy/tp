@@ -1,7 +1,6 @@
 package seedu.address.logic.parser.view;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_ITEM_TYPE;
-import static seedu.address.logic.parser.util.GeneralParserUtil.checkCommandDetailsIsNotBlank;
 import static seedu.address.logic.parser.util.GeneralParserUtil.getCommandDetails;
 import static seedu.address.logic.parser.util.GeneralParserUtil.getItemType;
 import static seedu.address.logic.parser.util.GeneralParserUtil.isValidItemType;
@@ -39,15 +38,15 @@ public class ViewCommandParser implements Parser<ViewCommand> {
         Index index = GeneralParserUtil.parseIndex(commandDetails);
         switch (itemType) {
         case COMPANY_ALIAS:
-            checkCommandDetailsIsNotBlank(commandDetails, itemType, ViewCompanyCommand.MESSAGE_USAGE);
+            //checkCommandDetailsIsNotBlank(commandDetails, itemType, ViewCompanyCommand.MESSAGE_USAGE);
             return new ViewCompanyCommand(index);
 
         case APPLICATION_ALIAS:
-            checkCommandDetailsIsNotBlank(commandDetails, itemType, ViewApplicationCommand.MESSAGE_USAGE);
+            //checkCommandDetailsIsNotBlank(commandDetails, itemType, ViewApplicationCommand.MESSAGE_USAGE);
             return new ViewApplicationCommand(index);
 
         case PROFILE_ALIAS:
-            checkCommandDetailsIsNotBlank(commandDetails, itemType, ViewProfileCommand.MESSAGE_USAGE);
+            //checkCommandDetailsIsNotBlank(commandDetails, itemType, ViewProfileCommand.MESSAGE_USAGE);
             return new ViewProfileCommand(index);
 
         default:

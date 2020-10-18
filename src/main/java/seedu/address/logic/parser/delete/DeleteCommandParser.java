@@ -1,7 +1,6 @@
 package seedu.address.logic.parser.delete;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_ITEM_TYPE;
-import static seedu.address.logic.parser.util.GeneralParserUtil.checkCommandDetailsIsNotBlank;
 import static seedu.address.logic.parser.util.GeneralParserUtil.getCommandDetails;
 import static seedu.address.logic.parser.util.GeneralParserUtil.getItemType;
 import static seedu.address.logic.parser.util.GeneralParserUtil.isValidItemType;
@@ -44,15 +43,15 @@ public class DeleteCommandParser implements Parser<DeleteCommandAbstract> {
         Index index = GeneralParserUtil.parseIndex(commandDetails);
         switch (itemType) {
         case COMPANY_ALIAS:
-            checkCommandDetailsIsNotBlank(commandDetails, itemType, DeleteCompanyCommand.MESSAGE_USAGE);
+            //checkCommandDetailsIsNotBlank(commandDetails, itemType, DeleteCompanyCommand.MESSAGE_USAGE);
             return new DeleteCompanyCommand(index);
 
         case APPLICATION_ALIAS:
-            checkCommandDetailsIsNotBlank(commandDetails, itemType, DeleteApplicationCommand.MESSAGE_USAGE);
+            //checkCommandDetailsIsNotBlank(commandDetails, itemType, DeleteApplicationCommand.MESSAGE_USAGE);
             return new DeleteApplicationCommand(index);
 
         case PROFILE_ALIAS:
-            checkCommandDetailsIsNotBlank(commandDetails, itemType, DeleteProfileCommand.MESSAGE_USAGE);
+            //checkCommandDetailsIsNotBlank(commandDetails, itemType, DeleteProfileCommand.MESSAGE_USAGE);
             return new DeleteProfileCommand(index);
 
         default:

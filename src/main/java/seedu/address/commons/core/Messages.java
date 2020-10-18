@@ -36,4 +36,7 @@ public class Messages {
     /** Switch message: First string refers to tab that is being switch to. */
     public static final String MESSAGE_SWITCH_SUCCESS = "Switching to %s tab";
     public static final String MESSAGE_SAME_SCREEN = "Already in %s tab";
+
+    /** Find message: First string refers to the number if item found */
+    public static final String MESSAGE_FIND_APPLICATION_SUCCESS = "%1$d applications listed!";
 }

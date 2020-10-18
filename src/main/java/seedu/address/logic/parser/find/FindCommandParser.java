@@ -3,7 +3,6 @@ package seedu.address.logic.parser.find;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_ITEM_TYPE;
 import static seedu.address.logic.parser.util.GeneralParserUtil.getCommandDetails;
 import static seedu.address.logic.parser.util.GeneralParserUtil.getItemType;
-import static seedu.address.logic.parser.util.GeneralParserUtil.isValidItemType;
 import static seedu.address.model.util.ItemUtil.APPLICATION_ALIAS;
 import static seedu.address.model.util.ItemUtil.COMPANY_ALIAS;
 import static seedu.address.model.util.ItemUtil.PROFILE_ALIAS;
@@ -28,23 +27,16 @@ public class FindCommandParser implements Parser<FindCommand> {
         String itemType = getItemType(args, FindCommand.MESSAGE_USAGE);
         String commandDetails = getCommandDetails(args);
 
-        isValidItemType(itemType);
-
         switch (itemType) {
         case COMPANY_ALIAS:
             // todo shawn
-            //checkCommandDetailsIsNotBlank(commandDetails, itemType, FindCompanyCommand.MESSAGE_USAGE);
-            //return new FindCompanyCommand(commandDetails);
+            //return new FindCompanyCommandParser().parse(commandDetails);
             return null;
         case APPLICATION_ALIAS:
-            // todo sean
-            //checkCommandDetailsIsNotBlank(commandDetails, itemType, FindApplicationCommand.MESSAGE_USAGE);
-            //return new FindApplicationCommand(commandDetails);
-            return null;
+            return new FindApplicationCommandParser().parse(commandDetails);
         case PROFILE_ALIAS:
             // todo isaac
-            //checkCommandDetailsIsNotBlank(commandDetails, itemType, FindProfileCommand.MESSAGE_USAGE);
-            //return new FindProfileCommand(commandDetails);
+            //return new FindProfileCommandParser().parse(commandDetails);
             return null;
         default:
             // Invalid item type

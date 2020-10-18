@@ -55,5 +55,5 @@ public interface FilterableItemList<T extends Item> {
      * Updates the filter of the filtered Item list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredItemList(Predicate<? super T > predicate);
+    void updateFilteredItemList(Predicate<? super T> predicate);
 }
