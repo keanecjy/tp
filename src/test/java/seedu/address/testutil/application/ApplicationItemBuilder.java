@@ -15,7 +15,7 @@ import seedu.address.testutil.internship.SampleInternshipItems;
  */
 public class ApplicationItemBuilder {
     public static final String DEFAULT_STATUS = "APPLIED";
-    public static final String DEFAULT_STATUS_DATE = "5-12-19";
+    public static final String DEFAULT_STATUS_DATE = "5-12-21";
 
     private Status status;
     private StatusDate statusDate;
@@ -45,7 +45,7 @@ public class ApplicationItemBuilder {
      */
     public ApplicationItemBuilder withStatus(String status) {
         requireNonNull(status);
-        this.status = Status.valueOf(status);
+        this.status = Status.valueOf(status.toUpperCase());
         return this;
     }
 

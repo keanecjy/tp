@@ -1,0 +1,31 @@
+{
+  "items": [
+    {
+      "status": "Offered",
+      "statusDate": "12 Jun 2021 @ 11.59 PM",
+      "internshipItem": {
+        "companyName": "Shopee",
+        "jobTitle": "Software Engineer",
+        "period": "2 months",
+        "wage": "2000",
+        "requirements": [
+          "React Native"
+        ]
+      }
+    },
+    {
+      "status": "Rejected",
+      "statusDate": "12 Jun 2021 @ 11.59 PM",
+      "internshipItem": {
+        "companyName": "Lazada",
+        "jobTitle": "Data Scientist Intern",
+        "period": "3 months",
+        "wage": "3000",
+        "requirements": [
+          "TensorFlow",
+          "Python"
+        ]
+      }
+    }
+  ]
+}

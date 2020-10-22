@@ -52,9 +52,9 @@ public class LogicManager implements Logic {
         commandResult = command.execute(model);
 
         try {
-            storage.getCompanyItemListStorage().saveItemList(model.getCompanyList().getUnfilteredItemList());
-            storage.getApplicationItemListStorage().saveItemList(model.getApplicationList().getUnfilteredItemList());
-            storage.getProfileItemListStorage().saveItemList(model.getProfileList().getUnfilteredItemList());
+            storage.saveCompanyItemList(model.getCompanyList().getUnfilteredItemList());
+            storage.saveApplicationItemList(model.getApplicationList().getUnfilteredItemList());
+            storage.saveProfileItemList(model.getProfileList().getUnfilteredItemList());
         } catch (IOException ioe) {
             throw new CommandException(FILE_OPS_ERROR_MESSAGE + ioe, ioe);
         }
@@ -62,11 +62,13 @@ public class LogicManager implements Logic {
         return commandResult;
     }
 
+    // todo: remove when possible
     @Override
     public ReadOnlyItemList<Person> getAddressBook() {
         return model.getAddressBook().getUnfilteredItemList();
     }
 
+    // todo: remove when possible
     @Override
     public ObservableList<Person> getFilteredPersonList() {
         return model.getAddressBook().getFilteredItemList();
@@ -74,17 +76,17 @@ public class LogicManager implements Logic {
 
     @Override
     public ObservableList<ApplicationItem> getFilteredApplicationItemList() {
-        return model.getApplicationList().getFilteredItemList();
+        return model.getFilteredApplicationList();
     }
 
     @Override
     public ObservableList<CompanyItem> getFilteredCompanyItemList() {
-        return model.getCompanyList().getFilteredItemList();
+        return model.getFilteredCompanyList();
     }
 
     @Override
     public ObservableList<ProfileItem> getFilteredProfileItemList() {
-        return model.getProfileList().getFilteredItemList();
+        return model.getFilteredProfileList();
     }
 
     @Override

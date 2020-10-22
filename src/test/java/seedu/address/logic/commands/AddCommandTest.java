@@ -6,9 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.nio.file.Path;
+import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.add.AddCommand;
@@ -19,6 +21,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.application.ApplicationItem;
 import seedu.address.model.company.CompanyItem;
+import seedu.address.model.item.ItemList;
 import seedu.address.model.person.Person;
 import seedu.address.model.profile.ProfileItem;
 import seedu.address.testutil.PersonBuilder;
@@ -119,12 +122,153 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<CompanyItem> getFilteredCompanyList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ItemList<CompanyItem> getUnfilteredCompanyList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        /**
+         * Returns the company item list
+         */
+        @Override
+        public ObservableList<CompanyItem> getCompanyItemList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean hasCompany(CompanyItem companyItem) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void deleteCompany(CompanyItem target) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addCompany(CompanyItem companyItem) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setCompany(CompanyItem target, CompanyItem editedCompanyItem) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredCompanyList(Predicate<? super CompanyItem> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setCompanyList(ItemList<CompanyItem> companyList) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public FilterableItemList<ApplicationItem> getApplicationList() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
+        public ObservableList<ApplicationItem> getFilteredApplicationList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ItemList<ApplicationItem> getUnfilteredApplicationList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean hasApplication(ApplicationItem applicationItem) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void deleteApplication(ApplicationItem target) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void deleteSameApplication(ApplicationItem target) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addApplication(ApplicationItem applicationItem) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setApplication(ApplicationItem target, ApplicationItem editedApplicationItem) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredApplicationList(Predicate<? super ApplicationItem> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setApplicationList(ItemList<ApplicationItem> applicationList) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public FilterableItemList<ProfileItem> getProfileList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<ProfileItem> getFilteredProfileList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ItemList<ProfileItem> getUnfilteredProfileList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        /**
+         * Returns the profile item list
+         */
+        @Override
+        public ObservableList<ProfileItem> getProfileItemList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean hasProfileItem(ProfileItem profileItem) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void deleteProfileItem(ProfileItem target) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addProfileItem(ProfileItem profileItem) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setProfileItem(ProfileItem target, ProfileItem editedProfileItem) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredProfileList(Predicate<? super ProfileItem> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setProfileList(ItemList<ProfileItem> profileList) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -167,11 +311,43 @@ public class AddCommandTest {
         public Index getProfileViewIndex() {
             throw new AssertionError("This method should not be called.");
         }
+
+        /**
+         * Gets ProfileItem from Filtered Profile list.
+         *
+         * @param index
+         */
+        @Override
+        public ProfileItem getProfileItemFromFilteredList(int index) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public CompanyItem getCompanyItemFromFilteredList(int index) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ApplicationItem getApplicationItemFromFilteredList(int index) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public int getFilteredCompanyListSize() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public int getFilteredApplicationListSize() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public int getFilteredProfileListSize() {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
-    /**
-     * A Model stub that contains a single person.
-     */
     private class ModelStubWithPerson extends ModelStub {
         private final Person person;
 

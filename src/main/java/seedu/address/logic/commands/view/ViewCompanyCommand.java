@@ -48,7 +48,7 @@ public class ViewCompanyCommand extends ViewCommand {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<CompanyItem> lastShownList = model.getCompanyList().getFilteredItemList();
+        List<CompanyItem> lastShownList = model.getFilteredCompanyList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(String.format(MESSAGE_INVALID_ITEM_DISPLAYED_INDEX, COMPANY_NAME));

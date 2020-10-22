@@ -1,10 +1,13 @@
 package seedu.address.logic.parser.edit;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.edit.EditCommandAbstract.MESSAGE_NOT_EDITED;
 import static seedu.address.logic.parser.clisyntax.ApplicationCliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.clisyntax.ApplicationCliSyntax.PREFIX_STATUS_DATE;
 import static seedu.address.logic.parser.util.ApplicationParserUtil.parseStatus;
 import static seedu.address.logic.parser.util.ApplicationParserUtil.parseStatusDate;
+import static seedu.address.logic.parser.util.GeneralParserUtil.argumentsAreValid;
 import static seedu.address.logic.parser.util.GeneralParserUtil.getIndexInPreamble;
 
 import seedu.address.commons.core.index.Index;
@@ -14,6 +17,8 @@ import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.application.Status;
+import seedu.address.model.application.StatusDate;
 
 /**
  * Parses input arguments and creates a new EditApplicationCommand object.
@@ -30,18 +35,26 @@ public class EditApplicationCommandParser implements Parser<EditApplicationComma
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_STATUS, PREFIX_STATUS_DATE);
 
-        Index index = getIndexInPreamble(argMultimap, EditApplicationCommand.MESSAGE_USAGE);
-
+        if (!argumentsAreValid(true, argMultimap)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    EditApplicationCommand.MESSAGE_USAGE));
+        }
+        Index index = getIndexInPreamble(argMultimap);
         EditApplicationDescriptor editApplicationDescriptor = new EditApplicationDescriptor();
+
         if (argMultimap.getValue(PREFIX_STATUS).isPresent()) {
-            editApplicationDescriptor.setStatus(parseStatus(argMultimap.getValue(PREFIX_STATUS).get()));
+            String inputStatus = argMultimap.getValue(PREFIX_STATUS).get();
+            Status editedStatus = parseStatus(inputStatus);
+            editApplicationDescriptor.setStatus(editedStatus);
         }
         if (argMultimap.getValue(PREFIX_STATUS_DATE).isPresent()) {
-            editApplicationDescriptor.setStatusDate(parseStatusDate(argMultimap.getValue(PREFIX_STATUS_DATE).get()));
+            String inputStatusDate = argMultimap.getValue(PREFIX_STATUS_DATE).get();
+            StatusDate editedStatusDate = parseStatusDate(inputStatusDate);
+            editApplicationDescriptor.setStatusDate(editedStatusDate);
         }
 
         if (!editApplicationDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(EditApplicationCommand.MESSAGE_USAGE);
+            throw new ParseException(MESSAGE_NOT_EDITED);
         }
 
         return new EditApplicationCommand(index, editApplicationDescriptor);

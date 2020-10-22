@@ -18,14 +18,14 @@ public class ResultDisplay extends UiPart<Region> {
     private static final String FXML = "ResultDisplay.fxml";
 
     // FXML properties
-    private static final String TEXT_COLOR = "#5A4DEB"; // TODO change to red
+    private static final String TEXT_COLOR = "#5A4DEB";
     private static final String TEXT_FONT = "Nunito";
 
     @FXML
     private TextFlow resultDisplay;
 
     /**
-     * Construct a display containing the results of the command.
+     * Creates a display containing the results of the command.
      */
     public ResultDisplay() {
         super(FXML);
@@ -33,6 +33,8 @@ public class ResultDisplay extends UiPart<Region> {
 
     /**
      * Displays the {@code feedbackToUser} in {@code resultDisplay}.
+     *
+     * @param feedbackToUser The feedback message to the user.
      */
     public void setFeedbackToUser(String feedbackToUser) {
         requireNonNull(feedbackToUser);
@@ -43,6 +45,8 @@ public class ResultDisplay extends UiPart<Region> {
 
     /**
      * Sets the color and font of the {@code text}.
+     *
+     * @param text The text to be styled.
      */
     private void setTextStyle(Text text) {
         text.setFill(Color.web(TEXT_COLOR));
@@ -58,6 +62,8 @@ public class ResultDisplay extends UiPart<Region> {
 
     /**
      * Displays the {@code text} in {@code resultDisplay}.
+     *
+     * @param text The new text to be displayed.
      */
     private void setNewText(Text text) {
         setTextStyle(text);

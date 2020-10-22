@@ -64,6 +64,7 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
+    private InternshipsWindow internshipsWindow;
     private Tabs tabs;
     @FXML
     private VBox cardList;
@@ -80,6 +81,8 @@ public class MainWindow extends UiPart<Stage> {
 
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
+     * @param primaryStage The main stage of the app.
+     * @param logic The logic unit of the app.
      */
     public MainWindow(Stage primaryStage, Logic logic) {
         super(FXML, primaryStage);
@@ -97,7 +100,7 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * todo Javadocs
+     * @return the {@code primaryStage} of the main window.
      */
     public Stage getPrimaryStage() {
         return primaryStage;
@@ -105,24 +108,29 @@ public class MainWindow extends UiPart<Stage> {
 
     /**
      * Sets up the GUI properties in the {@code primaryStage} using the stored user settings in {@code logic}.
+     *
+     * @param primaryStage The main stage of the app.
+     * @param logic The logic unit of the app.
      */
     private void initializeUi(Stage primaryStage, Logic logic) {
         setWindowDefaultSize(logic.getGuiSettings());
         bindHeights(primaryStage);
         helpWindow = new HelpWindow();
-
+        internshipsWindow = new InternshipsWindow();
         primaryStage.setOnCloseRequest(event -> {
             GuiSettings guiSettings = new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
                     (int) primaryStage.getX(), (int) primaryStage.getY());
             logic.setGuiSettings(guiSettings);
 
-            ExitDialog exitDialog = new ExitDialog(event, helpWindow);
+            ExitDialog exitDialog = new ExitDialog(event, helpWindow, internshipsWindow);
             exitDialog.show();
         });
     }
 
     /**
-     * Binds the height of {@code personList} and {@code resultDisplayPlaceHolder} in the {@code primaryStage}
+     * Binds the height of {@code personList} and {@code resultDisplayPlaceHolder} in the {@code primaryStage}.
+     *
+     * @param primaryStage The main stage of the app.
      */
     private void bindHeights(Stage primaryStage) {
         cardList.prefWidthProperty().bind(primaryStage.widthProperty().subtract(PERSON_LIST_HEIGHT_SHRINK));
@@ -131,6 +139,8 @@ public class MainWindow extends UiPart<Stage> {
 
     /**
      * Sets the default size based on {@code guiSettings}.
+     *
+     * @param guiSettings The stored GUI settings of the app.
      */
     private void setWindowDefaultSize(GuiSettings guiSettings) {
         primaryStage.setHeight(guiSettings.getWindowHeight());
@@ -153,7 +163,7 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * todo javadocs
+     * Adds the tab display to the {@code MainWindow}.
      */
     void addTabs() {
         tabs = Tabs.getTabs(this, logic);
@@ -161,7 +171,7 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * todo javadocs
+     * Adds the result display to the {@code MainWindow}.
      */
     void addResultDisplay() {
         resultDisplay = new ResultDisplay();
@@ -169,14 +179,14 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * todo javadocs
+     * Adds the information display to the {@code MainWindow}.
      */
     void addInformationDisplay() {
         changeDisplay();
     }
 
     /**
-     * todo javadocs
+     * Adds the command box display to the {@code MainWindow}.
      */
     void addCommandBox() {
         CommandBox commandBox = new CommandBox(this::executeCommand);
@@ -184,7 +194,7 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * todo javadocs
+     * Adds the list panel display to the {@code MainWindow}.
      */
     void addListPanel() {
         changeListPanelView(COMPANY);
@@ -195,17 +205,35 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleHelp() {
-        if (!helpWindow.isShowing()) {
-            helpWindow.show();
+        handlePopupWindow(helpWindow);
+    }
+
+    /**
+     * Opens the internships window or focuses on it if it's already opened.
+     */
+    @FXML
+    public void handleMatchingInternships(String internshipList) {
+        internshipsWindow.setTextDisplay(internshipList);
+        handlePopupWindow(internshipsWindow);
+    }
+
+    /**
+     * Opens the popup window or focuses on it if it's already opened.
+     *
+     * @param popupWindow Popup window.
+     */
+    private void handlePopupWindow(PopupWindow popupWindow) {
+        if (!popupWindow.isShowing()) {
+            popupWindow.show();
         } else {
-            helpWindow.focus();
+            popupWindow.focus();
         }
     }
 
     /**
      * Displays the GUI.
      */
-    void show() {
+    public void show() {
         primaryStage.show();
     }
 
@@ -218,7 +246,9 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Switch the tabs of the application.
+     * Switch the tabs of the application to {@code tabName}.
+     *
+     * @param tabName The tab to be switched to.
      */
     private void switchTab(TabName tabName) {
         tabs.switchTab(tabName);
@@ -227,13 +257,20 @@ public class MainWindow extends UiPart<Stage> {
     /**
      * Executes the command and returns the result.
      *
-     * @see seedu.address.logic.Logic#execute(String)
+     * @param commandText The text that the user input.
+     * @return A command result which contains the result of executing the text input.
+     * @throws CommandException thrown when there is an invalid command inputted.
+     * @throws ParseException thrown when there is an invalid text to be parsed.
      */
     private CommandResult executeCommand(String commandText) throws CommandException, ParseException {
         try {
             CommandResult commandResult = logic.execute(commandText);
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
+
+            if (commandResult.isShowMatchingInternships()) {
+                handleMatchingInternships(commandResult.getMatchingInternshipsText());
+            }
 
             if (commandResult.isShowHelp()) {
                 handleHelp();
@@ -261,7 +298,9 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Changes the display of screen, depending on {@code input}, in the {@code primaryStage}.
+     * Changes the display of screen, depending on {@code tabName}, in the {@code primaryStage}.
+     *
+     * @param tabName The tab to be switched to.
      */
     public void changeListPanelView(TabName tabName) {
         assert (tabName.equals(APPLICATION) || tabName.equals(COMPANY) || tabName.equals(PROFILE));
@@ -288,28 +327,28 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * todo javadocs
+     * @return An Optional value containing the company list panel.
      */
     private Optional<ListPanel<? extends Item>> getCompanyTabView() {
         return Optional.of(new CompanyListPanel(companyItems));
     }
 
     /**
-     * todo javadocs
+     * @return An Optional value containing the application list panel.
      */
     private Optional<ListPanel<? extends Item>> setApplicationTabView() {
         return Optional.of(new ApplicationListPanel(applicationItems));
     }
 
     /**
-     * todo javadocs
+     * @return An Optional value containing the profile list panel.
      */
     private Optional<ListPanel<? extends Item>> setProfileTabView() {
         return Optional.of(new ProfileListPanel(profileItems));
     }
 
     /**
-     * todo javadocs
+     * Switches the display based on the {@code index} and {@code tabName}.
      */
     public void changeDisplay() {
         TabName tabName = logic.getTabName();
@@ -339,7 +378,8 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * todo javadocs
+     * @param index The Index of the display to be displayed.
+     * @return An Optional containing the display information of the company at that particular Index.
      */
     private Optional<InformationDisplay<? extends Item>> getCompanyDisplay(int index) {
         if (!IS_EMPTY_DATA_LIST.test(companyItems)) {
@@ -349,7 +389,8 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * todo javadocs
+     * @param index The Index of the display to be displayed.
+     * @return An Optional containing the display information of the Application at that particular Index.
      */
     private Optional<InformationDisplay<? extends Item>> getApplicationDisplay(int index) {
         if (!IS_EMPTY_DATA_LIST.test(applicationItems)) {
@@ -359,7 +400,8 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * todo javadocs
+     * @param index The Index of the display to be displayed.
+     * @return An Optional containing the display information of the profile at that particular Index.
      */
     private Optional<InformationDisplay<? extends Item>> getProfileDisplay(int index) {
         if (!IS_EMPTY_DATA_LIST.test(profileItems)) {

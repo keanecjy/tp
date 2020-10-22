@@ -1,0 +1,33 @@
+{
+  "items": [
+    {
+      "title": "HTML",
+      "profileType": "SKILL",
+      "descriptors": [
+        "Learn to create divs.",
+        "learn to create tables."
+      ]
+    },
+    {
+      "title": "Internship with Govtech",
+      "profileType": "SCHOOL",
+      "descriptors": [
+        "Build internal tooling for syncing data with remote servers"
+      ]
+    },
+    {
+      "title": "@__@",
+      "profileType": "EXPERIENCE",
+      "descriptors": [
+        "Fix UI bugs in Modules View"
+      ]
+    },
+    {
+      "title": "Participation in MS OpenHack",
+      "profileType": "ACHIEVEMENT",
+      "descriptors": [
+        "Solve the Agriculture challenge with satellite imagery"
+      ]
+    }
+  ]
+}

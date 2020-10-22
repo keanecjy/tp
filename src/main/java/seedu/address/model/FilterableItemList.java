@@ -7,7 +7,9 @@ import seedu.address.model.item.Item;
 import seedu.address.model.item.ItemList;
 
 public interface FilterableItemList<T extends Item> {
-    /** {@code Predicate} that always evaluate to true */
+    /**
+     * {@code Predicate} that always evaluate to true
+     */
     Predicate<Item> PREDICATE_SHOW_ALL_ITEMS = unused -> true;
 
     /**
@@ -15,7 +17,9 @@ public interface FilterableItemList<T extends Item> {
      */
     void setItemList(ItemList<T> itemList);
 
-    /** Returns the ItemList */
+    /**
+     * Returns the ItemList
+     */
     ItemList<T> getUnfilteredItemList();
 
     /**
@@ -48,12 +52,25 @@ public interface FilterableItemList<T extends Item> {
      */
     void setItem(T target, T editedItem);
 
-    /** Returns an unmodifiable view of the filtered Item list */
+    /**
+     * Returns an unmodifiable view of the filtered Item list
+     */
     ObservableList<T> getFilteredItemList();
+
+
+    /** Returns an Item from the filtered Item list */
+    T getItemFromFilteredItemList(int index);
+
+    /** Returns the observable Item List */
+    ObservableList<T> getItemList();
 
     /**
      * Updates the filter of the filtered Item list to filter by the given {@code predicate}.
+     *
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredItemList(Predicate<? super T> predicate);
+
+    /** Retrieves the size of the list. */
+    int getSize();
 }

@@ -1,0 +1,28 @@
+@startuml
+!include InternHunterStyle.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor LOGIC_COLOR_T4
+skinparam classBackgroundColor LOGIC_COLOR
+
+package Command {
+
+class "ABSTRACT\nCommand" as Command
+class "ABSTRACT\nXCommand" as XCommand
+class XCompanyCommand
+class XInternshipCommand
+class XApplicationCommand
+class XProfileCommand
+class YCommand
+
+}
+
+hide members
+
+Command <|-- XCommand
+XCommand <|-- XCompanyCommand
+XCommand <|-- XInternshipCommand
+XCommand <|-- XApplicationCommand
+XCommand <|-- XProfileCommand
+Command <|-- YCommand
+
+@enduml

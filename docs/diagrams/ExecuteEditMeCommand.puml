@@ -1,0 +1,72 @@
+@startuml
+!include InternHunterStyle.puml
+!$index = 1
+!$profileItemToEdit = "profileItemToEdit"
+
+box Logic LOGIC_COLOR_T1
+participant ":EditProfileCommand" as EditProfileCommand LOGIC_COLOR
+participant ":CommandUtil" as CommandUtil LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+participant "profileList:ItemListManager" as ItemListManager MODEL_COLOR
+end box
+
+mainframe sd execute edit me command
+
+[-> EditProfileCommand: execute(model)
+activate EditProfileCommand
+
+EditProfileCommand -> CommandUtil : getProfileItem(model, $index)
+activate CommandUtil
+
+
+CommandUtil -> Model : getFilteredProfileList()
+activate Model
+
+Model -> ItemListManager : getFilteredItemList()
+activate ItemListManager
+
+ItemListManager --> Model : lastShownList
+deactivate ItemListManager
+
+Model --> CommandUtil : lastShownList
+deactivate Model
+
+CommandUtil -> Model : getProfileItemFromFilteredList($index)
+activate Model
+
+Model -> ItemListManager : getItemFromFilteredList($index)
+activate ItemListManager
+
+ItemListManager --> Model : $profileItemToEdit
+deactivate ItemListManager
+
+Model --> CommandUtil : $profileItemToEdit
+deactivate Model
+
+CommandUtil --> EditProfileCommand : $profileItemToEdit
+deactivate CommandUtil
+
+
+'EditProfileCommand -> EditProfileCommand: createEditedProfileItem(toEdit, editProfileItemDescriptor)
+'activate EditProfileCommand
+'EditProfileCommand --> EditProfileCommand : editedProfileItem
+'deactivate EditProfileCommand
+
+EditProfileCommand -> Model : setProfileItem($profileItemToEdit, editedProfileItem)
+activate Model
+
+Model -> ItemListManager : setItem($profileItemToEdit, editedProfileItem)
+activate ItemListManager
+
+ItemListManager --> Model
+deactivate ItemListManager
+
+Model --> EditProfileCommand
+deactivate Model
+
+[<-- EditProfileCommand: commandResult
+deactivate EditProfileCommand
+@enduml

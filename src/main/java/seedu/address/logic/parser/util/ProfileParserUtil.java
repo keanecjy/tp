@@ -1,9 +1,6 @@
 package seedu.address.logic.parser.util;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.util.ProfileItemCategoryUtil.ACHIEVEMENT_KEYWORD;
-import static seedu.address.model.util.ProfileItemCategoryUtil.EXPERIENCE_KEYWORD;
-import static seedu.address.model.util.ProfileItemCategoryUtil.SKILL_KEYWORD;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -47,21 +44,10 @@ public class ProfileParserUtil {
         requireNonNull(category);
         String trimmedCategory = category.trim();
 
-        if (!ProfileItemCategory.isValidProfileItemCategory(trimmedCategory.toUpperCase())) {
+        if (!ProfileItemCategory.isValidProfileItemCategory(trimmedCategory)) {
             throw new ParseException(ProfileItemCategory.MESSAGE_CONSTRAINTS);
         }
-
-        switch (trimmedCategory.toLowerCase()) {
-        case ACHIEVEMENT_KEYWORD:
-            return ProfileItemCategory.ACHIEVEMENT;
-        case EXPERIENCE_KEYWORD:
-            return ProfileItemCategory.EXPERIENCE;
-        case SKILL_KEYWORD:
-            return ProfileItemCategory.SKILL;
-        default:
-            assert false : INVALID_PROFILE_CATEGORY_MESSAGE;
-            return null;
-        }
+        return ProfileItemCategory.valueOf(trimmedCategory.toUpperCase());
     }
 
     /**

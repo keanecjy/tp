@@ -63,7 +63,7 @@ public class DeleteInternshipCommand extends DeleteCommandAbstract {
 
         // Delete applications for this deleted internship
         ApplicationItem applicationItemToDelete = new ApplicationItem(internshipItem);
-        model.getApplicationList().deleteSameItem(applicationItemToDelete);
+        model.deleteSameApplication(applicationItemToDelete);
 
         // Delete the internship
         companyItem.removeInternship(internshipIndex);

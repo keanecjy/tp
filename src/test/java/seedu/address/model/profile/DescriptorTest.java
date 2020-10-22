@@ -8,8 +8,9 @@ import org.junit.jupiter.api.Test;
 class DescriptorTest {
     static final String BLANK_DESCRIPTOR = "";
     static final String VALID_DESCRIPTOR = "Implement a automated tool to speed up testing by 20%";
-    static final String INVALID_DESCRIPTOR = "Wrote documentation (with User Guide included)";
-    static final String INVALID_DESCRIPTOR_TWO = "Deploy a bot @ telegram";
+    static final String VALID_DESCRIPTOR_PUNCTUATION = ".,!?:;+#%";
+    static final String INVALID_DESCRIPTOR_PARENTHESIS = "Wrote documentation (with User Guide included)";
+    static final String INVALID_DESCRIPTOR_AMPERSAND = "Deploy a bot @ telegram";
 
     @Test
     public void constructor_null_throwsNullPointerException() {
@@ -18,15 +19,17 @@ class DescriptorTest {
 
     @Test
     public void constructor_invalidDescriptor_throwsIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () -> new Descriptor(INVALID_DESCRIPTOR));
-        assertThrows(IllegalArgumentException.class, () -> new Descriptor(INVALID_DESCRIPTOR_TWO));
+        assertThrows(IllegalArgumentException.class, () -> new Descriptor(INVALID_DESCRIPTOR_PARENTHESIS));
+        assertThrows(IllegalArgumentException.class, () -> new Descriptor(INVALID_DESCRIPTOR_AMPERSAND));
         assertThrows(IllegalArgumentException.class, () -> new Descriptor(BLANK_DESCRIPTOR));
     }
 
     @Test
     public void toString_validFormats_success() {
         Descriptor descriptor = new Descriptor(VALID_DESCRIPTOR);
+        Descriptor descriptorPunctuation = new Descriptor(VALID_DESCRIPTOR_PUNCTUATION);
         assertEquals(VALID_DESCRIPTOR, descriptor.toString());
+        assertEquals(VALID_DESCRIPTOR_PUNCTUATION, descriptorPunctuation.toString());
     }
 
     @Test

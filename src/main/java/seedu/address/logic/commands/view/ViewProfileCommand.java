@@ -49,7 +49,7 @@ public class ViewProfileCommand extends ViewCommand {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<ProfileItem> lastShownList = model.getProfileList().getFilteredItemList();
+        List<ProfileItem> lastShownList = model.getFilteredProfileList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(String.format(MESSAGE_INVALID_ITEM_DISPLAYED_INDEX, PROFILE_NAME));

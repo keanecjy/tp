@@ -7,7 +7,6 @@ import static seedu.address.logic.commands.util.CommandUtil.getApplication;
 import static seedu.address.logic.commands.util.CommandUtil.getCommandResult;
 import static seedu.address.logic.parser.clisyntax.ApplicationCliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.clisyntax.ApplicationCliSyntax.PREFIX_STATUS_DATE;
-import static seedu.address.model.FilterableItemList.PREDICATE_SHOW_ALL_ITEMS;
 import static seedu.address.model.util.ItemUtil.APPLICATION_ALIAS;
 import static seedu.address.model.util.ItemUtil.APPLICATION_NAME;
 
@@ -17,7 +16,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.FilterableItemList;
 import seedu.address.model.Model;
 import seedu.address.model.application.ApplicationItem;
 import seedu.address.model.application.Status;
@@ -60,9 +58,8 @@ public class EditApplicationCommand extends EditCommandAbstract {
         ApplicationItem editedApplicationItem = createEditedApplicationItem(applicationItemToEdit,
                 editApplicationDescriptor);
 
-        FilterableItemList<ApplicationItem> applicationList = model.getApplicationList();
-        applicationList.setItem(applicationItemToEdit, editedApplicationItem);
-        applicationList.updateFilteredItemList(PREDICATE_SHOW_ALL_ITEMS);
+        model.setApplication(applicationItemToEdit, editedApplicationItem);
+        model.setApplicationViewIndex(targetIndex);
         String editSuccessMessage = String.format(MESSAGE_EDIT_SUCCESS, APPLICATION_NAME, editedApplicationItem);
         return getCommandResult(model, editSuccessMessage, TabName.APPLICATION);
     }

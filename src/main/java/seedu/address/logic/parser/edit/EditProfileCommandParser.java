@@ -1,10 +1,13 @@
 package seedu.address.logic.parser.edit;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.edit.EditCommandAbstract.MESSAGE_NOT_EDITED;
 import static seedu.address.logic.commands.edit.EditProfileCommand.EditProfileItemDescriptor;
 import static seedu.address.logic.parser.clisyntax.ProfileCliSyntax.PREFIX_CATEGORY;
-import static seedu.address.logic.parser.clisyntax.ProfileCliSyntax.PREFIX_DESCRIPTORS;
+import static seedu.address.logic.parser.clisyntax.ProfileCliSyntax.PREFIX_DESCRIPTOR;
 import static seedu.address.logic.parser.clisyntax.ProfileCliSyntax.PREFIX_TITLE;
+import static seedu.address.logic.parser.util.GeneralParserUtil.argumentsAreValid;
 import static seedu.address.logic.parser.util.GeneralParserUtil.getIndexInPreamble;
 import static seedu.address.logic.parser.util.ProfileParserUtil.parseCategory;
 import static seedu.address.logic.parser.util.ProfileParserUtil.parseDescriptors;
@@ -37,27 +40,32 @@ public class EditProfileCommandParser implements Parser<EditProfileCommand> {
     public EditProfileCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_TITLE, PREFIX_CATEGORY,
-                PREFIX_DESCRIPTORS);
+                PREFIX_DESCRIPTOR);
 
-        Index index = getIndexInPreamble(argMultimap, EditProfileCommand.MESSAGE_USAGE);
+        if (!argumentsAreValid(true, argMultimap)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    EditProfileCommand.MESSAGE_USAGE));
+        }
 
-        EditProfileItemDescriptor editProfileDescriptor = new EditProfileItemDescriptor();
+        Index index = getIndexInPreamble(argMultimap);
+
+        EditProfileItemDescriptor editProfileItemDescriptor = new EditProfileItemDescriptor();
         // Update the setters
         if (argMultimap.getValue(PREFIX_TITLE).isPresent()) {
-            editProfileDescriptor.setTitle(parseTitle(argMultimap.getValue(PREFIX_TITLE).get()));
+            editProfileItemDescriptor.setTitle(parseTitle(argMultimap.getValue(PREFIX_TITLE).get()));
         }
         if (argMultimap.getValue(PREFIX_CATEGORY).isPresent()) {
-            editProfileDescriptor.setProfileItemCategory(parseCategory(argMultimap.getValue(PREFIX_CATEGORY)
+            editProfileItemDescriptor.setProfileItemCategory(parseCategory(argMultimap.getValue(PREFIX_CATEGORY)
                 .get()));
         }
-        parseDescriptorsForEdit(argMultimap.getAllValues(PREFIX_DESCRIPTORS))
-                .ifPresent(editProfileDescriptor::setDescriptors);
+        parseDescriptorsForEdit(argMultimap.getAllValues(PREFIX_DESCRIPTOR))
+                .ifPresent(editProfileItemDescriptor::setDescriptors);
 
-        if (!editProfileDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(EditProfileCommand.MESSAGE_USAGE);
+        if (!editProfileItemDescriptor.isAnyFieldEdited()) {
+            throw new ParseException(MESSAGE_NOT_EDITED);
         }
 
-        return new EditProfileCommand(index, editProfileDescriptor);
+        return new EditProfileCommand(index, editProfileItemDescriptor);
     }
     /**
      * Parses {@code Collection<String> descriptors} into a {@code Set<Descriptor>} if {@code descriptors} is non-empty.
@@ -77,6 +85,4 @@ public class EditProfileCommandParser implements Parser<EditProfileCommand> {
                 : descriptors;
         return Optional.of(parseDescriptors(descriptorSet));
     }
-
-
 }

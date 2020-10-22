@@ -7,10 +7,11 @@ import org.junit.jupiter.api.Test;
 
 public class ProfileItemCategoryTest {
     static final String BLANK_CATEGORY = "";
-    static final String VALID_CATEGORY_SKILL = "skill".toUpperCase();
-    static final String VALID_CATEGORY_ACHIEVEMENT = "achievement".toUpperCase();
-    static final String VALID_CATEGORY_EXPERIENCE = "experience".toUpperCase();
-    static final String INVALID_CATEGORY = "awards".toUpperCase();
+    static final String VALID_CATEGORY_SKILL = "SKILL";
+    static final String VALID_CATEGORY_ACHIEVEMENT = "ACHIEVEMENT";
+    static final String VALID_CATEGORY_EXPERIENCE = "EXPERIENCE";
+    static final String INVALID_CATEGORY_CASING = "sKiLl";
+    static final String INVALID_CATEGORY = "AWARDS";
 
     @Test
     public void constructor_null_throwsNullPointerException() {
@@ -21,6 +22,7 @@ public class ProfileItemCategoryTest {
     public void constructor_invalidStatus_throwsIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class, () -> ProfileItemCategory.valueOf(BLANK_CATEGORY));
         assertThrows(IllegalArgumentException.class, () -> ProfileItemCategory.valueOf(INVALID_CATEGORY));
+        assertThrows(IllegalArgumentException.class, () -> ProfileItemCategory.valueOf(INVALID_CATEGORY_CASING));
     }
 
     @Test

@@ -19,7 +19,7 @@ import seedu.address.ui.UiPart;
 import seedu.address.ui.textstyle.TitleDescription;
 
 /**
- * A UI component that displays information of a {@code Person}.
+ * A UI component that displays some information of a {@code Item}.
  */
 public abstract class Card<T extends Item> extends UiPart<Region> {
 
@@ -54,7 +54,10 @@ public abstract class Card<T extends Item> extends UiPart<Region> {
     private TextFlow l3;
 
     /**
-     * todo Javadocs
+     * Creates a card with information regarding {@code item} with index of {@code displayedIndex}.
+     *
+     * @param item The item to be displayed.
+     * @param displayedIndex The index of the item.
      */
     public Card(T item, int displayedIndex) {
         super(FXML);
@@ -64,21 +67,25 @@ public abstract class Card<T extends Item> extends UiPart<Region> {
     }
 
     /**
-     * todo Javadocs
+     * @return The item in the card.
      */
     protected T getItem() {
         return item;
     }
 
     /**
-     * todo Javadocs
+     * Sets the name on the card.
+     *
+     * @param cardName The name of card.
      */
     protected void setName(String cardName) {
         name.setText(cardName);
     }
 
     /**
-     * todo Javadocs
+     * Sets the tags on the card.
+     *
+     * @param tagNames A string containing all the tag names.
      */
     protected void setTags(String tagNames) {
         String[] tagList = generateTags(tagNames);
@@ -86,7 +93,10 @@ public abstract class Card<T extends Item> extends UiPart<Region> {
     }
 
     /**
-     * todo Javadocs
+     * Formats the {@code tagNames} into a list of tag names.
+     *
+     * @param tagNames A string containing all the tag names.
+     * @return An array that contains a list of tag names.
      */
     private String[] generateTags(String tagNames) {
         int length = tagNames.length();
@@ -94,7 +104,9 @@ public abstract class Card<T extends Item> extends UiPart<Region> {
     }
 
     /**
-     * todo Javadocs
+     * Sets each tag with a particular tag name.
+     *
+     * @param tagList A list of tag names.
      */
     private void setAllTags(String ... tagList) {
         for (String tag : tagList) {
@@ -104,14 +116,21 @@ public abstract class Card<T extends Item> extends UiPart<Region> {
     }
 
     /**
-     * todo Javadocs
+     * Sets the id of the card with {@code displayIndex}.
+     *
+     * @param displayedIndex The index of the card.
      */
     protected void setId(int displayedIndex) {
         id.setText(displayedIndex + ". ");
     }
 
     /**
-     * todo Javadocs
+     * Sets the information of the card with {@code title} and {@code description} in the position depending
+     * on the {@code lineNumber}.
+     *
+     * @param title The title of the information.
+     * @param description The description of the information.
+     * @param lineNumber The linenumber to denote the position of the information.
      */
     protected void setTextAt(String title, String description, LineNumber lineNumber) {
         TitleDescription titleDescription = createTitleDescription(title + ": ", description);
@@ -134,7 +153,12 @@ public abstract class Card<T extends Item> extends UiPart<Region> {
     }
 
     /**
-     * todo Javadocs
+     * Sets the {@code styledTitle} and {@code styledDescription} at {@code textFlow}.
+     *
+     * @param textFlow The text flow to be displayed
+     * @param styledTitle A text containing the styled title.
+     * @param styledDescription A text containing the styled description.
+     * @param <K> The type of text flow.
      */
     private <K extends Pane> void setLineText(K textFlow, Text styledTitle, Text styledDescription) {
         textFlow.getChildren().addAll(styledTitle, styledDescription);

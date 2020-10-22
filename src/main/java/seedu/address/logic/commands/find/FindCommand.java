@@ -23,9 +23,8 @@ public abstract class FindCommand extends Command {
         + PROFILE_NAME + ".\n"
         + "Parameters: ITEM_TYPE DESCRIPTION\n" // note that the name description can be change in the future
         + "Note: Valid ITEM_TYPEs are "
-        + "'" + COMPANY_ALIAS + "', "
-        + "'" + APPLICATION_ALIAS + "' or "
-        + "'" + PROFILE_ALIAS + "'. "
-        + "Example: "
-        + COMMAND_WORD + " " + COMPANY_ALIAS + " " + "Google" + "\n";
+        + " " + COMPANY_ALIAS + ", "
+        + " " + APPLICATION_ALIAS + " or "
+        + " " + PROFILE_ALIAS + ". "
+        + "Example: " + COMMAND_WORD + " " + COMPANY_ALIAS + " " + "Google\n";
 }

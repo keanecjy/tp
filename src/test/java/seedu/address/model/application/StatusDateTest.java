@@ -5,7 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.application.ApplicationItemFieldsUtil.BLANK_STATUS_DATE;
 import static seedu.address.testutil.application.ApplicationItemFieldsUtil.EXPECTED_DATE_JUNE_2021;
+import static seedu.address.testutil.application.ApplicationItemFieldsUtil.INVALID_STATUS_DATE;
 import static seedu.address.testutil.application.ApplicationItemFieldsUtil.STATUS_DATE_JUNE_2021;
 import static seedu.address.testutil.application.ApplicationItemFieldsUtil.STATUS_DATE_JUNE_2022;
 import static seedu.address.testutil.application.ApplicationItemFieldsUtil.STATUS_DATE_MAY_2021;
@@ -16,9 +18,6 @@ import org.junit.jupiter.api.Test;
 import seedu.address.model.util.DateUtil;
 
 public class StatusDateTest {
-
-    private static final String BLANK_STATUS_DATE = "";
-    private static final String INVALID_STATUS_DATE = "Monday";
 
     private static final StatusDate VALID_STATUS_DATE_JUNE_2021 =
             new StatusDate(DateUtil.convertToDateTime(STATUS_DATE_JUNE_2021));

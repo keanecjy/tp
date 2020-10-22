@@ -20,7 +20,7 @@ import javafx.scene.image.Image;
 import seedu.address.model.application.ApplicationItem;
 
 /**
- * todo Javadocs
+ * A UI component that displays some information of a {@code ApplicationItem}.
  */
 public class ApplicationCard extends Card<ApplicationItem> {
 
@@ -45,7 +45,10 @@ public class ApplicationCard extends Card<ApplicationItem> {
     private static final int IMAGE_HEIGHT_WIDTH = 23;
 
     /**
-     * todo Javadocs
+     * Creates a card display with information of {@code ApplicationItem} and with a index of {@code displayIndex}.
+     *
+     * @param applicationItem The application item to be displayed.
+     * @param displayedIndex The index of the profile item.
      */
     public ApplicationCard(ApplicationItem applicationItem, int displayedIndex) {
         super(applicationItem, displayedIndex);
@@ -53,7 +56,7 @@ public class ApplicationCard extends Card<ApplicationItem> {
     }
 
     /**
-     * todo Javadocs
+     * Sets the id, name, requirements, status, period, wages, company name, date on the card.
      */
     private void initializeInternshipCardGui() {
         setId(displayedIndex);
@@ -67,7 +70,7 @@ public class ApplicationCard extends Card<ApplicationItem> {
     }
 
     /**
-     * todo Javadocs
+     * Sets the name on the card.
      */
     private void setName() {
         Object jobTitle = mapping.get(JOB_TITLE_DISPLAY_NAME);
@@ -75,7 +78,7 @@ public class ApplicationCard extends Card<ApplicationItem> {
     }
 
     /**
-     * todo Javadocs
+     * Sets the requirements on the card.
      */
     private void setRequirements() {
         Object requirements = mapping.get(REQUIREMENTS_DISPLAY_NAME);
@@ -85,19 +88,21 @@ public class ApplicationCard extends Card<ApplicationItem> {
     }
 
     /**
-     * todo Javadocs
+     * Sets the status on the card.
      */
     private void setStatus() {
         Object status = mapping.get(STATUS_DISPLAY_NAME);
         if (!IS_EMPTY_LIST_STRING.test(status.toString())) {
-            getStatusStyle(status.toString());
+            setStatusStyle(status.toString());
         }
     }
 
     /**
-     * todo Javadocs
+     * Set the style of the status depending on {@code statusType}
+     *
+     * @param statusType The type of status the user inputted in.
      */
-    private void getStatusStyle(String statusType) {
+    private void setStatusStyle(String statusType) {
         String updatedStatusBoxStyle = DEFAULT_STATUS_BOX;
         switch (statusType) {
         case (APPLIED_KEYWORD):
@@ -132,7 +137,7 @@ public class ApplicationCard extends Card<ApplicationItem> {
     }
 
     /**
-     * todo Javadocs
+     * Sets the company name on the card.
      */
     private void setCompanyName() {
         Object companyName = mapping.get(COMPANY_DISPLAY_NAME);
@@ -140,7 +145,7 @@ public class ApplicationCard extends Card<ApplicationItem> {
     }
 
     /**
-     * todo Javadocs
+     * Sets the wages on the card.
      */
     private void setWage() {
         Object wage = mapping.get(WAGE_DISPLAY_NAME);
@@ -148,7 +153,7 @@ public class ApplicationCard extends Card<ApplicationItem> {
     }
 
     /**
-     * todo Javadocs
+     * Sets the period on the card.
      */
     private void setPeriod() {
         Object period = mapping.get(PERIOD_DISPLAY_NAME);
@@ -156,7 +161,7 @@ public class ApplicationCard extends Card<ApplicationItem> {
     }
 
     /**
-     * todo Javadocs
+     * Sets the date and image on the card.
      */
     private void setDate() {
         Image calendarIcon = new Image(this.getClass().getResourceAsStream(CALENDAR_IMAGE_LINK));
@@ -169,7 +174,7 @@ public class ApplicationCard extends Card<ApplicationItem> {
     }
 
     /**
-     * todo Javadocs
+     * Sets the image styling on card.
      */
     private void setImageStyling() {
         imageView.setFitHeight(IMAGE_HEIGHT_WIDTH);

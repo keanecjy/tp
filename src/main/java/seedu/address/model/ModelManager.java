@@ -4,8 +4,10 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
@@ -73,11 +75,77 @@ public class ModelManager implements Model {
         return addressBook;
     }
 
+    //=========== Company Methods ============================================================================
+
     @Override
     public FilterableItemList<CompanyItem> getCompanyList() {
         return companyList;
     }
 
+    @Override
+    public ObservableList<CompanyItem> getFilteredCompanyList() {
+        return companyList.getFilteredItemList();
+    }
+
+    @Override
+    public int getFilteredCompanyListSize() {
+        return companyList.getSize();
+    }
+
+    @Override
+    public ItemList<CompanyItem> getUnfilteredCompanyList() {
+        return companyList.getUnfilteredItemList();
+    }
+
+    /**
+     * Returns the company item list
+     */
+    @Override
+    public ObservableList<CompanyItem> getCompanyItemList() {
+        return companyList.getItemList();
+    }
+
+    @Override
+    public boolean hasCompany(CompanyItem companyItem) {
+        return companyList.hasItem(companyItem);
+    }
+
+    @Override
+    public void deleteCompany(CompanyItem target) {
+        companyList.deleteItem(target);
+    }
+
+    @Override
+    public void addCompany(CompanyItem companyItem) {
+        companyList.addItem(companyItem);
+    }
+
+    @Override
+    public void setCompany(CompanyItem target, CompanyItem editedCompanyItem) {
+        companyList.setItem(target, editedCompanyItem);
+    }
+
+    @Override
+    public void updateFilteredCompanyList(Predicate<? super CompanyItem> predicate) {
+        companyList.updateFilteredItemList(predicate);
+    }
+
+    @Override
+    public void setCompanyList(ItemList<CompanyItem> companyList) {
+        this.companyList.setItemList(companyList);
+    }
+
+    /**
+     * Gets CompanyItem from Filtered Company list.
+     *
+     * @param index of item in filtered company list.
+     */
+    @Override
+    public CompanyItem getCompanyItemFromFilteredList(int index) {
+        return companyList.getItemFromFilteredItemList(index);
+    }
+
+    //=========== Application Methods ========================================================================
 
     @Override
     public FilterableItemList<ApplicationItem> getApplicationList() {
@@ -85,10 +153,135 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public ObservableList<ApplicationItem> getFilteredApplicationList() {
+        return applicationList.getFilteredItemList();
+    }
+
+    @Override
+    public int getFilteredApplicationListSize() {
+        return applicationList.getSize();
+    }
+
+    @Override
+    public ItemList<ApplicationItem> getUnfilteredApplicationList() {
+        return applicationList.getUnfilteredItemList();
+    }
+
+    @Override
+    public boolean hasApplication(ApplicationItem applicationItem) {
+        return applicationList.hasItem(applicationItem);
+    }
+
+    @Override
+    public void deleteApplication(ApplicationItem target) {
+        applicationList.deleteItem(target);
+    }
+
+    @Override
+    public void deleteSameApplication(ApplicationItem target) {
+        applicationList.deleteSameItem(target);
+    }
+
+    @Override
+    public void addApplication(ApplicationItem applicationItem) {
+        applicationList.addItem(applicationItem);
+    }
+
+    @Override
+    public void setApplication(ApplicationItem target, ApplicationItem editedApplicationItem) {
+        applicationList.setItem(target, editedApplicationItem);
+    }
+
+    @Override
+    public void updateFilteredApplicationList(Predicate<? super ApplicationItem> predicate) {
+        applicationList.updateFilteredItemList(predicate);
+    }
+
+    @Override
+    public void setApplicationList(ItemList<ApplicationItem> applicationList) {
+        this.applicationList.setItemList(applicationList);
+    }
+
+
+    /**
+     * Gets ApplicationItem from Filtered Application list.
+     *
+     * @param index of item in filtered application list.
+     */
+    @Override
+    public ApplicationItem getApplicationItemFromFilteredList(int index) {
+        return applicationList.getItemFromFilteredItemList(index);
+    }
+
+    //=========== Profile Methods ============================================================================
+
+    @Override
     public FilterableItemList<ProfileItem> getProfileList() {
         return profileList;
     }
 
+    @Override
+    public ObservableList<ProfileItem> getFilteredProfileList() {
+        return profileList.getFilteredItemList();
+    }
+
+    @Override
+    public int getFilteredProfileListSize() {
+        return profileList.getSize();
+    }
+
+    @Override
+    public ItemList<ProfileItem> getUnfilteredProfileList() {
+        return profileList.getUnfilteredItemList();
+    }
+
+    /**
+     * Returns the profile item list
+     */
+    @Override
+    public ObservableList<ProfileItem> getProfileItemList() {
+        return profileList.getItemList();
+    }
+
+    @Override
+    public boolean hasProfileItem(ProfileItem profileItem) {
+        return profileList.hasItem(profileItem);
+    }
+
+    @Override
+    public void deleteProfileItem(ProfileItem target) {
+        profileList.deleteItem(target);
+    }
+
+    @Override
+    public void addProfileItem(ProfileItem profileItem) {
+        profileList.addItem(profileItem);
+    }
+
+    @Override
+    public void setProfileItem(ProfileItem target, ProfileItem editedProfileItem) {
+        profileList.setItem(target, editedProfileItem);
+    }
+
+    @Override
+    public void updateFilteredProfileList(Predicate<? super ProfileItem> predicate) {
+        profileList.updateFilteredItemList(predicate);
+    }
+
+    @Override
+    public void setProfileList(ItemList<ProfileItem> profileList) {
+        this.profileList.setItemList(profileList);
+    }
+
+    /**
+     * Gets ProfileItem from Filtered Profile list.
+     *
+     * @param index of item in filtered profile list.
+     */
+    @Override
+    public ProfileItem getProfileItemFromFilteredList(int index) {
+        return profileList.getItemFromFilteredItemList(index);
+    }
     //=========== UserPrefs ==================================================================================
 
     @Override

@@ -9,8 +9,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
   * Guarantees: immutable; non-empty; descriptor is valid as declared in {@link #isValidDescriptor(String)}
   */
 public class Descriptor {
-    public static final String MESSAGE_CONSTRAINTS = "descriptors should be alphanumeric,"
-        + "punctuations limited to .,?!:;+#% and non-empty";
+    public static final String MESSAGE_CONSTRAINTS = "descriptors should be alphanumeric and non-empty,"
+        + "punctuations limited to .,?!:;+#%";
     public static final String VALIDATION_REGEX = "^[A-Za-z0-9 .,!?:;+#%]+$";
 
     public final String descriptor;

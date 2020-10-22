@@ -1,6 +1,8 @@
 package seedu.address.model.application;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.model.util.StatusUtil.ACCEPTED_KEYWORD;
 import static seedu.address.model.util.StatusUtil.APPLIED_KEYWORD;
@@ -9,14 +11,17 @@ import static seedu.address.model.util.StatusUtil.OFFERED_KEYWORD;
 import static seedu.address.model.util.StatusUtil.REJECTED_KEYWORD;
 import static seedu.address.model.util.StatusUtil.WAITING_KEYWORD;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.application.ApplicationItemFieldsUtil.INVALID_STATUS;
+import static seedu.address.testutil.application.ApplicationItemFieldsUtil.STATUS_BLANK;
+import static seedu.address.testutil.application.ApplicationItemFieldsUtil.VALID_STATUS_APPLIED_MIX_CASE;
+import static seedu.address.testutil.application.ApplicationItemFieldsUtil.VALID_STATUS_REJECTED_MIX_CASE;
 
 import org.junit.jupiter.api.Test;
 
 public class StatusTest {
 
-    private static final String BLANK_STATUS = "";
-    private static final String VALID_STATUS = "APPLIED";
-    private static final String INVALID_STATUS = "DEAD";
+    private static final Status VALID_STATUS_ONE = Status.valueOf(APPLIED_KEYWORD.toUpperCase());
+    private static final Status VALID_STATUS_TWO = Status.valueOf(REJECTED_KEYWORD.toUpperCase());
 
     @Test
     public void valueOf_null_throwsNullPointerException() {
@@ -25,12 +30,12 @@ public class StatusTest {
 
     @Test
     public void valueOf_invalidStatus_throwsIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () -> Status.valueOf(BLANK_STATUS));
+        assertThrows(IllegalArgumentException.class, () -> Status.valueOf(STATUS_BLANK));
         assertThrows(IllegalArgumentException.class, () -> Status.valueOf(INVALID_STATUS));
     }
 
     @Test
-    public void isValidBoolean_validFormats_success() {
+    public void isValidStatus_validFormats_success() {
         assertTrue(Status.isValidStatus(APPLIED_KEYWORD));
         assertTrue(Status.isValidStatus(INTERVIEW_KEYWORD));
         assertTrue(Status.isValidStatus(WAITING_KEYWORD));
@@ -40,16 +45,32 @@ public class StatusTest {
     }
 
     @Test
+    public void isValidStatus_caseInsensitivityTest_success() {
+        assertTrue(Status.isValidStatus(VALID_STATUS_APPLIED_MIX_CASE));
+        assertTrue(Status.isValidStatus(VALID_STATUS_REJECTED_MIX_CASE));
+    }
+
+    @Test
+    public void isValidStatus_invalidFormats_success() {
+        assertFalse(Status.isValidStatus(STATUS_BLANK));
+        assertFalse(Status.isValidStatus(INVALID_STATUS));
+    }
+
+    @Test
     public void toString_validFormat_success() {
-        Status status1 = Status.valueOf(VALID_STATUS);
-        assertEquals(APPLIED_KEYWORD, status1.toString());
+        assertEquals(APPLIED_KEYWORD, VALID_STATUS_ONE.toString());
     }
 
     @Test
     public void equals_equalityTest_success() {
-        Status status1 = Status.valueOf(VALID_STATUS);
-        Status status2 = Status.valueOf(VALID_STATUS);
-        assertEquals(status1, status2);
+        assertEquals(VALID_STATUS_ONE, VALID_STATUS_ONE);
+        Status statusCopy = Status.valueOf(APPLIED_KEYWORD.toUpperCase());
+        assertEquals(VALID_STATUS_ONE, statusCopy);
+    }
+
+    @Test
+    public void equals_nonEqualityTest_success() {
+        assertNotEquals(VALID_STATUS_ONE, VALID_STATUS_TWO);
     }
 
 }

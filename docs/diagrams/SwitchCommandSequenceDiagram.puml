@@ -1,0 +1,62 @@
+@startuml
+!include InternHunterStyle.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":MainParser" as MainParser LOGIC_COLOR
+participant ":SwitchCommandParser" as SwitchCommandParser LOGIC_COLOR
+participant ":ParserUtil" as ParserUtil LOGIC_COLOR
+participant "s:SwitchCommand" as SwitchCommand LOGIC_COLOR
+participant ":CommandUtil" as CommandUtil LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("switch me")
+activate LogicManager
+
+LogicManager -> MainParser : parseCommand("switch me")
+activate MainParser
+
+create SwitchCommandParser
+MainParser -> SwitchCommandParser
+activate SwitchCommandParser
+
+SwitchCommandParser --> MainParser
+deactivate SwitchCommandParser
+
+MainParser -> SwitchCommandParser : parse(" me")
+activate SwitchCommandParser
+
+SwitchCommandParser -> ParserUtil : parseTab(" me")
+activate ParserUtil
+
+ParserUtil -> SwitchCommandParser : TabName.PROFILE
+deactivate ParserUtil
+
+create SwitchCommand
+SwitchCommandParser -> SwitchCommand : SwitchCommand(TabName.PROFILE)
+activate SwitchCommand
+
+SwitchCommand --> SwitchCommandParser : s
+deactivate SwitchCommand
+
+SwitchCommandParser --> MainParser : s
+deactivate SwitchCommandParser
+
+MainParser --> LogicManager : s
+deactivate MainParser
+
+LogicManager -> SwitchCommand : execute(model)
+activate SwitchCommand
+
+ref over SwitchCommand, CommandUtil, Model : execute switch me command
+
+SwitchCommand --> LogicManager : result
+deactivate SwitchCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

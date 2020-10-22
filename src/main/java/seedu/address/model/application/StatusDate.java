@@ -3,8 +3,8 @@ package seedu.address.model.application;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.util.DateUtil.DATE_TIME_LONG_FORMAT;
 import static seedu.address.model.util.DateUtil.formatterDateTime;
-import static seedu.address.model.util.DateUtil.isDateFormat;
-import static seedu.address.model.util.DateUtil.isDateTimeFormat;
+import static seedu.address.model.util.DateUtil.isValidDateFormat;
+import static seedu.address.model.util.DateUtil.isValidDateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -14,7 +14,8 @@ import java.time.LocalDateTime;
  */
 public class StatusDate {
 
-    public static final String MESSAGE_CONSTRAINTS = "Status date should be in the format of d-M-yy or d-M-yy HHmm";
+    public static final String MESSAGE_CONSTRAINTS = "Status date should be in the format of d-M-yy or d-M-yy HHmm"
+            + "and set in the future";
 
     private final LocalDateTime statusDate;
 
@@ -29,18 +30,18 @@ public class StatusDate {
     }
 
     /**
-     * Returns true if the given statusDate is valid.
+     * Returns true if the given statusDate is valid. Status date must be in the future and have the right format.
      *
      * @param statusDate Input statusDate.
      * @return True if statusDate has a valid input format, false otherwise.
      */
     public static boolean isValidDate(String statusDate) {
-        return isDateFormat(statusDate) || isDateTimeFormat(statusDate);
+        return isValidDateFormat(statusDate) || isValidDateTimeFormat(statusDate);
     }
 
     /**
-     * Checks if the otherDate has the same statusDate as this Date object.
-     * Two LocalDateTime objects have ths same statusDate if they have the same year and statusDate.
+     * Checks if the otherDate has the same statusDate as this StatusDate object.
+     * Two LocalDateTime objects have ths same date if are on the same day in the same year.
      *
      * @param otherDate Date of the other task.
      * @return True if the other task has the same statusDate.

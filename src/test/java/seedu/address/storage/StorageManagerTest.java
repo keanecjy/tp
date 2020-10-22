@@ -2,7 +2,7 @@ package seedu.address.storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.application.SampleApplicationItems.getSampleApplicationItemList;
 
 import java.nio.file.Path;
 
@@ -68,21 +68,22 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void addressBookReadSave() throws Exception {
+    public void applicationItemListReadSave() throws Exception {
         /*
          * Note: This is an integration test that verifies the StorageManager is properly wired to the
          * {@link JsonItemListStorage} class.
          * More extensive testing of UserPref saving/reading is done in {@link JsonAddressBoolStorageTest} class.
          */
-        ItemList<Person> original = getTypicalAddressBook();
-        storageManager.getAddressBookStorage().saveItemList(original);
-        ReadOnlyItemList<Person> retrieved = storageManager.getAddressBookStorage().readItemList().get();
+        ItemList<ApplicationItem> getSampleApplicationItems;
+        ItemList<ApplicationItem> original = getSampleApplicationItemList();
+        storageManager.saveApplicationItemList(original);
+        ReadOnlyItemList<ApplicationItem> retrieved = storageManager.readApplicationItemList().get();
         assertEquals(original, new ItemList<>(retrieved));
     }
 
     @Test
     public void getItemListFilePath() {
-        assertNotNull(storageManager.getAddressBookStorage().getItemListFilePath());
+        assertNotNull(storageManager.getApplicationItemListFilePath());
     }
 
 }

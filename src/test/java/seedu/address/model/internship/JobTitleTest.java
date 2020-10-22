@@ -5,15 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.internship.InternshipItemFieldsUtil.INVALID_JOB_TITLE_BLANK;
+import static seedu.address.testutil.internship.InternshipItemFieldsUtil.INVALID_JOB_TITLE_DASH;
 import static seedu.address.testutil.internship.InternshipItemFieldsUtil.VALID_JOB_TITLE_FE;
 import static seedu.address.testutil.internship.InternshipItemFieldsUtil.VALID_JOB_TITLE_SWE;
 
 import org.junit.jupiter.api.Test;
 
 public class JobTitleTest {
-
-    private static final String INVALID_JOB_TITLE_DASH = "Software - Engineer";
-    private static final String INVALID_JOB_TITLE_BLANK = " ";
 
     private static final JobTitle VALID_JOB_TITLE_ONE = new JobTitle(VALID_JOB_TITLE_SWE);
     private static final JobTitle VALID_JOB_TITLE_TWO = new JobTitle(VALID_JOB_TITLE_FE);

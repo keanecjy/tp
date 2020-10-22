@@ -88,7 +88,7 @@ public class AddInternshipCommand extends AddCommandAbstract {
         }
 
         companyItem.addInternship(internshipItem);
-
+        model.setCompanyViewIndex(companyIndex);
         String addSuccessMessage = String.format(MESSAGE_ADD_SUCCESS, INTERNSHIP_NAME, internshipItem);
         return getCommandResult(model, addSuccessMessage, TabName.COMPANY);
     }

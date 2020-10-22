@@ -1,6 +1,7 @@
 package seedu.address.storage;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Optional;
 
 import seedu.address.commons.exceptions.DataConversionException;
@@ -8,12 +9,9 @@ import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.application.ApplicationItem;
 import seedu.address.model.company.CompanyItem;
-import seedu.address.model.person.Person;
+import seedu.address.model.item.ItemList;
+import seedu.address.model.item.ReadOnlyItemList;
 import seedu.address.model.profile.ProfileItem;
-import seedu.address.storage.application.JsonAdaptedApplicationItem;
-import seedu.address.storage.company.JsonAdaptedCompanyItem;
-import seedu.address.storage.person.JsonAdaptedPerson;
-import seedu.address.storage.profile.JsonAdaptedProfileItem;
 
 /**
  * API of the Storage component
@@ -27,31 +25,102 @@ public interface Storage extends UserPrefsStorage {
     void saveUserPrefs(ReadOnlyUserPrefs userPrefs) throws IOException;
 
     /**
-     * Gets the address book storage.
-     *
-     * @return address book storage.
+     * Returns the file path of the application data file.
      */
-    ListStorage<Person, JsonAdaptedPerson> getAddressBookStorage();
+    Path getApplicationItemListFilePath();
 
     /**
-     * Gets the application item list storage.
+     * Returns application ItemList data as a {@link ItemList}.
+     * Returns {@code Optional.empty()} if storage file is not found.
      *
-     * @return application item list storage.
+     * @throws DataConversionException if the data in storage is not in the expected format.
+     * @throws IOException             if there was any problem when reading from the storage.
      */
-    ListStorage<ApplicationItem, JsonAdaptedApplicationItem> getApplicationItemListStorage();
+    Optional<ReadOnlyItemList<ApplicationItem>> readApplicationItemList() throws DataConversionException, IOException;
 
     /**
-     * Gets the company item list storage.
-     *
-     * @return company item list storage.
+     * @see #getApplicationItemListFilePath()
      */
-    ListStorage<CompanyItem, JsonAdaptedCompanyItem> getCompanyItemListStorage();
+    Optional<ReadOnlyItemList<ApplicationItem>> readApplicationItemList(
+            Path filePath) throws DataConversionException, IOException;
 
     /**
-     * Gets the profile item list storage.
+     * Saves the given {@link ItemList} to the storage.
      *
-     * @return profile item list storage.
+     * @param itemList cannot be null.
+     * @throws IOException if there was any problem writing to the file.
      */
-    ListStorage<ProfileItem, JsonAdaptedProfileItem> getProfileItemListStorage();
+    void saveApplicationItemList(ReadOnlyItemList<ApplicationItem> itemList) throws IOException;
+
+    /**
+     * @see #saveApplicationItemList(ReadOnlyItemList)
+     */
+    void saveApplicationItemList(ReadOnlyItemList<ApplicationItem> itemList, Path filePath) throws IOException;
+
+    /**
+     * Returns the file path of the company data file.
+     */
+    Path getCompanyItemListFilePath();
+
+    /**
+     * Returns company ItemList data as a {@link ItemList}.
+     * Returns {@code Optional.empty()} if storage file is not found.
+     *
+     * @throws DataConversionException if the data in storage is not in the expected format.
+     * @throws IOException             if there was any problem when reading from the storage.
+     */
+    Optional<ReadOnlyItemList<CompanyItem>> readCompanyItemList() throws DataConversionException, IOException;
+
+    /**
+     * @see #getCompanyItemListFilePath()
+     */
+    Optional<ReadOnlyItemList<CompanyItem>> readCompanyItemList(
+            Path filePath) throws DataConversionException, IOException;
+
+    /**
+     * Saves the given {@link ItemList} to the storage.
+     *
+     * @param itemList cannot be null.
+     * @throws IOException if there was any problem writing to the file.
+     */
+    void saveCompanyItemList(ReadOnlyItemList<CompanyItem> itemList) throws IOException;
+
+    /**
+     * @see #saveCompanyItemList(ReadOnlyItemList)
+     */
+    void saveCompanyItemList(ReadOnlyItemList<CompanyItem> itemList, Path filePath) throws IOException;
+
+    /**
+     * Returns the file path of the profile data file.
+     */
+    Path getProfileItemListFilePath();
+
+    /**
+     * Returns profile ItemList data as a {@link ItemList}.
+     * Returns {@code Optional.empty()} if storage file is not found.
+     *
+     * @throws DataConversionException if the data in storage is not in the expected format.
+     * @throws IOException             if there was any problem when reading from the storage.
+     */
+    Optional<ReadOnlyItemList<ProfileItem>> readProfileItemList() throws DataConversionException, IOException;
+
+    /**
+     * @see #getProfileItemListFilePath()
+     */
+    Optional<ReadOnlyItemList<ProfileItem>> readProfileItemList(
+            Path filePath) throws DataConversionException, IOException;
+
+    /**
+     * Saves the given {@link ItemList} to the storage.
+     *
+     * @param itemList cannot be null.
+     * @throws IOException if there was any problem writing to the file.
+     */
+    void saveProfileItemList(ReadOnlyItemList<ProfileItem> itemList) throws IOException;
+
+    /**
+     * @see #saveProfileItemList(ReadOnlyItemList)
+     */
+    void saveProfileItemList(ReadOnlyItemList<ProfileItem> itemList, Path filePath) throws IOException;
 
 }

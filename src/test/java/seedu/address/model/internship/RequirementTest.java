@@ -5,15 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.internship.InternshipItemFieldsUtil.INVALID_REQUIREMENT_EMPTY;
+import static seedu.address.testutil.internship.InternshipItemFieldsUtil.INVALID_REQUIREMENT_SPACES;
 import static seedu.address.testutil.internship.InternshipItemFieldsUtil.VALID_REQUIREMENT_R;
 import static seedu.address.testutil.internship.InternshipItemFieldsUtil.VALID_REQUIREMENT_VUE;
 
 import org.junit.jupiter.api.Test;
 
 public class RequirementTest {
-
-    private static final String INVALID_REQUIREMENT_EMPTY = "";
-    private static final String INVALID_REQUIREMENT_SPACES = "   ";
 
     private static final Requirement VALID_REQUIREMENT_ONE = new Requirement(VALID_REQUIREMENT_VUE);
     private static final Requirement VALID_REQUIREMENT_TWO = new Requirement(VALID_REQUIREMENT_R);

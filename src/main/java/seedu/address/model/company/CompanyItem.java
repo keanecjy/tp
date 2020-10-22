@@ -2,6 +2,11 @@ package seedu.address.model.company;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_ITEM_DISPLAYED_INDEX;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.util.CompanyItemUtil.ADDRESS_OUTPUT_NAME;
+import static seedu.address.model.util.CompanyItemUtil.EMAIL_OUTPUT_NAME;
+import static seedu.address.model.util.CompanyItemUtil.INDUSTRIES_OUTPUT_NAME;
+import static seedu.address.model.util.CompanyItemUtil.INTERNSHIPS_OUTPUT_NAME;
+import static seedu.address.model.util.CompanyItemUtil.PHONE_OUTPUT_NAME;
 import static seedu.address.model.util.ItemUtil.COMPANY_NAME;
 import static seedu.address.model.util.ItemUtil.INTERNSHIP_NAME;
 import static seedu.address.ui.panel.PanelDisplayKeyword.ADDRESS_DISPLAY_NAME;
@@ -85,6 +90,22 @@ public class CompanyItem extends Item {
         return address;
     }
 
+    public String getCompanyNameValue() {
+        return companyName.getValue();
+    }
+
+    public String getPhoneValue() {
+        return phone.getValue();
+    }
+
+    public String getEmailValue() {
+        return email.getValue();
+    }
+
+    public String getAddressValue() {
+        return address.getValue();
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -161,7 +182,7 @@ public class CompanyItem extends Item {
 
         return otherCompanyItem != null
                 && otherCompanyItem.getCompanyName().equals(getCompanyName())
-                && (otherCompanyItem.getPhone().equals(getPhone()) || otherCompanyItem.getEmail().equals(getEmail()));
+                && otherCompanyItem.getAddress().equals(getAddress());
     }
 
     /**
@@ -197,20 +218,16 @@ public class CompanyItem extends Item {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getCompanyName())
-                .append(" Phone: ")
+                .append(PHONE_OUTPUT_NAME)
                 .append(getPhone())
-                .append(" Email: ")
+                .append(EMAIL_OUTPUT_NAME)
                 .append(getEmail())
-                .append(" Address: ")
-                .append(getAddress());
-        if (!industries.isEmpty()) {
-            builder.append(" Industries: ");
-            getIndustries().forEach(industry -> builder.append(industry + " "));
-        }
-        if (!internships.isEmpty()) {
-            builder.append("Internships: ");
-            getInternships().forEach(builder::append);
-        }
+                .append(ADDRESS_OUTPUT_NAME)
+                .append(getAddress())
+                .append(INDUSTRIES_OUTPUT_NAME)
+                .append(getIndustries().isEmpty() ? "-" : getIndustries())
+                .append(INTERNSHIPS_OUTPUT_NAME)
+                .append(getInternships().isEmpty() ? "-" : getInternships());
         return builder.toString();
     }
 

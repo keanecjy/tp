@@ -4,16 +4,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.commons.util.GeneralStringUtil.COMMA_WITH_SPACE;
-import static seedu.address.commons.util.NumberUtil.NUMBER_FIVE;
-import static seedu.address.commons.util.NumberUtil.NUMBER_SEVEN;
 import static seedu.address.model.util.ApplicationItemUtil.DATE_OUTPUT_NAME;
 import static seedu.address.model.util.ApplicationItemUtil.STATUS_OUTPUT_NAME;
 import static seedu.address.model.util.ItemUtil.APPLICATION_NAME;
+import static seedu.address.model.util.StatusUtil.APPLIED_KEYWORD;
 import static seedu.address.model.util.StatusUtil.OFFERED_KEYWORD;
 import static seedu.address.testutil.application.ApplicationItemFieldsUtil.EXPECTED_DATE_JUNE_2021;
 import static seedu.address.testutil.application.ApplicationItemFieldsUtil.STATUS_DATE_JUNE_2022;
-import static seedu.address.testutil.application.ApplicationItemFieldsUtil.STATUS_REJECTED;
 import static seedu.address.testutil.application.SampleApplicationItems.LAZADA_REJECTED;
 import static seedu.address.testutil.application.SampleApplicationItems.SHOPEE_OFFERED;
 import static seedu.address.testutil.internship.SampleInternshipItems.GOLDMAN_DA;
@@ -37,7 +34,7 @@ public class ApplicationItemTest {
     @Test
     public void getMapping_size_success() {
         LinkedHashMap<String, Object> mapping = SHOPEE_OFFERED.getMapping();
-        assertEquals(NUMBER_SEVEN, mapping.size());
+        assertEquals(7, mapping.size());
     }
 
     @Test
@@ -65,7 +62,7 @@ public class ApplicationItemTest {
         assertTrue(SHOPEE_OFFERED.isSameItem(editedShopeeOffered));
 
         // different status, everything else the same -> returns true
-        editedShopeeOffered = new ApplicationItemBuilder(SHOPEE_OFFERED).withStatus(STATUS_REJECTED).build();
+        editedShopeeOffered = new ApplicationItemBuilder(SHOPEE_OFFERED).withStatus(APPLIED_KEYWORD).build();
         assertTrue(SHOPEE_OFFERED.isSameItem(editedShopeeOffered));
 
         // different status date, everything else the same -> returns true
@@ -110,7 +107,7 @@ public class ApplicationItemTest {
         assertNotEquals(SHOPEE_OFFERED, null);
 
         // different type -> returns false
-        assertNotEquals(SHOPEE_OFFERED, NUMBER_FIVE);
+        assertNotEquals(SHOPEE_OFFERED, 5);
 
         // different items -> returns false
         assertNotEquals(SHOPEE_OFFERED, SHOPEE_SWE);
@@ -124,7 +121,7 @@ public class ApplicationItemTest {
         assertNotEquals(editedShopeeOffered, SHOPEE_OFFERED);
 
         // different status -> returns false
-        editedShopeeOffered = new ApplicationItemBuilder(SHOPEE_OFFERED).withStatus(STATUS_REJECTED).build();
+        editedShopeeOffered = new ApplicationItemBuilder(SHOPEE_OFFERED).withStatus(APPLIED_KEYWORD).build();
         assertNotEquals(editedShopeeOffered, SHOPEE_OFFERED);
 
         // different status date -> returns false
@@ -145,7 +142,7 @@ public class ApplicationItemTest {
         builder.append(SHOPEE_OFFERED.getInternshipItem())
                 .append(STATUS_OUTPUT_NAME)
                 .append(OFFERED_KEYWORD)
-                .append(COMMA_WITH_SPACE)
+                .append(", ")
                 .append(DATE_OUTPUT_NAME)
                 .append(EXPECTED_DATE_JUNE_2021);
         assertEquals(builder.toString(), SHOPEE_OFFERED.toString());

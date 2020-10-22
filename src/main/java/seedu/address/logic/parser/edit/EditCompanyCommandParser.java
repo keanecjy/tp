@@ -1,12 +1,15 @@
 package seedu.address.logic.parser.edit;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.edit.EditCommandAbstract.MESSAGE_NOT_EDITED;
 import static seedu.address.logic.commands.edit.EditCompanyCommand.EditCompanyDescriptor;
 import static seedu.address.logic.parser.clisyntax.CompanyCliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.clisyntax.CompanyCliSyntax.PREFIX_COMPANY_NAME;
 import static seedu.address.logic.parser.clisyntax.CompanyCliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.clisyntax.CompanyCliSyntax.PREFIX_INDUSTRY;
 import static seedu.address.logic.parser.clisyntax.CompanyCliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.util.GeneralParserUtil.argumentsAreValid;
 import static seedu.address.logic.parser.util.GeneralParserUtil.getIndexInPreamble;
 
 import java.util.Collection;
@@ -39,8 +42,12 @@ public class EditCompanyCommandParser implements Parser<EditCommandAbstract> {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_COMPANY_NAME, PREFIX_PHONE,
                 PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_INDUSTRY);
 
-        Index index = getIndexInPreamble(argMultimap, EditCompanyCommand.MESSAGE_USAGE);
+        if (!argumentsAreValid(true, argMultimap)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    EditCompanyCommand.MESSAGE_USAGE));
+        }
 
+        Index index = getIndexInPreamble(argMultimap);
         EditCompanyDescriptor editCompanyDescriptor = new EditCompanyDescriptor();
         if (argMultimap.getValue(PREFIX_COMPANY_NAME).isPresent()) {
             editCompanyDescriptor.setName(CompanyParserUtil.parseCompanyName(argMultimap.getValue(PREFIX_COMPANY_NAME)
@@ -60,7 +67,7 @@ public class EditCompanyCommandParser implements Parser<EditCommandAbstract> {
                 .ifPresent(editCompanyDescriptor::setIndustries);
 
         if (!editCompanyDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(EditCompanyCommand.MESSAGE_NOT_EDITED);
+            throw new ParseException(MESSAGE_NOT_EDITED);
         }
 
         return new EditCompanyCommand(index, editCompanyDescriptor);

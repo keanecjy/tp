@@ -55,7 +55,10 @@ public class Tabs extends VBox {
     private Logic logic;
 
     /**
-     * Constructs the {@code Tabs} in the given {@code primaryStage} of the {@code mainWindow}.
+     * Creates the {@code Tabs} in the given {@code primaryStage} of the {@code mainWindow}.
+     *
+     * @param mainWindow The Main Window of the app.
+     * @param logic The logic unit of the app.
      */
     private Tabs(MainWindow mainWindow, Logic logic) {
         try {
@@ -78,13 +81,19 @@ public class Tabs extends VBox {
 
     /**
      * Creates the {@code Tabs} information in the {@code primaryStage} of the {@code mainWindow}.
+     *
+     * @param mainWindow The Main Window of the app.
+     * @param logic The logic unit of the app.
+     * @return A tab display.
      */
     public static Tabs getTabs(MainWindow mainWindow, Logic logic) {
         return new Tabs(mainWindow, logic);
     }
 
     /**
-     * Switch tabs.
+     * Switches the tab display depending on {@code tabName}.
+     *
+     * @param tabName The tab to be switched to.
      */
     public void switchTab(TabName tabName) {
         switch (tabName) {
@@ -151,13 +160,21 @@ public class Tabs extends VBox {
 
     /**
      * Sets the color of the {@code scene} to be transparent.
+     *
+     * @param scene The scene to be changed in color.
+     * @param distance The distance of the scene in the {@code mainWindow}.
+     * @param <T> The type of scene.
      */
     private <T extends Pane> void setTransparent(T scene, String distance) {
         scene.setStyle(TRANSPARENT + distance);
     }
 
     /**
-     * Sets the color of the {@code scene} to be {@code TAB_COLOR}.
+     * Sets the color of the {@code scene} to be of its own {@code TAB_COLOR}.
+     *
+     * @param scene The scene to be changed in color.
+     * @param distance The distance of the scene in the {@code mainWindow}.
+     * @param <T> The type of scene.
      */
     private <T extends Pane> void setColor(T scene, String distance) {
         scene.setStyle(TAB_COLOR + distance);

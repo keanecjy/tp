@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDateTime;
 
-import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.application.Status;
 import seedu.address.model.application.StatusDate;
@@ -13,7 +12,7 @@ import seedu.address.model.util.DateUtil;
 /**
  * ApplicationParserUtil class which parses all the fields in an ApplicationItem.
  */
-public class ApplicationParserUtil {
+public abstract class ApplicationParserUtil {
 
     /**
      * Parses a {@code String status} into a {@code Status}.
@@ -23,7 +22,7 @@ public class ApplicationParserUtil {
      */
     public static Status parseStatus(String status) throws ParseException {
         requireNonNull(status);
-        String trimmedStatus = StringUtil.toTitleCase(status.trim());
+        String trimmedStatus = status.trim();
 
         if (!Status.isValidStatus(trimmedStatus)) {
             throw new ParseException(Status.MESSAGE_CONSTRAINTS);
@@ -41,7 +40,7 @@ public class ApplicationParserUtil {
         requireNonNull(statusDate);
         String trimmedStatusDate = statusDate.trim();
 
-        if (!StatusDate.isValidDate(statusDate)) {
+        if (!StatusDate.isValidDate(trimmedStatusDate)) {
             throw new ParseException(StatusDate.MESSAGE_CONSTRAINTS);
         }
 

@@ -48,7 +48,7 @@ public class ViewApplicationCommand extends ViewCommand {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<ApplicationItem> lastShownList = model.getApplicationList().getFilteredItemList();
+        List<ApplicationItem> lastShownList = model.getFilteredApplicationList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(String.format(MESSAGE_INVALID_ITEM_DISPLAYED_INDEX, APPLICATION_NAME));

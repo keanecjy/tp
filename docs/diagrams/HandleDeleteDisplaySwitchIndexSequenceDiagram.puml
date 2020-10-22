@@ -1,0 +1,79 @@
+@startuml
+!include InternHunterStyle.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":CommandUtil" as CommandUtil LOGIC_COLOR
+end box
+
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+participant ":ViewManager" as ViewManager MODEL_COLOR
+end box
+
+mainframe sd handleDeleteDisplaySwitchIndex
+activate CommandUtil
+
+alt current tab at company tab
+    CommandUtil -> Model : getCompanyViewIndex()
+    activate Model
+    Model -> ViewManager : getCompanyViewIndex()
+    activate ViewManager
+    ViewManager -> Model :  companyIndex
+    deactivate ViewManager
+    Model --> CommandUtil : companyIndex
+    deactivate Model
+    CommandUtil -> CommandUtil : handleViewIndex(model::setCompanyViewIndex, currentIndex, newIndex)
+    opt current index greater than new index
+        opt current index - 1  > 0
+            CommandUtil -> Model : setCompanyViewIndex(Index.fromOneBased(currentIndex.getOneBased() - 1))
+            activate Model
+            Model -> ViewManager : setCompanyViewIndex(index)
+            activate ViewManager
+            deactivate ViewManager
+            deactivate Model
+        end
+    end
+else current tab at application tab
+    CommandUtil -> Model : getApplicationViewIndex()
+    activate Model
+    Model -> ViewManager : getApplicationViewIndex()
+    activate ViewManager
+    ViewManager -> Model :  applicationIndex
+    deactivate ViewManager
+    Model --> CommandUtil : applicationIndex
+    deactivate Model
+    CommandUtil -> CommandUtil : handleViewIndex(model::setApplicationViewIndex, currentIndex, newIndex)
+    opt current index greater than new index
+        opt current index - 1  > 0
+            CommandUtil -> Model : setApplicationViewIndex(Index.fromOneBased(currentIndex.getOneBased() - 1))
+            activate Model
+            Model -> ViewManager : setApplicationViewIndex(index)
+            activate ViewManager
+            deactivate ViewManager
+            deactivate Model
+        end
+    end
+else current tab at profile tab
+    CommandUtil -> Model : getProfileViewIndex()
+    activate Model
+    Model -> ViewManager : getCompanyViewIndex()
+    activate ViewManager
+    ViewManager -> Model :  profileIndex
+    deactivate ViewManager
+    Model --> CommandUtil : profileIndex
+    deactivate Model
+    CommandUtil -> CommandUtil : handleViewIndex(model::setProfileViewIndex, currentIndex, newIndex)
+    opt current index greater than new index
+        opt current index - 1  > 0
+            CommandUtil -> Model : setProfileViewIndex(Index.fromOneBased(currentIndex.getOneBased() - 1))
+            activate Model
+            Model -> ViewManager : setProfileViewIndex(index)
+            activate ViewManager
+            deactivate ViewManager
+            deactivate Model
+        end
+    end
+end
+deactivate CommandUtil
+@enduml

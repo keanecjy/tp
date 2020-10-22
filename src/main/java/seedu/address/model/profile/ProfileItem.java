@@ -44,8 +44,16 @@ public class ProfileItem extends Item {
         return title;
     }
 
+    public String getTitleValue() {
+        return title.getValue();
+    }
+
     public ProfileItemCategory getCategory() {
         return category;
+    }
+
+    public String getCategoryString() {
+        return category.toString();
     }
 
     /**
@@ -147,4 +155,3 @@ public class ProfileItem extends Item {
         return new JsonAdaptedProfileItem(this);
     }
 }
-

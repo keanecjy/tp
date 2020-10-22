@@ -37,14 +37,14 @@ public class DeleteProfileCommand extends DeleteCommandAbstract {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         TabName currentTabName = model.getTabName();
-        List<ProfileItem> lastShownList = model.getProfileList().getFilteredItemList();
+        List<ProfileItem> lastShownList = model.getFilteredProfileList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(String.format(Messages.MESSAGE_INVALID_ITEM_DISPLAYED_INDEX, PROFILE_NAME));
         }
 
         ProfileItem profileToDelete = lastShownList.get(targetIndex.getZeroBased());
-        model.getProfileList().deleteItem(profileToDelete);
+        model.deleteProfileItem(profileToDelete);
 
         String deleteSuccessMessage = String.format(Messages.MESSAGE_DELETED_ITEM, PROFILE_NAME, profileToDelete);
         return getCommandResult(model, deleteSuccessMessage, currentTabName, TabName.PROFILE, targetIndex);

@@ -12,14 +12,15 @@ import static seedu.address.model.util.DateUtil.convertOutputFormat;
 import static seedu.address.model.util.DateUtil.convertToDateTime;
 import static seedu.address.model.util.DateUtil.extractDayAndMonth;
 import static seedu.address.model.util.DateUtil.formatterDateTime;
-import static seedu.address.model.util.DateUtil.isDateFormat;
-import static seedu.address.model.util.DateUtil.isDateTimeFormat;
+import static seedu.address.model.util.DateUtil.isValidDateFormat;
+import static seedu.address.model.util.DateUtil.isValidDateTimeFormat;
 import static seedu.address.model.util.DateUtil.isValidOutputDate;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import org.junit.jupiter.api.Test;
 
@@ -28,52 +29,52 @@ public class DateUtilTest {
     /**
      * DATE_TIME FORMATS
      */
-    private static final String VALID_DATE_TIME_ONE = "18-9-20 2240";
-    private static final String VALID_DATE_TIME_TWO = "9-09-20 0000";
-    private static final String INVALID_DATE_TIME_ONE = "18-9-20   2240";
-    private static final String INVALID_DATE_TIME_TWO = "9-09-20 00 00";
+    private static final String VALID_DATE_TIME_ONE = "18-9-21 2240";
+    private static final String VALID_DATE_TIME_TWO = "9-09-21 0000";
+    private static final String INVALID_DATE_TIME_ONE = "18-9-21   2240";
+    private static final String INVALID_DATE_TIME_TWO = "9-09-21 00 00";
 
     /**
      * DATE FORMATS
      */
-    private static final String VALID_DATE_ONE = "18-9-20";
-    private static final String VALID_DATE_TWO = "9-09-20";
+    private static final String VALID_DATE_ONE = "18-9-21";
+    private static final String VALID_DATE_TWO = "9-09-21";
     private static final String INVALID_DATE_ONE = "20-09-20 ";
-    private static final String INVALID_DATE_TWO = " 9-09-20";
+    private static final String INVALID_DATE_TWO = " 9-09-21";
 
     /**
      * OUTPUT FORMATS
      */
-    private static final String VALID_OUTPUT_FORMAT = "18 Sep 2020 @ 10.40 PM";
-    private static final String INVALID_OUTPUT_FORMAT = "18 Sep 2020 @ 10.40 pm";
+    private static final String VALID_OUTPUT_FORMAT = "18 Sep 2021 @ 10.40 PM";
+    private static final String INVALID_OUTPUT_FORMAT = "18 Sep 2021 @ 10.40 pm";
     private static final String VALID_SHORT_FORMAT = "18 Sep";
 
     @Test
-    public void isDateTimeFormat_validFormats_success() {
-        assertTrue(isDateTimeFormat(VALID_DATE_TIME_ONE));
-        assertTrue(isDateTimeFormat(VALID_DATE_TIME_TWO));
+    public void isValidDateTimeFormat_validFormats_success() {
+        assertTrue(isValidDateTimeFormat(VALID_DATE_TIME_ONE));
+        assertTrue(isValidDateTimeFormat(VALID_DATE_TIME_TWO));
     }
 
     @Test
-    public void isDateTimeFormat_invalidFormats_success() {
-        assertFalse(isDateTimeFormat(INVALID_DATE_TIME_ONE));
-        assertFalse(isDateTimeFormat(INVALID_DATE_TIME_TWO));
-        assertFalse(isDateTimeFormat(VALID_DATE_ONE));
-        assertFalse(isDateTimeFormat(VALID_DATE_TWO));
+    public void isValidDateTimeFormat_invalidFormats_success() {
+        assertFalse(isValidDateTimeFormat(INVALID_DATE_TIME_ONE));
+        assertFalse(isValidDateTimeFormat(INVALID_DATE_TIME_TWO));
+        assertFalse(isValidDateTimeFormat(VALID_DATE_ONE));
+        assertFalse(isValidDateTimeFormat(VALID_DATE_TWO));
     }
 
     @Test
-    public void isDateFormat_validFormats_success() {
-        assertTrue(isDateFormat(VALID_DATE_ONE));
-        assertTrue(isDateFormat(VALID_DATE_TWO));
+    public void isValidDateFormat_validFormats_success() {
+        assertTrue(isValidDateFormat(VALID_DATE_ONE));
+        assertTrue(isValidDateFormat(VALID_DATE_TWO));
     }
 
     @Test
-    public void isDateFormat_invalidFormats_success() {
-        assertFalse(isDateFormat(INVALID_DATE_ONE));
-        assertFalse(isDateFormat(INVALID_DATE_TWO));
-        assertFalse(isDateFormat(VALID_DATE_TIME_ONE));
-        assertFalse(isDateFormat(VALID_DATE_TIME_TWO));
+    public void isValidDateFormat_invalidFormats_success() {
+        assertFalse(isValidDateFormat(INVALID_DATE_ONE));
+        assertFalse(isValidDateFormat(INVALID_DATE_TWO));
+        assertFalse(isValidDateFormat(VALID_DATE_TIME_ONE));
+        assertFalse(isValidDateFormat(VALID_DATE_TIME_TWO));
     }
 
 
@@ -99,7 +100,7 @@ public class DateUtilTest {
     }
 
     @Test
-    public void convertToDateTime_invalidFormatsErrorMessage_success() {
+    public void convertToDateTime_invalidFormatErrorMessage_success() {
         AssertionError ae = assertThrows(AssertionError.class, () -> convertToDateTime(INVALID_DATE_TIME_ONE));
         assertEquals(ERROR_MESSAGE, ae.getMessage());
     }
@@ -122,7 +123,7 @@ public class DateUtilTest {
 
     @Test
     public void formatterDateTime_validInput_success() {
-        DateTimeFormatter expected = DateTimeFormatter.ofPattern(DATE_TIME_INPUT_FORMAT);
+        DateTimeFormatter expected = DateTimeFormatter.ofPattern(DATE_TIME_INPUT_FORMAT, Locale.ENGLISH);
         // Comparison using toString since different DateTimeFormatter objects are not equal
         assertEquals(expected.toString(), formatterDateTime(DATE_TIME_INPUT_FORMAT).toString());
     }

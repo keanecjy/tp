@@ -19,16 +19,12 @@ import seedu.address.model.application.ApplicationItem;
 import seedu.address.model.company.CompanyItem;
 import seedu.address.model.internship.InternshipItem;
 import seedu.address.model.internship.exceptions.InconsistentInternshipException;
-import seedu.address.model.item.Item;
 import seedu.address.model.item.ItemList;
 import seedu.address.model.item.ReadOnlyItemList;
 import seedu.address.model.person.Person;
 import seedu.address.model.profile.ProfileItem;
-import seedu.address.model.util.ItemUtil;
-import seedu.address.storage.ListStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.UserPrefsStorage;
-import seedu.address.storage.item.JsonAdaptedItem;
 
 /**
  * A collection of utility functions for the MainApp.
@@ -38,31 +34,86 @@ public class MainAppUtil {
     private static final Logger logger = LogsCenter.getLogger(MainAppUtil.class);
 
     /**
-     * Gets the initial item list.
+     * Gets the initial application item list.
      *
-     * @param itemListStorage storage of the item list.
-     * @param <T>             type of the item.
-     * @param <U>             type of the json adapted item.
-     * @return initial item list.
+     * @param storage storage the application item list is saved in.
+     * @return initial application item list.
      */
-    public static <T extends Item, U extends JsonAdaptedItem> ReadOnlyItemList<T> initItemList(
-            ListStorage<T, U> itemListStorage, String itemType) {
-        Optional<ReadOnlyItemList<T>> itemListOptional;
-        ReadOnlyItemList<T> initialItemListData;
+    public static ReadOnlyItemList<ApplicationItem> initApplicationItemList(Storage storage) {
+        Optional<ReadOnlyItemList<ApplicationItem>> itemListOptional;
+        ReadOnlyItemList<ApplicationItem> initialItemListData;
         try {
-            itemListOptional = itemListStorage.readItemList();
+            itemListOptional = storage.readApplicationItemList();
             if (itemListOptional.isEmpty()) {
-                logger.info("Data file not found. Will be starting with a sample " + itemType + " item list");
+                logger.info("Data file not found. Will be starting with a sample application item list");
             }
             //to do sample data
             initialItemListData = itemListOptional.orElse(new ItemList<>());
         } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty "
-                    + itemType + "item list");
+            logger.warning("Data file not in the correct format. "
+                    + "Will be starting with an empty application item list");
             initialItemListData = new ItemList<>();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty "
-                    + itemType + "item list");
+            logger.warning("Problem while reading from the file. "
+                    + "Will be starting with an empty application item list");
+            initialItemListData = new ItemList<>();
+        }
+
+        return initialItemListData;
+    }
+
+    /**
+     * Gets the initial company item list.
+     *
+     * @param storage storage the company item list is saved in.
+     * @return initial company item list.
+     */
+    public static ReadOnlyItemList<CompanyItem> initCompanyItemList(Storage storage) {
+        Optional<ReadOnlyItemList<CompanyItem>> itemListOptional;
+        ReadOnlyItemList<CompanyItem> initialItemListData;
+        try {
+            itemListOptional = storage.readCompanyItemList();
+            if (itemListOptional.isEmpty()) {
+                logger.info("Data file not found. Will be starting with a sample company item list");
+            }
+            //to do sample data
+            initialItemListData = itemListOptional.orElse(new ItemList<>());
+        } catch (DataConversionException e) {
+            logger.warning("Data file not in the correct format. "
+                    + "Will be starting with an empty company item list");
+            initialItemListData = new ItemList<>();
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. "
+                    + "Will be starting with an empty company item list");
+            initialItemListData = new ItemList<>();
+        }
+
+        return initialItemListData;
+    }
+
+    /**
+     * Gets the initial profile item list.
+     *
+     * @param storage storage the profile item list is saved in.
+     * @return initial profile item list.
+     */
+    public static ReadOnlyItemList<ProfileItem> initProfileItemList(Storage storage) {
+        Optional<ReadOnlyItemList<ProfileItem>> itemListOptional;
+        ReadOnlyItemList<ProfileItem> initialItemListData;
+        try {
+            itemListOptional = storage.readProfileItemList();
+            if (itemListOptional.isEmpty()) {
+                logger.info("Data file not found. Will be starting with a sample profile item list");
+            }
+            //to do sample data
+            initialItemListData = itemListOptional.orElse(new ItemList<>());
+        } catch (DataConversionException e) {
+            logger.warning("Data file not in the correct format. "
+                    + "Will be starting with an empty profile item list");
+            initialItemListData = new ItemList<>();
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. "
+                    + "Will be starting with an empty profile item list");
             initialItemListData = new ItemList<>();
         }
 
@@ -107,13 +158,10 @@ public class MainAppUtil {
      * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
      */
     public static Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
-        ItemList<Person> addressBook = new ItemList<>(initItemList(storage.getAddressBookStorage(), "AB3"));
-        ItemList<CompanyItem> companyItemList = new ItemList<>(initItemList(storage.getCompanyItemListStorage(),
-                ItemUtil.COMPANY_NAME));
-        ItemList<ApplicationItem> applicationItemList =
-                new ItemList<>(initItemList(storage.getApplicationItemListStorage(), ItemUtil.APPLICATION_NAME));
-        ItemList<ProfileItem> profileItemList = new ItemList<>(initItemList(storage.getProfileItemListStorage(),
-                ItemUtil.PROFILE_ITEM_NAME));
+        ItemList<Person> addressBook = new ItemList<>();
+        ItemList<CompanyItem> companyItemList = new ItemList<>(initCompanyItemList(storage));
+        ItemList<ApplicationItem> applicationItemList = new ItemList<>(initApplicationItemList(storage));
+        ItemList<ProfileItem> profileItemList = new ItemList<>(initProfileItemList(storage));
 
         try {
             matchInternships(applicationItemList, companyItemList);

@@ -37,14 +37,14 @@ public class DeleteCompanyCommand extends DeleteCommandAbstract {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        CompanyItem companyToDelete = getCompany(model, targetIndex);
         TabName currentTabName = model.getTabName();
+        CompanyItem companyToDelete = getCompany(model, targetIndex);
 
         // Delete all internships in the company
         deleteAllInternshipsInCompany(model, companyToDelete);
 
         // Delete the company
-        model.getCompanyList().deleteItem(companyToDelete);
+        model.deleteCompany(companyToDelete);
 
         String deleteSuccessMessage = String.format(MESSAGE_DELETED_ITEM, COMPANY_NAME, companyToDelete);
         return getCommandResult(model, deleteSuccessMessage, currentTabName, TabName.COMPANY, targetIndex);

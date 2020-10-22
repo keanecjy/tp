@@ -12,12 +12,34 @@ import seedu.address.model.profile.ProfileItem;
 import seedu.address.ui.tabs.TabName;
 
 /**
- * A display containing information about the chosen profile's item.
+ * A UI component that displays all the information of a {@code ProfileItem}.
  */
 public class ProfileDisplay extends InformationDisplay<ProfileItem> {
 
     /**
-     * Constructs a {@code ProfileDisplay} in the given {@code primaryStage}.
+     * A function that removes the bracket of the string and indent each attribute.
+     */
+    private final Function<String, String> editString = string
+        -> string.substring(1, string.length() - 1).replaceAll(", ", "\n");
+
+    /**
+     * A predicate that checks if the current key is a descriptor.
+     */
+    private final Predicate<String> isDescriptors = key -> key.equals(DESCRIPTORS_DISPLAY_NAME);
+
+    /**
+     * A function that formats the information of the profile with bullet points.
+     */
+    private final Function<String, String> formatProfileDetail = string -> {
+        string = BULLET_WITH_ONE_SPACE + string;
+        return string.replaceAll("\n", "\n" + BULLET_WITH_ONE_SPACE);
+    };
+
+    /**
+     * Creates a {@code ProfileDisplay} in the given {@code primaryStage}.
+     *
+     * @param primaryStage The main stage of the app.
+     * @param profileItem The profile item to be displayed.
      */
     private ProfileDisplay(Stage primaryStage, ProfileItem profileItem) {
         super(primaryStage, profileItem);
@@ -26,14 +48,18 @@ public class ProfileDisplay extends InformationDisplay<ProfileItem> {
     }
 
     /**
-     * Creates the {@code ProfileDisplay} information in the {@code primaryStage}.
+     * Creates a {@code ProfileDisplay} in the given {@code primaryStage}.
+     *
+     * @param primaryStage The main stage of the app.
+     * @param profileItem The profile item to be displayed.
+     * @return A Profile Display with information of the {@code profileItem} in {@code primaryStage}.
      */
     public static ProfileDisplay getProfileDisplay(Stage primaryStage, ProfileItem profileItem) {
         return new ProfileDisplay(primaryStage, profileItem);
     }
 
     /**
-     * todo Javadocs
+     * Sets the title and information of the {@code profileItem} for display.
      */
     private void initializeProfileDisplayGui() {
         setDisplayName();
@@ -41,7 +67,7 @@ public class ProfileDisplay extends InformationDisplay<ProfileItem> {
     }
 
     /**
-     * todo Javadocs
+     * Sets the title of the {@code profileItem} for display.
      */
     private void setDisplayName() {
         Object jobTitle = mapping.get(TITLE_DISPLAY_NAME);
@@ -49,11 +75,10 @@ public class ProfileDisplay extends InformationDisplay<ProfileItem> {
     }
 
     /**
-     * todo javadocs
+     * Sets the information of the {@code profileItem} for display.
      */
     private void setProfileInformation() {
-        Predicate<String> isDescriptors = key -> key.equals(DESCRIPTORS_DISPLAY_NAME);
-        Function<String, String> editString = string -> string.substring(1, string.length() - 1).replaceAll(", ", "\n");
-        setInformation(editString, isDescriptors, TabName.PROFILE, PROFILE_DISPLAY_KEY_LIST);
+        setInformation(editString, formatProfileDetail, isDescriptors, TabName.PROFILE, PROFILE_DISPLAY_KEY_LIST);
     }
+
 }

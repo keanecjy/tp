@@ -7,12 +7,15 @@ import seedu.address.model.application.ApplicationItem;
 import seedu.address.ui.cards.ApplicationCard;
 
 /**
- * todo Javadocs
+ * A UI component that contains all the information of {@code ApplicationItem} and displays it
+ * as a scrollable list of cards.
  */
 public class ApplicationListPanel extends ListPanel<ApplicationItem> {
 
     /**
-     * todo Javadocs
+     * Creates a scrollable list panel with information of {@code ApplicationItem}.
+     *
+     * @param applicationItemList List containing all the application item in the storage.
      */
     public ApplicationListPanel(ObservableList<ApplicationItem> applicationItemList) {
         super(applicationItemList);
@@ -20,7 +23,7 @@ public class ApplicationListPanel extends ListPanel<ApplicationItem> {
     }
 
     /**
-     * todo Javadocs
+     * Creates each cell in the list panel with information of {@code ApplicationItem}.
      */
     class ApplicationListViewCell extends ListCell<ApplicationItem> {
         @Override

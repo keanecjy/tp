@@ -8,6 +8,9 @@ import seedu.address.model.item.Item;
  */
 public abstract class JsonAdaptedItem {
 
+    public static final String NULL_SOURCE_ERROR_MESSAGE =
+            "A JsonAdaptedItem should never be created from a null object";
+
     /**
      * Converts this Jackson-friendly adapted item object into the model's {@code Item} object.
      *

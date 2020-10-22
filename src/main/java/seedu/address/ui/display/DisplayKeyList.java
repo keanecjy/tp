@@ -15,6 +15,9 @@ import static seedu.address.ui.panel.PanelDisplayKeyword.TITLE_DISPLAY_NAME;
 import static seedu.address.ui.panel.PanelDisplayKeyword.TYPE_DISPLAY_NAME;
 import static seedu.address.ui.panel.PanelDisplayKeyword.WAGE_DISPLAY_NAME;
 
+/**
+ * A class that contains the key list to access the information in a particular order.
+ */
 public class DisplayKeyList {
 
     public static final String[] APPLICATION_DISPLAY_KEY_LIST = {COMPANY_DISPLAY_NAME, PERIOD_DISPLAY_NAME,

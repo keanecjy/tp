@@ -1,0 +1,40 @@
+@startuml
+!pragma useVerticalIf on
+
+start
+:Execute add command;
+
+if () then ([item type is company])
+    if () then ([company is duplicate])
+        :throw duplicate company exception;
+    else ([else])
+        :add company;
+        :display all company items;
+    endif
+elseif () then ([item type is internship])
+    if () then ([internship is duplicate])
+        :throw duplicate internship exception;
+    else ([else])
+        :add internship;
+        :display all internship items;
+    endif
+elseif () then ([item type is application])
+    if () then ([application is duplicate])
+        :throw duplicate application exception;
+    else ([else])
+        :add application;
+        :display all application items;
+    endif
+elseif () then ([item type is profile])
+    if () then ([profile is duplicate])
+        :throw duplicate profile exception;
+    else ([else])
+        :add profile;
+        :display all profile items;
+    endif
+else ([else])
+    :throw AssertionError;
+
+endif
+stop
+@enduml

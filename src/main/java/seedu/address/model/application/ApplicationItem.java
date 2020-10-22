@@ -2,7 +2,6 @@ package seedu.address.model.application;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.commons.util.GeneralStringUtil.COMMA_WITH_SPACE;
 import static seedu.address.model.util.ApplicationItemUtil.DATE_OUTPUT_NAME;
 import static seedu.address.model.util.ApplicationItemUtil.STATUS_OUTPUT_NAME;
 import static seedu.address.model.util.ItemUtil.APPLICATION_NAME;
@@ -76,12 +75,26 @@ public class ApplicationItem extends Item {
     }
 
     /**
+     * todo javadocs
+     */
+    public String getStatusString() {
+        return status.toString();
+    }
+
+    /**
      * Retrieves the status date of this ApplicationItem.
      *
      * @return Status date of this ApplicationItem.
      */
     public StatusDate getStatusDate() {
         return statusDate;
+    }
+
+    /**
+     * todo javadocs
+     */
+    public String getStatusDateString() {
+        return statusDate.toString();
     }
 
     /**
@@ -174,7 +187,7 @@ public class ApplicationItem extends Item {
         builder.append(getInternshipItem())
                 .append(STATUS_OUTPUT_NAME)
                 .append(getStatus())
-                .append(COMMA_WITH_SPACE)
+                .append(", ")
                 .append(DATE_OUTPUT_NAME)
                 .append(getStatusDate());
         return builder.toString();

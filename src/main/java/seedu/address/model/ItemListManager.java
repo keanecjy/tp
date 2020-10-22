@@ -43,6 +43,11 @@ public class ItemListManager<T extends Item> implements FilterableItemList<T> {
     }
 
     @Override
+    public ObservableList<T> getItemList() {
+        return itemList.getItemList();
+    }
+
+    @Override
     public boolean hasItem(T item) {
         requireNonNull(item);
         return itemList.hasItem(item);
@@ -67,8 +72,8 @@ public class ItemListManager<T extends Item> implements FilterableItemList<T> {
     @Override
     public void setItem(T target, T editedItem) {
         requireAllNonNull(target, editedItem);
-
         itemList.setItem(target, editedItem);
+        updateFilteredItemList(PREDICATE_SHOW_ALL_ITEMS);
     }
 
     //=========== Filtered Item List Accessors =============================================================
@@ -81,6 +86,27 @@ public class ItemListManager<T extends Item> implements FilterableItemList<T> {
     public ObservableList<T> getFilteredItemList() {
         return filteredItems;
     }
+
+    /**
+     * Retrieves the size of the filterable item list.
+     *
+     * @return the size of the filterable item list.
+     */
+    @Override
+    public int getSize() {
+        return filteredItems.size();
+    }
+
+    /**
+     * Returns an {@code Item} from filteredItems.
+     * @param index of item to be returned.
+     * @return Item at index specified.
+     */
+    @Override
+    public T getItemFromFilteredItemList(int index) {
+        return filteredItems.get(index);
+    }
+
 
     @Override
     public void updateFilteredItemList(Predicate<? super T> predicate) {

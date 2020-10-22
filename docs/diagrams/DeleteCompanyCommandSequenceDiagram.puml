@@ -1,0 +1,69 @@
+@startuml
+!include InternHunterStyle.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":MainParser" as MainParser LOGIC_COLOR
+participant ":DeleteCommandParser" as DeleteCommandParser LOGIC_COLOR
+participant ":DeleteCompanyCommandParser" as DeleteCompanyCommandParser LOGIC_COLOR
+participant "d:DeleteCompanyCommand" as DeleteCompanyCommand LOGIC_COLOR
+participant ":CommandUtil" as CommandUtil LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("delete com 3")
+activate LogicManager
+
+LogicManager -> MainParser : parseCommand("delete com 3")
+activate MainParser
+
+create DeleteCommandParser
+MainParser -> DeleteCommandParser
+activate DeleteCommandParser
+
+DeleteCommandParser --> MainParser
+deactivate DeleteCommandParser
+
+MainParser -> DeleteCommandParser : parse(" com 3")
+activate DeleteCommandParser
+
+create DeleteCompanyCommandParser
+DeleteCommandParser -> DeleteCompanyCommandParser
+activate DeleteCompanyCommandParser
+
+DeleteCompanyCommandParser --> DeleteCommandParser
+deactivate DeleteCompanyCommandParser
+
+DeleteCommandParser -> DeleteCompanyCommandParser : parse(" 3")
+activate DeleteCompanyCommandParser
+
+create DeleteCompanyCommand
+DeleteCompanyCommandParser -> DeleteCompanyCommand : DeleteCompanyCommand(3)
+activate DeleteCompanyCommand
+
+DeleteCompanyCommand --> DeleteCompanyCommandParser : d
+deactivate DeleteCompanyCommand
+
+DeleteCompanyCommandParser --> DeleteCommandParser : d
+deactivate DeleteCompanyCommandParser
+
+DeleteCommandParser --> MainParser : d
+deactivate DeleteCommandParser
+
+MainParser --> LogicManager : d
+deactivate MainParser
+
+LogicManager -> DeleteCompanyCommand : execute(model)
+activate DeleteCompanyCommand
+
+ref over DeleteCompanyCommand, CommandUtil, Model : execute delete company 3 command
+
+DeleteCompanyCommand --> LogicManager : result
+deactivate DeleteCompanyCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

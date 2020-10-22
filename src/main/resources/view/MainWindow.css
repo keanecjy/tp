@@ -186,6 +186,7 @@
     -fx-vbar-policy: never;
     -fx-hbar-policy: never;
     -fx-fit-to-width: true;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0.0, 0, 1)
 }
 
 .information_display_container_scrollable > .viewport {
@@ -222,6 +223,13 @@
     -fx-font-weight: bold;
 }
 
+.windowTextDisplay {
+    -fx-control-inner-background: "lightgrey";
+    -fx-font-family: "Droid Sans";
+    -fx-font-size: 20px;
+    -fx-text-fill: #6F67C6;
+}
+
 .information_display_bar {
     -fx-pref-height: 1;
     -fx-background-color: #DBE8FF;
@@ -238,6 +246,7 @@
 #cardPane {
     -fx-background-color: #fdfdfd;
     -fx-border-width: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0.0, 0, 1);
 }
 
 #commandTypeLabel {

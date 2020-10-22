@@ -1,0 +1,18 @@
+{
+  "items": [
+    {
+      "title": "Internship with Govtech",
+      "profileType": "SCHOOL",
+      "descriptors": [
+        "Build internal tooling for syncing data with remote servers"
+      ]
+    },
+    {
+      "title": "@__@",
+      "profileType": "EXPERIENCE",
+      "descriptors": [
+        "Fix UI bugs in Modules View"
+      ]
+    }
+  ]
+}

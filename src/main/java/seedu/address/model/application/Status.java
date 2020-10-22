@@ -1,12 +1,5 @@
 package seedu.address.model.application;
 
-import static seedu.address.model.util.StatusUtil.ACCEPTED_KEYWORD;
-import static seedu.address.model.util.StatusUtil.APPLIED_KEYWORD;
-import static seedu.address.model.util.StatusUtil.INTERVIEW_KEYWORD;
-import static seedu.address.model.util.StatusUtil.OFFERED_KEYWORD;
-import static seedu.address.model.util.StatusUtil.REJECTED_KEYWORD;
-import static seedu.address.model.util.StatusUtil.WAITING_KEYWORD;
-
 import seedu.address.commons.util.StringUtil;
 
 /**
@@ -30,12 +23,12 @@ public enum Status {
      * @return True if status is valid, false otherwise.
      */
     public static boolean isValidStatus(String status) {
-        return status.equals(APPLIED_KEYWORD)
-                || status.equals(INTERVIEW_KEYWORD)
-                || status.equals(WAITING_KEYWORD)
-                || status.equals(OFFERED_KEYWORD)
-                || status.equals(ACCEPTED_KEYWORD)
-                || status.equals(REJECTED_KEYWORD);
+        try {
+            Status.valueOf(status.toUpperCase());
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 
     /**

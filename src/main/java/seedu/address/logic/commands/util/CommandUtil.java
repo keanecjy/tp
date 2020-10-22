@@ -24,36 +24,36 @@ import seedu.address.ui.tabs.TabName;
 /**
  * Encapsulates common / shared execution processes between commands.
  */
-public class CommandUtil {
+public abstract class CommandUtil {
 
     public static CompanyItem getCompany(Model model, Index companyIndex) throws CommandException {
-        List<CompanyItem> lastShownList = model.getCompanyList().getFilteredItemList();
+        List<CompanyItem> lastShownList = model.getFilteredCompanyList();
 
         if (companyIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(String.format(Messages.MESSAGE_INVALID_ITEM_DISPLAYED_INDEX, COMPANY_NAME));
         }
 
-        return lastShownList.get(companyIndex.getZeroBased());
+        return model.getCompanyItemFromFilteredList(companyIndex.getZeroBased());
     }
 
     public static ApplicationItem getApplication(Model model, Index applicationIndex) throws CommandException {
-        List<ApplicationItem> lastShownList = model.getApplicationList().getFilteredItemList();
+        List<ApplicationItem> lastShownList = model.getFilteredApplicationList();
 
         if (applicationIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(String.format(Messages.MESSAGE_INVALID_ITEM_DISPLAYED_INDEX, APPLICATION_NAME));
         }
 
-        return lastShownList.get(applicationIndex.getZeroBased());
+        return model.getApplicationItemFromFilteredList(applicationIndex.getZeroBased());
     }
 
     public static ProfileItem getProfileItem(Model model, Index profileItemIndex) throws CommandException {
-        List<ProfileItem> lastShownList = model.getProfileList().getFilteredItemList();
+        List<ProfileItem> lastShownList = model.getFilteredProfileList();
 
         if (profileItemIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(String.format(Messages.MESSAGE_INVALID_ITEM_DISPLAYED_INDEX, PROFILE_NAME));
         }
 
-        return lastShownList.get(profileItemIndex.getZeroBased());
+        return model.getProfileItemFromFilteredList(profileItemIndex.getZeroBased());
     }
 
     /**
@@ -84,14 +84,14 @@ public class CommandUtil {
      * @param message Feedback message of the operation result for display.
      * @param currentTabName The current tab of the application.
      * @param changedTabName The tab that is being switched to.
-     * @param index The desired index of the tab that is being switch to.
+     * @param newIndex The desired index of the tab that is being switch to.
      * @return Feedback message of the operation result for display.
      */
     public static CommandResult getCommandResult(Model model, String message, TabName currentTabName,
-        TabName changedTabName, Index index) {
+        TabName changedTabName, Index newIndex) {
 
-        requireAllNonNull(model, message, currentTabName, changedTabName, index);
-        handleDeleteDisplaySwitchIndex(model, changedTabName, index);
+        requireAllNonNull(model, message, currentTabName, changedTabName, newIndex);
+        handleDeleteDisplaySwitchIndex(model, changedTabName, newIndex);
         if (currentTabName != changedTabName) {
             model.setTabName(changedTabName);
             return new CommandResult(message, false, false, true, true);
@@ -104,25 +104,25 @@ public class CommandUtil {
      * Checks which tab's display needs to be switch.
      *
      * @param model Model of application.
-     * @param tabName The tab that is being switched to.
-     * @param index The desired index of the tab that is being switch to.
+     * @param changedTabName The tab that is being switched to.
+     * @param newIndex The desired index of the tab that is being switch to.
      */
-    private static void handleDeleteDisplaySwitchIndex(Model model, TabName tabName, Index index) {
+    private static void handleDeleteDisplaySwitchIndex(Model model, TabName changedTabName, Index newIndex) {
         Index currentIndex;
-        assert (tabName.equals(COMPANY) || tabName.equals(APPLICATION) || tabName.equals(PROFILE));
+        assert (changedTabName.equals(COMPANY) || changedTabName.equals(APPLICATION) || changedTabName.equals(PROFILE));
 
-        switch (tabName) {
+        switch (changedTabName) {
         case COMPANY:
             currentIndex = model.getCompanyViewIndex();
-            handleViewIndex(model::setCompanyViewIndex, currentIndex, index);
+            handleViewIndex(model::setCompanyViewIndex, currentIndex, newIndex);
             break;
         case APPLICATION:
             currentIndex = model.getApplicationViewIndex();
-            handleViewIndex(model::setApplicationViewIndex, currentIndex, index);
+            handleViewIndex(model::setApplicationViewIndex, currentIndex, newIndex);
             break;
         case PROFILE:
             currentIndex = model.getProfileViewIndex();
-            handleViewIndex(model::setProfileViewIndex, currentIndex, index);
+            handleViewIndex(model::setProfileViewIndex, currentIndex, newIndex);
             break;
         default:
             assert false;
@@ -140,7 +140,7 @@ public class CommandUtil {
         if (currentIndex.getOneBased() >= newIndex.getOneBased()) {
             // currentIndex have to minus 1
             int shiftIndex = currentIndex.getOneBased();
-            if (!(shiftIndex - 1 == 0)) {
+            if (shiftIndex - 1 > 0) {
                 changeViewIndex.accept(Index.fromOneBased(shiftIndex - 1));
             }
         }

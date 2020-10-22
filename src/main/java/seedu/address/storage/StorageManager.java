@@ -11,6 +11,7 @@ import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.application.ApplicationItem;
 import seedu.address.model.company.CompanyItem;
+import seedu.address.model.item.ReadOnlyItemList;
 import seedu.address.model.person.Person;
 import seedu.address.model.profile.ProfileItem;
 import seedu.address.storage.application.JsonAdaptedApplicationItem;
@@ -24,19 +25,19 @@ import seedu.address.storage.profile.JsonAdaptedProfileItem;
 public class StorageManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
-    private final ListStorage<Person, JsonAdaptedPerson> addressBookStorage;
-    private final ListStorage<ApplicationItem, JsonAdaptedApplicationItem> applicationItemListStorage;
-    private final ListStorage<CompanyItem, JsonAdaptedCompanyItem> companyItemListStorage;
-    private final ListStorage<ProfileItem, JsonAdaptedProfileItem> profileItemListStorage;
+    private final ItemListStorage<Person, JsonAdaptedPerson> addressBookStorage;
+    private final ItemListStorage<ApplicationItem, JsonAdaptedApplicationItem> applicationItemListStorage;
+    private final ItemListStorage<CompanyItem, JsonAdaptedCompanyItem> companyItemListStorage;
+    private final ItemListStorage<ProfileItem, JsonAdaptedProfileItem> profileItemListStorage;
     private final UserPrefsStorage userPrefsStorage;
 
     /**
      * Creates a {@code StorageManager} with the given {@code ItemListStorage} and {@code UserPrefStorage}.
      */
-    public StorageManager(ListStorage<Person, JsonAdaptedPerson> addressBookStorage,
-            ListStorage<ApplicationItem, JsonAdaptedApplicationItem> applicationItemListStorage,
-            ListStorage<CompanyItem, JsonAdaptedCompanyItem> companyItemListStorage,
-            ListStorage<ProfileItem, JsonAdaptedProfileItem> profileItemListStorage,
+    public StorageManager(ItemListStorage<Person, JsonAdaptedPerson> addressBookStorage,
+            ItemListStorage<ApplicationItem, JsonAdaptedApplicationItem> applicationItemListStorage,
+            ItemListStorage<CompanyItem, JsonAdaptedCompanyItem> companyItemListStorage,
+            ItemListStorage<ProfileItem, JsonAdaptedProfileItem> profileItemListStorage,
             UserPrefsStorage userPrefsStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
@@ -63,26 +64,99 @@ public class StorageManager implements Storage {
         userPrefsStorage.saveUserPrefs(userPrefs);
     }
 
-    // ================ Get ListStorage ==============================
+    // ================ Item List Storage ==============================
 
     @Override
-    public ListStorage<Person, JsonAdaptedPerson> getAddressBookStorage() {
-        return addressBookStorage;
+    public Path getApplicationItemListFilePath() {
+        logger.fine("Accessing application item list storage");
+        return applicationItemListStorage.getItemListFilePath();
     }
 
     @Override
-    public ListStorage<ApplicationItem, JsonAdaptedApplicationItem> getApplicationItemListStorage() {
-        return applicationItemListStorage;
+    public Optional<ReadOnlyItemList<ApplicationItem>> readApplicationItemList()
+            throws DataConversionException, IOException {
+        logger.fine("Accessing application item list storage");
+        return applicationItemListStorage.readItemList();
     }
 
     @Override
-    public ListStorage<CompanyItem, JsonAdaptedCompanyItem> getCompanyItemListStorage() {
-        return companyItemListStorage;
+    public Optional<ReadOnlyItemList<ApplicationItem>> readApplicationItemList(
+            Path filePath) throws DataConversionException, IOException {
+        logger.fine("Accessing application item list storage");
+        return applicationItemListStorage.readItemList(filePath);
     }
 
     @Override
-    public ListStorage<ProfileItem, JsonAdaptedProfileItem> getProfileItemListStorage() {
-        return profileItemListStorage;
+    public void saveApplicationItemList(ReadOnlyItemList<ApplicationItem> itemList) throws IOException {
+        logger.fine("Accessing application item list storage");
+        applicationItemListStorage.saveItemList(itemList);
+    }
+
+    @Override
+    public void saveApplicationItemList(ReadOnlyItemList<ApplicationItem> itemList, Path filePath) throws IOException {
+        logger.fine("Accessing application item list storage");
+        applicationItemListStorage.saveItemList(itemList, filePath);
+    }
+
+    @Override
+    public Path getCompanyItemListFilePath() {
+        logger.fine("Accessing company item list storage");
+        return companyItemListStorage.getItemListFilePath();
+    }
+
+    @Override
+    public Optional<ReadOnlyItemList<CompanyItem>> readCompanyItemList() throws DataConversionException, IOException {
+        logger.fine("Accessing company item list storage");
+        return companyItemListStorage.readItemList();
+    }
+
+    @Override
+    public Optional<ReadOnlyItemList<CompanyItem>> readCompanyItemList(
+            Path filePath) throws DataConversionException, IOException {
+        return companyItemListStorage.readItemList(filePath);
+    }
+
+    @Override
+    public void saveCompanyItemList(ReadOnlyItemList<CompanyItem> itemList) throws IOException {
+        logger.fine("Accessing company item list storage");
+        companyItemListStorage.saveItemList(itemList);
+    }
+
+    @Override
+    public void saveCompanyItemList(ReadOnlyItemList<CompanyItem> itemList, Path filePath) throws IOException {
+        logger.fine("Accessing company item list storage");
+        companyItemListStorage.saveItemList(itemList, filePath);
+    }
+
+    @Override
+    public Path getProfileItemListFilePath() {
+        logger.fine("Accessing profile item list storage");
+        return profileItemListStorage.getItemListFilePath();
+    }
+
+    @Override
+    public Optional<ReadOnlyItemList<ProfileItem>> readProfileItemList() throws DataConversionException, IOException {
+        logger.fine("Accessing profile item list storage");
+        return profileItemListStorage.readItemList();
+    }
+
+    @Override
+    public Optional<ReadOnlyItemList<ProfileItem>> readProfileItemList(
+            Path filePath) throws DataConversionException, IOException {
+        logger.fine("Accessing profile item list storage");
+        return profileItemListStorage.readItemList(filePath);
+    }
+
+    @Override
+    public void saveProfileItemList(ReadOnlyItemList<ProfileItem> itemList) throws IOException {
+        logger.fine("Accessing profile item list storage");
+        profileItemListStorage.saveItemList(itemList);
+    }
+
+    @Override
+    public void saveProfileItemList(ReadOnlyItemList<ProfileItem> itemList, Path filePath) throws IOException {
+        logger.fine("Accessing profile item list storage");
+        profileItemListStorage.saveItemList(itemList, filePath);
     }
 
 }

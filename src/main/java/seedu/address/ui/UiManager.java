@@ -27,6 +27,8 @@ public class UiManager implements Ui {
 
     /**
      * Creates a {@code UiManager} with the given {@code Logic}.
+     *
+     * @param logic The logic unit of the app.
      */
     public UiManager(Logic logic) {
         super();
@@ -51,10 +53,23 @@ public class UiManager implements Ui {
         }
     }
 
+    /**
+     * @param imagePath A String representing the path of the image.
+     * @return an Image that is from the {@code imagePath}.
+     */
     private Image getImage(String imagePath) {
         return new Image(MainApp.class.getResourceAsStream(imagePath));
     }
 
+    /**
+     * Shows an alert dialog on {@code owner} with the given parameters at the given {@code primaryStage}.
+     * This method only returns after the user has closed the alert dialog.
+     *
+     * @param type The alert type.
+     * @param title The title for the alert.
+     * @param headerText The header for the text.
+     * @param contentText The content for the text.
+     */
     void showAlertDialogAndWait(Alert.AlertType type, String title, String headerText, String contentText) {
         showAlertDialogAndWait(mainWindow.getPrimaryStage(), type, title, headerText, contentText);
     }
@@ -62,6 +77,12 @@ public class UiManager implements Ui {
     /**
      * Shows an alert dialog on {@code owner} with the given parameters.
      * This method only returns after the user has closed the alert dialog.
+     *
+     * @param owner The main stage.
+     * @param type The alert type.
+     * @param title The title for the alert.
+     * @param headerText The header for the text.
+     * @param contentText The content for the text.
      */
     private static void showAlertDialogAndWait(Stage owner, AlertType type, String title, String headerText,
         String contentText) {
@@ -79,6 +100,9 @@ public class UiManager implements Ui {
     /**
      * Shows an error alert dialog with {@code title} and error message, {@code e},
      * and exits the application after the user has closed the alert dialog.
+     *
+     * @param title The error message title.
+     * @param e The information of the error.
      */
     private void showFatalErrorDialogAndShutdown(String title, Throwable e) {
         logger.severe(title + " " + e.getMessage() + StringUtil.getDetails(e));

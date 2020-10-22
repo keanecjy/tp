@@ -9,7 +9,6 @@ import static seedu.address.logic.parser.clisyntax.CompanyCliSyntax.PREFIX_COMPA
 import static seedu.address.logic.parser.clisyntax.CompanyCliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.clisyntax.CompanyCliSyntax.PREFIX_INDUSTRY;
 import static seedu.address.logic.parser.clisyntax.CompanyCliSyntax.PREFIX_PHONE;
-import static seedu.address.model.FilterableItemList.PREDICATE_SHOW_ALL_ITEMS;
 import static seedu.address.model.util.ItemUtil.COMPANY_ALIAS;
 import static seedu.address.model.util.ItemUtil.COMPANY_NAME;
 
@@ -24,7 +23,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.FilterableItemList;
 import seedu.address.model.Model;
 import seedu.address.model.company.Address;
 import seedu.address.model.company.CompanyItem;
@@ -76,14 +74,12 @@ public class EditCompanyCommand extends EditCommandAbstract {
         CompanyItem companyToEdit = getCompany(model, index);
         CompanyItem editedCompany = createEditedCompany(companyToEdit, editCompanyDescriptor);
 
-        FilterableItemList<CompanyItem> companyList = model.getCompanyList();
-
-        if (!companyToEdit.isSameItem(editedCompany) && companyList.hasItem(editedCompany)) {
+        if (!companyToEdit.isSameItem(editedCompany) && model.hasCompany(editedCompany)) {
             throw new CommandException(String.format(Messages.MESSAGE_DUPLICATE_ITEM, COMPANY_NAME));
         }
 
-        companyList.setItem(companyToEdit, editedCompany);
-        companyList.updateFilteredItemList(PREDICATE_SHOW_ALL_ITEMS);
+        model.setCompany(companyToEdit, editedCompany);
+        model.setCompanyViewIndex(index);
         String editSuccessMessage = String.format(MESSAGE_EDIT_SUCCESS, COMPANY_NAME, editedCompany);
         return getCommandResult(model, editSuccessMessage, TabName.COMPANY);
     }
@@ -138,7 +134,8 @@ public class EditCompanyCommand extends EditCommandAbstract {
         private Address address;
         private Set<Industry> industries;
 
-        public EditCompanyDescriptor() {}
+        public EditCompanyDescriptor() {
+        }
 
         /**
          * Copy constructor.

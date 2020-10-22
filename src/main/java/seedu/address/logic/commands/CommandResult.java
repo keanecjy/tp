@@ -23,11 +23,14 @@ public class CommandResult {
     /** The application should switch display. */
     private final boolean isSwitchDisplay;
 
+    /** List of matching internships generated based on user's profile skills */
+    private String matchingInternshipsText = "";
+
     /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
     public CommandResult(String feedbackToUser, boolean isShowHelp, boolean isExit, boolean isSwitchTab,
-        boolean isSwitchDisplay) {
+            boolean isSwitchDisplay) {
 
         this.feedbackToUser = requireNonNull(feedbackToUser);
         this.isShowHelp = isShowHelp;
@@ -62,6 +65,18 @@ public class CommandResult {
 
     public boolean isSwitchDisplay() {
         return isSwitchDisplay;
+    }
+
+    public boolean isShowMatchingInternships() {
+        return !matchingInternshipsText.isEmpty();
+    }
+
+    public void setMatchingInternshipsText(String listOfInternships) {
+        matchingInternshipsText = listOfInternships;
+    }
+
+    public String getMatchingInternshipsText() {
+        return matchingInternshipsText;
     }
 
     @Override

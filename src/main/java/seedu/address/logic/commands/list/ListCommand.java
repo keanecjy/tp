@@ -20,7 +20,7 @@ public abstract class ListCommand extends Command {
         + APPLICATION_NAME + " or "
         + PROFILE_NAME + ".\n"
         + "Parameters: list ITEM_TYPE\n"
-        + "Example: "
-        + COMMAND_WORD + " " + COMPANY_ALIAS + "\n";
+        + "Example: " + COMMAND_WORD + " " + COMPANY_ALIAS + "\n";
 
+    public static final String EXCESS_MESSAGE = "Note that that should not be anything inputs after the ITEM_TYPE";
 }

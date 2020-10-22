@@ -196,6 +196,8 @@ Valid `STATUS_DATE` formats:
     - e.g. `23-12-19`
     - Time will be taken as 2359
 
+:information_source: Note that dates added must be in the future
+
 #### Adding an application: `add app`
 
 Selects an internship from a company and adds it to your list of applications. If unspecified, the application’s
@@ -318,6 +320,8 @@ Example:
 Displays a link to the InternHunter user guide.
 
 Format: `help`
+
+:bulb: You can press Esc key to close the help window!
 
 #### Exiting the Program: `exit`
 Shows an exit confirmation dialog.

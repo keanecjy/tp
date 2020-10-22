@@ -19,7 +19,7 @@ import seedu.address.storage.item.JsonAdaptedItem;
 /**
  * A class to access ItemList data stored as a json file on the hard disk.
  */
-public class JsonItemListStorage<T extends Item, U extends JsonAdaptedItem> implements ListStorage<T, U> {
+public class JsonItemListStorage<T extends Item, U extends JsonAdaptedItem> implements ItemListStorage<T, U> {
 
     private static final Logger logger = LogsCenter.getLogger(JsonItemListStorage.class);
 

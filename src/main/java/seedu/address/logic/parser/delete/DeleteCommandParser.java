@@ -3,20 +3,14 @@ package seedu.address.logic.parser.delete;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_ITEM_TYPE;
 import static seedu.address.logic.parser.util.GeneralParserUtil.getCommandDetails;
 import static seedu.address.logic.parser.util.GeneralParserUtil.getItemType;
-import static seedu.address.logic.parser.util.GeneralParserUtil.isValidItemType;
 import static seedu.address.model.util.ItemUtil.APPLICATION_ALIAS;
 import static seedu.address.model.util.ItemUtil.COMPANY_ALIAS;
 import static seedu.address.model.util.ItemUtil.INTERNSHIP_ALIAS;
 import static seedu.address.model.util.ItemUtil.PROFILE_ALIAS;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.delete.DeleteApplicationCommand;
 import seedu.address.logic.commands.delete.DeleteCommandAbstract;
-import seedu.address.logic.commands.delete.DeleteCompanyCommand;
-import seedu.address.logic.commands.delete.DeleteProfileCommand;
 import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.logic.parser.util.GeneralParserUtil;
 
 /**
  * Parses input arguments and creates a new DeleteCommand object
@@ -33,26 +27,18 @@ public class DeleteCommandParser implements Parser<DeleteCommandAbstract> {
         String itemType = getItemType(args, DeleteCommandAbstract.MESSAGE_USAGE);
         String commandDetails = getCommandDetails(args);
 
-        isValidItemType(itemType);
-
-        // Internship has a different parse requirement
-        if (itemType.equals(INTERNSHIP_ALIAS)) {
-            return new DeleteInternshipCommandParser().parse(commandDetails);
-        }
-
-        Index index = GeneralParserUtil.parseIndex(commandDetails);
         switch (itemType) {
         case COMPANY_ALIAS:
-            //checkCommandDetailsIsNotBlank(commandDetails, itemType, DeleteCompanyCommand.MESSAGE_USAGE);
-            return new DeleteCompanyCommand(index);
+            return new DeleteCompanyCommandParser().parse(commandDetails);
+
+        case INTERNSHIP_ALIAS:
+            return new DeleteInternshipCommandParser().parse(commandDetails);
 
         case APPLICATION_ALIAS:
-            //checkCommandDetailsIsNotBlank(commandDetails, itemType, DeleteApplicationCommand.MESSAGE_USAGE);
-            return new DeleteApplicationCommand(index);
+            return new DeleteApplicationCommandParser().parse(commandDetails);
 
         case PROFILE_ALIAS:
-            //checkCommandDetailsIsNotBlank(commandDetails, itemType, DeleteProfileCommand.MESSAGE_USAGE);
-            return new DeleteProfileCommand(index);
+            // return new DeleteProfileCommandParser().parse(commandDetails);
 
         default:
             // Invalid item type

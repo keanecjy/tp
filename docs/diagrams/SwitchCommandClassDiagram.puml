@@ -1,0 +1,36 @@
+@startuml
+!include InternHunterStyle.puml
+
+skinparam classAttributeIconSize 0
+skinparam arrowThickness 1.1
+skinparam arrowColor LOGIC_COLOR_T4
+skinparam classBackgroundColor LOGIC_COLOR
+skinparam defaultFontColor #DDDDDD
+
+class SwitchCommand {
+    {static} +MESSAGE_USAGE: String
+    {static} +COMMAND_WORD: String
+    +SwitchCommand(tabName: TabName)
+    +execute(model: Model): CommandResult
+    +equals(other: Object): boolean
+}
+
+class "ABSTRACT\nCommand" as Command {
+    +execute(model: Model): CommandResult ABSTRACT
+}
+
+class TabName <<enumeration>> {
+    APPLICATION
+    COMPANY
+    PROFILE
+}
+
+class Model <<interface>> {
+    +getTabName(): void
+}
+
+TabName <-- SwitchCommand
+Command <|-- SwitchCommand
+Model <.. SwitchCommand
+
+@enduml

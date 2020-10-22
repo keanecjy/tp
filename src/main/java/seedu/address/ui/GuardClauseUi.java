@@ -9,6 +9,9 @@ import seedu.address.model.item.Item;
 import seedu.address.ui.display.InformationDisplay;
 import seedu.address.ui.panel.ListPanel;
 
+/**
+ * Holds the predicate and function checks for ui.
+ */
 public class GuardClauseUi {
 
     /** Checks if the given string is an empty representation of a list */

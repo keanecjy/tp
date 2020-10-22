@@ -20,6 +20,8 @@ public class DeleteCommandParserTest {
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
+        // todo: change the test case to use the currently commented-out line when all 3 delete command parsers for
+        //  individual items have been implemented
         assertParseFailure(parser, "a", Messages.MESSAGE_INVALID_ITEM_TYPE);
     }
 }

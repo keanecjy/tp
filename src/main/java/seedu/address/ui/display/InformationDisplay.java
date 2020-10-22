@@ -21,17 +21,13 @@ import seedu.address.ui.UiPart;
 import seedu.address.ui.tabs.TabName;
 
 /**
- * A display that contains information.
+ * A UI component that displays all information of a {@code Item}.
  */
 public abstract class InformationDisplay<T extends Item> extends UiPart<Region> {
 
-    private static final String NEW_LINE = "\n";
-    private static final String COMMA_ONE_SPACE = ", ";
-    private static final String COMMA_TWO_SPACE = ", {2}";
-    private static final String BULLET_WITH_TWO_SPACE_FRONT_ONE_BACK = "  \u2022 ";
-    private static final String BULLET_WITH_ONE_SPACE = "\u2022 ";
-    private static final String DOT_SPACE = ". ";
-    private static final String DASH = "-";
+    protected static final String BULLET_WITH_ONE_SPACE = "\u2022 ";
+    protected static final String BULLET_WITH_TWO_SPACE_FRONT_ONE_BACK = "  \u2022 ";
+    protected static final String COMMA_TWO_SPACE = ", {2}";
 
     //FXML
     private static final String FXML = "InformationDisplay.fxml";
@@ -41,6 +37,11 @@ public abstract class InformationDisplay<T extends Item> extends UiPart<Region> 
     private static final int INFORMATION_WIDTH_SHRINK = 100;
     protected T item;
     protected LinkedHashMap<String, Object> mapping;
+
+    /**
+     * A function that removes the bracket in the string.
+     */
+    protected final Function<String, String> editString = string -> string.substring(1, string.length() - 1);
 
     @FXML
     private ScrollPane scrollableInformationDisplay;
@@ -56,7 +57,10 @@ public abstract class InformationDisplay<T extends Item> extends UiPart<Region> 
     private VBox informationDisplayContainer;
 
     /**
-     * Constructs a {@code InformationDisplay} in the given {@code primaryStage}.
+     * Creates a {@code InformationDisplay} in the given {@code primaryStage}.
+     *
+     * @param primaryStage The main stage of the app.
+     * @param item The item to be displayed.
      */
     public InformationDisplay(Stage primaryStage, T item) {
         super(FXML);
@@ -67,6 +71,8 @@ public abstract class InformationDisplay<T extends Item> extends UiPart<Region> 
 
     /**
      * Sets the size of {@code InformationDisplay} in the given {@code primaryStage}.
+     *
+     * @param primaryStage The main stage of the app.
      */
     private void initializeInformationDisplay(Stage primaryStage) {
         scrollableInformationDisplay.prefHeightProperty()
@@ -76,6 +82,8 @@ public abstract class InformationDisplay<T extends Item> extends UiPart<Region> 
 
     /**
      * Adds {@code titleDescriptionDisplay} into {@code InformationDisplay}.
+     *
+     * @param titleDescriptionDisplay A display that contains a title and description.
      */
     void addInformation(TitleDescriptionDisplay titleDescriptionDisplay) {
         information.getChildren().addAll(titleDescriptionDisplay);
@@ -83,16 +91,24 @@ public abstract class InformationDisplay<T extends Item> extends UiPart<Region> 
 
     /**
      * Adds {@code title} into {@code InformationDisplay}.
+     *
+     * @param title A string representing the title for the display.
      */
     protected void setInformationTitle(String title) {
         informationTitle.setText(title);
     }
 
     /**
-     * todo javadocs
+     * Sets the information onto the display in {@code MainWindow}.
+     *
+     * @param editString A function that removes the brackets of the string.
+     * @param formatString A function that formats the string depending the the {@code tabName}.
+     * @param haveBrackets A predicate that checks if the string has brackets.
+     * @param tabName The tab that will be displayed.
+     * @param displayKeyList A pre-fixed order of keys to access the display depending on the {@code tabName}.
      */
-    protected void setInformation(Function<String, String> editString, Predicate<String> haveBrackets,
-        TabName tabName, String ... displayKeyList) {
+    protected void setInformation(Function<String, String> editString, Function<String, String> formatString,
+        Predicate<String> haveBrackets, TabName tabName, String ... displayKeyList) {
         for (String key : displayKeyList) {
             Object object = mapping.get(key);
             String detail = object.toString();
@@ -100,59 +116,16 @@ public abstract class InformationDisplay<T extends Item> extends UiPart<Region> 
                 detail = editString.apply(detail);
             }
             if (IS_SAME_STRING.test(key, INTERNSHIPS_DISPLAY_NAME) && !IS_EMPTY_STRING.test(detail)) {
-                detail = formatInternshipDetail(detail);
+                detail = formatString.apply(detail);
             }
             if (IS_SAME_STRING.test(key, DESCRIPTORS_DISPLAY_NAME) && !IS_EMPTY_STRING.test(detail)) {
-                detail = formatProfileDetail(detail);
+                detail = formatString.apply(detail);
             }
             if (IS_EMPTY_STRING.test(detail)) {
-                detail = DASH;
+                detail = "-";
             }
             addInformation(TitleDescriptionDisplay.addTitleDescriptionDisplay(key, detail, tabName));
         }
     }
 
-    /**
-     * todo javadocs
-     */
-    public String formatProfileDetail(String string) {
-        string = BULLET_WITH_ONE_SPACE + string;
-        return string.replaceAll(NEW_LINE, NEW_LINE + BULLET_WITH_ONE_SPACE);
-    }
-
-    /**
-     * todo javadocs
-     */
-    public String formatInternshipDetail(String string) {
-        String s = string.substring(0, string.length() - 1);
-        s = s.replaceAll(NEW_LINE + COMMA_ONE_SPACE, NEW_LINE);
-        StringBuffer buffer = new StringBuffer(s);
-        buffer.insert(0, 1 + DOT_SPACE);
-        formatNumbering(buffer, NEW_LINE);
-        return formatBulletPoints(buffer);
-    }
-
-    /**
-     * todo javadocs
-     */
-    public void formatNumbering(StringBuffer buffer, String target) {
-        int index = buffer.indexOf(target);
-        int counter = 2;
-        while (index != -1) {
-            String replacement = target + counter + DOT_SPACE;
-            buffer.replace(index, index + 1, replacement);
-            index += replacement.length();
-            index = buffer.indexOf(target, index);
-            counter++;
-        }
-    }
-
-    /**
-     * todo javadocs
-     */
-    public String formatBulletPoints(StringBuffer buffer) {
-        String string = buffer.toString();
-        string = string.replaceAll(COMMA_TWO_SPACE, NEW_LINE + BULLET_WITH_TWO_SPACE_FRONT_ONE_BACK);
-        return string;
-    }
 }

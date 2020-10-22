@@ -39,7 +39,7 @@ public class DeleteApplicationCommand extends DeleteCommandAbstract {
         requireNonNull(model);
         TabName currentTabName = model.getTabName();
         ApplicationItem applicationToDelete = getApplication(model, targetIndex);
-        model.getApplicationList().deleteItem(applicationToDelete);
+        model.deleteApplication(applicationToDelete);
         String deleteSuccessMessage = String.format(MESSAGE_DELETED_ITEM, APPLICATION_NAME, applicationToDelete);
         return getCommandResult(model, deleteSuccessMessage, currentTabName, TabName.APPLICATION, targetIndex);
     }

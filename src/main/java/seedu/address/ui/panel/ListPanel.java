@@ -14,7 +14,8 @@ import seedu.address.model.item.Item;
 import seedu.address.ui.UiPart;
 
 /**
- * todo Javadocs
+ * A generic UI component that contains all the information of {@code Item} and displays it
+ * as a scrollable list of cards.
  */
 public abstract class ListPanel<T extends Item> extends UiPart<Region> {
 
@@ -26,7 +27,9 @@ public abstract class ListPanel<T extends Item> extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(ListPanel.class);
 
     /**
-     * todo Javadocs
+     * Creates a scrollable list panel with information of {@code Item}.
+     *
+     * @param itemList List containing all the item in the storage.
      */
     public ListPanel(ObservableList<T> itemList) {
         super(FXML);

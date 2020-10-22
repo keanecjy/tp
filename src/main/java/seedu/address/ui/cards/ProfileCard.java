@@ -7,7 +7,7 @@ import javafx.scene.transform.Translate;
 import seedu.address.model.profile.ProfileItem;
 
 /**
- * todo Javadocs
+ * A UI component that displays some information of a {@code ProfileItem}.
  */
 public class ProfileCard extends Card<ProfileItem> {
 
@@ -21,7 +21,10 @@ public class ProfileCard extends Card<ProfileItem> {
     private static final int IMAGE_TRANSLATE_Y = -25;
 
     /**
-     * todo Javadocs
+     * Creates a card display with information of {@code profileItem} and with a index of {@code displayIndex}.
+     *
+     * @param profileItem The profile item to be displayed.
+     * @param displayedIndex The index of the profile item.
      */
     public ProfileCard(ProfileItem profileItem, int displayedIndex) {
         super(profileItem, displayedIndex);
@@ -29,7 +32,7 @@ public class ProfileCard extends Card<ProfileItem> {
     }
 
     /**
-     * todo Javadocs
+     * Sets the id, name and image on the card.
      */
     private void initializeUserCardGui() {
         setId(displayedIndex);
@@ -38,7 +41,7 @@ public class ProfileCard extends Card<ProfileItem> {
     }
 
     /**
-     * todo Javadocs
+     * Sets the name on the card.
      */
     protected void setName() {
         Object title = mapping.get(TITLE_DISPLAY_NAME);
@@ -46,7 +49,7 @@ public class ProfileCard extends Card<ProfileItem> {
     }
 
     /**
-     * todo Javadocs
+     * Sets the image on the card.
      */
     protected void setImageType() {
         Image image;
@@ -70,7 +73,7 @@ public class ProfileCard extends Card<ProfileItem> {
     }
 
     /**
-     * todo Javadocs
+     * Sets the image styling on the card.
      */
     private void setImageStyling() {
         imageView.setFitHeight(IMAGE_HEIGHT_WIDTH);

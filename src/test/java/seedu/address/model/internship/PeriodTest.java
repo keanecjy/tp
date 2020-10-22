@@ -5,15 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.internship.InternshipItemFieldsUtil.INVALID_PERIOD_EMPTY;
+import static seedu.address.testutil.internship.InternshipItemFieldsUtil.INVALID_PERIOD_SPACES;
 import static seedu.address.testutil.internship.InternshipItemFieldsUtil.VALID_PERIOD_SUMMER;
 import static seedu.address.testutil.internship.InternshipItemFieldsUtil.VALID_PERIOD_THREE_MONTHS;
 
 import org.junit.jupiter.api.Test;
 
 public class PeriodTest {
-
-    private static final String INVALID_PERIOD_EMPTY = "";
-    private static final String INVALID_PERIOD_SPACES = "   ";
 
     private static final Period VALID_PERIOD_ONE = new Period(VALID_PERIOD_SUMMER);
     private static final Period VALID_PERIOD_TWO = new Period(VALID_PERIOD_THREE_MONTHS);

@@ -1,0 +1,35 @@
+@startuml
+!include InternHunterStyle.puml
+
+box Logic LOGIC_COLOR_T1
+participant "s:SwitchCommand" as SwitchCommand LOGIC_COLOR
+participant ":CommandUtil" as CommandUtil LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+mainframe sd execute switch me command
+
+[-> SwitchCommand : execute(model)
+activate SwitchCommand
+
+SwitchCommand -> Model : getTabName()
+activate Model
+
+Model --> SwitchCommand : currentTabName
+deactivate Model
+
+SwitchCommand -> CommandUtil : getCommandResult(model, resultMessage, TAB_NAME)
+activate CommandUtil
+
+ref over CommandUtil, Model : get command result
+
+CommandUtil --> SwitchCommand : result
+deactivate CommandUtil
+
+[<-- SwitchCommand : result
+deactivate SwitchCommand
+
+@enduml

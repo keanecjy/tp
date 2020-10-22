@@ -51,8 +51,8 @@ public class ProfileItemBuilder {
     /**
      * Sets the {@code ProfileItemCategory} of the {@code ProfileItem} that we are building.
      */
-    public ProfileItemBuilder withCategory(ProfileItemCategory category) {
-        this.category = category;
+    public ProfileItemBuilder withCategory(String category) {
+        this.category = ProfileItemCategory.valueOf(category.toUpperCase());
         return this;
     }
 

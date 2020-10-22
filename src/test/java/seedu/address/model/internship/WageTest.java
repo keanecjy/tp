@@ -1,9 +1,14 @@
 package seedu.address.model.internship;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.model.internship.Wage.WAGE_SYMBOL;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.internship.InternshipItemFieldsUtil.INVALID_WAGE_DECIMAL;
+import static seedu.address.testutil.internship.InternshipItemFieldsUtil.INVALID_WAGE_NEGATIVE;
+import static seedu.address.testutil.internship.InternshipItemFieldsUtil.INVALID_WAGE_ZERO;
 import static seedu.address.testutil.internship.InternshipItemFieldsUtil.VALID_WAGE_2000;
 import static seedu.address.testutil.internship.InternshipItemFieldsUtil.VALID_WAGE_3000;
 
@@ -11,9 +16,7 @@ import org.junit.jupiter.api.Test;
 
 public class WageTest {
 
-    private static final String INVALID_WAGE_ZERO = "0";
-    private static final String INVALID_WAGE_NEGATIVE = "-5";
-    private static final String INVALID_WAGE_DECIMAL = "3555.4";
+
 
     private static final Wage VALID_WAGE_ONE = new Wage(VALID_WAGE_2000);
     private static final Wage VALID_WAGE_TWO = new Wage(VALID_WAGE_3000);
@@ -28,6 +31,35 @@ public class WageTest {
         assertThrows(IllegalArgumentException.class, () -> new Wage(INVALID_WAGE_ZERO));
         assertThrows(IllegalArgumentException.class, () -> new Wage(INVALID_WAGE_NEGATIVE));
         assertThrows(IllegalArgumentException.class, () -> new Wage(INVALID_WAGE_DECIMAL));
+    }
+
+    @Test
+    public void isValidWage_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> Wage.isValidWage(null));
+    }
+
+    @Test
+    public void isValidWage_validInput_success() {
+        assertTrue(Wage.isValidWage("2"));
+        assertTrue(Wage.isValidWage("12345"));
+        assertTrue(Wage.isValidWage("243"));
+    }
+
+    @Test
+    public void isValidWage_invalidDigits_success() {
+        assertFalse(Wage.isValidWage("0")); // Zero
+        assertFalse(Wage.isValidWage("-4")); // Negative number
+        assertFalse(Wage.isValidWage("400.00")); // Decimals
+        assertFalse(Wage.isValidWage("0.400")); // Decimals
+    }
+
+    @Test
+    public void isValidWage_invalidInput_success() {
+        assertFalse(Wage.isValidWage("")); // empty string
+        assertFalse(Wage.isValidWage("    ")); // spaces only
+        assertFalse(Wage.isValidWage("   213")); // space then number
+        assertFalse(Wage.isValidWage("1221abc2131")); // alphabets within digits
+        assertFalse(Wage.isValidWage("90 41")); // spaces within digits
     }
 
     @Test

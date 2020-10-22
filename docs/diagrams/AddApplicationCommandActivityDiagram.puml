@@ -1,0 +1,12 @@
+@startuml
+start
+:Execute add application command;
+
+if () then ([application is duplicate])
+    :throw duplicate application exception;
+else ([else])
+    :add application;
+    :display all applications;
+endif
+stop
+@enduml

@@ -1,0 +1,78 @@
+@startuml
+!include InternHunterStyle.puml
+
+box Logic LOGIC_COLOR_T1
+participant "d:DeleteCompanyCommand" as DeleteCompanyCommand LOGIC_COLOR
+participant ":DeleteInternshipCommand" as DeleteInternshipCommand LOGIC_COLOR
+participant ":CommandUtil" as CommandUtil LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+mainframe sd execute delete company 3 command
+
+[-> DeleteCompanyCommand : execute(model)
+activate DeleteCompanyCommand
+
+DeleteCompanyCommand -> Model : getTabName()
+activate Model
+
+Model --> DeleteCompanyCommand : currentTabName
+deactivate Model
+
+DeleteCompanyCommand -> CommandUtil : getCompany(model, 3)
+activate CommandUtil
+
+CommandUtil -> Model : getFilteredCompanyList()
+activate Model
+
+Model --> CommandUtil
+deactivate Model
+
+CommandUtil --> DeleteCompanyCommand : companyToDelete
+deactivate CommandUtil
+
+DeleteCompanyCommand -> DeleteCompanyCommand : deleteAllInternshipsInCompany(model, companyToDelete)
+activate DeleteCompanyCommand
+
+opt company has internships
+loop number of internships in company
+    create DeleteInternshipCommand
+    DeleteCompanyCommand -> DeleteInternshipCommand
+    activate DeleteInternshipCommand
+
+    DeleteInternshipCommand --> DeleteCompanyCommand
+    deactivate DeleteInternshipCommand
+
+    DeleteCompanyCommand -> DeleteInternshipCommand : execute(model)
+    activate DeleteInternshipCommand
+
+    ref over DeleteInternshipCommand, Model : delete internship
+
+    DeleteInternshipCommand --> DeleteCompanyCommand
+    deactivate DeleteInternshipCommand
+end
+end
+
+DeleteCompanyCommand --> DeleteCompanyCommand
+deactivate DeleteCompanyCommand
+
+DeleteCompanyCommand -> Model : deleteCompany(companyToDelete)
+activate Model
+
+Model --> DeleteCompanyCommand
+deactivate Model
+
+DeleteCompanyCommand -> CommandUtil : getCommandResult(model, deleteSuccessMessage,\ncurrentTabName, TabName.COMPANY, 3)
+activate CommandUtil
+
+ref over CommandUtil, Model: get delete command result
+
+CommandUtil --> DeleteCompanyCommand : result
+deactivate CommandUtil
+
+[<-- DeleteCompanyCommand : result
+deactivate DeleteCompanyCommand
+@enduml
