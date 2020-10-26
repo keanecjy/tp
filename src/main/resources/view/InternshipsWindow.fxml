@@ -5,8 +5,10 @@
 <?import javafx.stage.Stage?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.geometry.Insets?>
-<fx:root minHeight="600"
-         minWidth="600"
+<fx:root minHeight="450"
+         minWidth="450"
+         height="450"
+         width="450"
          type="javafx.stage.Stage"
          xmlns="http://javafx.com/javafx/11"
          xmlns:fx="http://javafx.com/fxml/1">

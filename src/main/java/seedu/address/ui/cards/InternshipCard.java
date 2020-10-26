@@ -40,9 +40,9 @@ public class InternshipCard extends Card<InternshipItem> {
     /**
      * Sets the company name on the card.
      */
-    private void setCompanyName() {
-        Object companyName = mapping.get(COMPANY_DISPLAY_NAME);
-        setName(companyName.toString());
+    private void setJobTitle() {
+        Object jobTitle = mapping.get(JOB_TITLE_DISPLAY_NAME);
+        setName(jobTitle.toString());
     }
 
     /**
@@ -58,9 +58,9 @@ public class InternshipCard extends Card<InternshipItem> {
     /**
      * Sets the name on the card.
      */
-    private void setJobTitle() {
-        Object jobTitle = mapping.get(JOB_TITLE_DISPLAY_NAME);
-        setTextAt(JOB_TITLE_DISPLAY_NAME, jobTitle.toString(), LineNumber.L1);
+    private void setCompanyName() {
+        Object companyName = mapping.get(COMPANY_DISPLAY_NAME);
+        setTextAt(COMPANY_DISPLAY_NAME, companyName.toString(), LineNumber.L1);
     }
 
     /**
