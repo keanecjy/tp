@@ -19,7 +19,7 @@ public class ApplicationNameContainsKeyWordsPredicate implements Predicate<Appli
     public boolean test(ApplicationItem applicationItem) {
         return keywords.stream()
             .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(
-                applicationItem.getInternshipItem().getJobTitle().getValue(), keyword));
+                applicationItem.getInternshipJobTitleValue(), keyword));
     }
 
     @Override

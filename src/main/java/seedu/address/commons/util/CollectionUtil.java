@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -32,14 +31,6 @@ public class CollectionUtil {
      */
     public static boolean isAnyNonNull(Object... items) {
         return items != null && Arrays.stream(items).anyMatch(Objects::nonNull);
-    }
-
-    public static String getNumberedList(List<?> items) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < items.size(); i++) {
-            sb.append(i + 1).append(". ").append(items.get(i));
-        }
-        return sb.toString();
     }
 
 }

@@ -2,6 +2,8 @@ package seedu.address.ui;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.testutil.application.SampleApplicationItems.getSampleApplicationItemList;
+import static seedu.address.testutil.profile.SampleProfileItems.getSampleProfileItemList;
 import static seedu.address.ui.GuardClauseUi.IS_EMPTY_DATA_LIST;
 import static seedu.address.ui.GuardClauseUi.IS_EMPTY_LIST_STRING;
 import static seedu.address.ui.GuardClauseUi.IS_EMPTY_STRING;
@@ -14,7 +16,10 @@ import org.junit.jupiter.api.Test;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.application.ApplicationItem;
 import seedu.address.model.item.Item;
+import seedu.address.model.item.ItemList;
+import seedu.address.model.profile.ProfileItem;
 import seedu.address.storage.item.JsonAdaptedItem;
 
 public class GuardClauseUiTest {
@@ -23,14 +28,14 @@ public class GuardClauseUiTest {
     private static final String NON_EMPTY_STRING = "a";
     private static final String EMPTY_LIST_STRING = "[]";
     private static final String NON_EMPTY_LIST_STRING = "[a]";
-    private ObservableList<ApplicationItemStub> applicationItemStubList;
-    private ObservableList<ProfileItemStub> profileItemStubList;
+    private ItemList<ApplicationItem> applicationItemList;
+    private ItemList<ProfileItem> profileItemList;
     private ObservableList<CompanyItemStub> companyItemStubList;
 
     @BeforeEach
     public void setUp() {
-        applicationItemStubList = FXCollections.observableArrayList();
-        profileItemStubList = FXCollections.observableArrayList();
+        applicationItemList = getSampleApplicationItemList();
+        profileItemList = getSampleProfileItemList();
         companyItemStubList = FXCollections.observableArrayList();
     }
 
@@ -54,36 +59,19 @@ public class GuardClauseUiTest {
 
     @Test
     public void isEmptyDataList_true_success() {
-        // all the list are of size 0 when initialized
-
-        // application item list
-        assertTrue(IS_EMPTY_DATA_LIST.test(applicationItemStubList));
-
-        // application item list
-        assertTrue(IS_EMPTY_DATA_LIST.test(profileItemStubList));
-
-        // application item list
-        assertTrue(IS_EMPTY_DATA_LIST.test(companyItemStubList));
+        assertTrue(IS_EMPTY_DATA_LIST.test(FXCollections.observableArrayList()));
     }
 
     @Test
     public void isEmptyDataList_false_success() {
-        // adding 1 item to applicationItemStubList;
-        applicationItemStubList.add(new ApplicationItemStub());
+        // application item list
+        assertFalse(IS_EMPTY_DATA_LIST.test(applicationItemList.getItemList()));
 
-        // adding 1 item to applicationItemStubList;
+        // profile item list
+        assertFalse(IS_EMPTY_DATA_LIST.test(profileItemList.getItemList()));
+
+        // company item list
         companyItemStubList.add(new CompanyItemStub());
-
-        // adding 1 item to applicationItemStubList;
-        profileItemStubList.add(new ProfileItemStub());
-
-        // application item list
-        assertFalse(IS_EMPTY_DATA_LIST.test(applicationItemStubList));
-
-        // application item list
-        assertFalse(IS_EMPTY_DATA_LIST.test(profileItemStubList));
-
-        // application item list
         assertFalse(IS_EMPTY_DATA_LIST.test(companyItemStubList));
 
         // null test
@@ -142,28 +130,6 @@ public class GuardClauseUiTest {
      * TODO Note that all stub class to be removed after all the sample is made
      * SampleApplicationItems, SampleInternshipItems, SampleCompanyItems, SampleProfileItems.
      */
-    static class ApplicationItemStub extends Item {
-
-        @Override
-        public boolean isSameItem(Item otherItem) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public String getItemName() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public LinkedHashMap<String, Object> getMapping() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public JsonAdaptedItem getJsonAdaptedItem() {
-            throw new AssertionError("This method should not be called.");
-        }
-    }
 
     static class CompanyItemStub extends Item {
 
@@ -188,26 +154,4 @@ public class GuardClauseUiTest {
         }
     }
 
-    static class ProfileItemStub extends Item {
-
-        @Override
-        public boolean isSameItem(Item otherItem) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public String getItemName() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public LinkedHashMap<String, Object> getMapping() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public JsonAdaptedItem getJsonAdaptedItem() {
-            throw new AssertionError("This method should not be called.");
-        }
-    }
 }

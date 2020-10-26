@@ -15,7 +15,6 @@ import seedu.address.model.Model;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.application.ApplicationItem;
 import seedu.address.model.company.CompanyItem;
-import seedu.address.model.person.Person;
 import seedu.address.model.profile.ProfileItem;
 import seedu.address.storage.ItemListStorage;
 import seedu.address.storage.JsonItemListStorage;
@@ -25,7 +24,6 @@ import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.application.JsonAdaptedApplicationItem;
 import seedu.address.storage.company.JsonAdaptedCompanyItem;
-import seedu.address.storage.person.JsonAdaptedPerson;
 import seedu.address.storage.profile.JsonAdaptedProfileItem;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
@@ -35,7 +33,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    public static final Version VERSION = new Version(1, 3, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -55,8 +53,6 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = MainAppUtil.initPrefs(userPrefsStorage);
-        ItemListStorage<Person, JsonAdaptedPerson> addressBookStorage = new JsonItemListStorage<>(
-                userPrefs.getAddressBookFilePath(), Person.class, JsonAdaptedPerson.class);
         ItemListStorage<ApplicationItem, JsonAdaptedApplicationItem> applicationItemListStorage =
                 new JsonItemListStorage<>(userPrefs.getApplicationItemListFilePath(), ApplicationItem.class,
                         JsonAdaptedApplicationItem.class);
@@ -65,8 +61,8 @@ public class MainApp extends Application {
         ItemListStorage<ProfileItem, JsonAdaptedProfileItem> profileItemListStorage = new JsonItemListStorage<>(
                 userPrefs.getProfileItemListFilePath(), ProfileItem.class, JsonAdaptedProfileItem.class);
 
-        storage = new StorageManager(addressBookStorage, applicationItemListStorage,
-                companyItemListStorage, profileItemListStorage, userPrefsStorage);
+        storage = new StorageManager(applicationItemListStorage, companyItemListStorage, profileItemListStorage,
+                userPrefsStorage);
 
         MainAppUtil.initLogging(config);
 

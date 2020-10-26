@@ -35,9 +35,7 @@ public class ViewCommandParser implements Parser<ViewCommand> {
             return new ViewApplicationCommandParser().parse(commandDetails);
 
         case PROFILE_ALIAS:
-            // todo: return view profile command parser
-            // return new ViewProfileCommandParser().parse(commandDetails);
-
+            return new ViewProfileCommandParser().parse(commandDetails);
         default:
             // Invalid item type
             throw new ParseException(MESSAGE_INVALID_ITEM_TYPE);

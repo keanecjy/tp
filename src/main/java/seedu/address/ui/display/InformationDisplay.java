@@ -23,7 +23,7 @@ import seedu.address.ui.tabs.TabName;
 /**
  * A UI component that displays all information of a {@code Item}.
  */
-public abstract class InformationDisplay<T extends Item> extends UiPart<Region> {
+public class InformationDisplay<T extends Item> extends UiPart<Region> {
 
     protected static final String BULLET_WITH_ONE_SPACE = "\u2022 ";
     protected static final String BULLET_WITH_TWO_SPACE_FRONT_ONE_BACK = "  \u2022 ";

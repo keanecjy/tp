@@ -30,7 +30,7 @@ public class CompanyCard extends Card<CompanyItem> {
      */
     private void initializeCompanyCardGui() {
         setId(displayedIndex);
-        setName();
+        setCompanyName();
         setIndustries();
         setPhone();
         setEmail();
@@ -40,7 +40,7 @@ public class CompanyCard extends Card<CompanyItem> {
     /**
      * Sets the name on the card.
      */
-    private void setName() {
+    private void setCompanyName() {
         Object companyName = mapping.get(COMPANY_DISPLAY_NAME);
         setName(companyName.toString());
     }

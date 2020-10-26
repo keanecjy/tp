@@ -1,6 +1,5 @@
 package seedu.address.model;
 
-import java.nio.file.Path;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -39,28 +38,28 @@ public interface Model {
     void setGuiSettings(GuiSettings guiSettings);
 
     /**
-     * Returns the user prefs' address book file path.
-     */
-    Path getInternHunterFilePath();
-
-    /**
-     * Sets the user prefs' address book file path.
-     */
-    void setInternHunterFilePath(Path internHunterFilePath);
-
-    /** Returns the person list */ //todo: remove when possible
+     * Returns the person list
+     */ //todo: remove when possible
     FilterableItemList<Person> getAddressBook();
 
-    /** Returns the company list */ // todo: remove if ultimately not needed
+    /**
+     * Returns the company list
+     */ // todo: remove if ultimately not needed
     FilterableItemList<CompanyItem> getCompanyList();
 
-    /** Returns an unmodifiable view of the filtered company list */
+    /**
+     * Returns an unmodifiable view of the filtered company list
+     */
     ObservableList<CompanyItem> getFilteredCompanyList();
 
-    /** Returns the unfiltered company list */
+    /**
+     * Returns the unfiltered company list
+     */
     ItemList<CompanyItem> getUnfilteredCompanyList();
 
-    /** Returns the company item list */
+    /**
+     * Returns the company item list
+     */
     ObservableList<CompanyItem> getCompanyItemList();
 
     /**
@@ -90,6 +89,7 @@ public interface Model {
 
     /**
      * Updates the filter of the filtered Company list to filter by the given {@code predicate}.
+     *
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredCompanyList(Predicate<? super CompanyItem> predicate);
@@ -99,13 +99,19 @@ public interface Model {
      */
     void setCompanyList(ItemList<CompanyItem> companyList);
 
-    /** Returns the application list */ // todo: remove if ultimately not needed
+    /**
+     * Returns the application list
+     */ // todo: remove if ultimately not needed
     FilterableItemList<ApplicationItem> getApplicationList();
 
-    /** Returns an unmodifiable view of the filtered application list */
+    /**
+     * Returns an unmodifiable view of the filtered application list
+     */
     ObservableList<ApplicationItem> getFilteredApplicationList();
 
-    /** Returns the unfiltered application list */
+    /**
+     * Returns the unfiltered application list
+     */
     ItemList<ApplicationItem> getUnfilteredApplicationList();
 
     /**
@@ -141,6 +147,7 @@ public interface Model {
 
     /**
      * Updates the filter of the filtered Application list to filter by the given {@code predicate}.
+     *
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredApplicationList(Predicate<? super ApplicationItem> predicate);
@@ -150,17 +157,25 @@ public interface Model {
      */
     void setApplicationList(ItemList<ApplicationItem> applicationList);
 
-    /** Returns the profile list */ // todo: remove if ultimately not needed
+    /**
+     * Returns the profile list
+     */ // todo: remove if ultimately not needed
     FilterableItemList<ProfileItem> getProfileList();
 
-    /** Returns an unmodifiable view of the filtered profile list */
+    /**
+     * Returns an unmodifiable view of the filtered profile list
+     */
     ObservableList<ProfileItem> getFilteredProfileList();
 
 
-    /** Returns the unfiltered profile list */
+    /**
+     * Returns the unfiltered profile list
+     */
     ItemList<ProfileItem> getUnfilteredProfileList();
 
-    /** Returns the profile item list */
+    /**
+     * Returns the profile item list
+     */
     ObservableList<ProfileItem> getProfileItemList();
 
     /**
@@ -190,6 +205,7 @@ public interface Model {
 
     /**
      * Updates the filter of the filtered Profile list to filter by the given {@code predicate}.
+     *
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredProfileList(Predicate<? super ProfileItem> predicate);

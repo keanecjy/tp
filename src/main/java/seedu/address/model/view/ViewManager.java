@@ -1,5 +1,7 @@
 package seedu.address.model.view;
 
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.commons.core.index.Index;
 
 /**
@@ -24,6 +26,7 @@ public class ViewManager implements View {
      * Replaces {@code companyIndex} with {@code index}.
      */
     public void setCompanyViewIndex(Index index) {
+        requireNonNull(index);
         companyIndex = index;
     }
 
@@ -31,6 +34,7 @@ public class ViewManager implements View {
      * Replaces {@code companyIndex} with {@code index}.
      */
     public void setApplicationViewIndex(Index index) {
+        requireNonNull(index);
         applicationIndex = index;
     }
 
@@ -38,6 +42,7 @@ public class ViewManager implements View {
      * Replaces {@code companyIndex} with {@code index}.
      */
     public void setProfileViewIndex(Index index) {
+        requireNonNull(index);
         profileIndex = index;
     }
 

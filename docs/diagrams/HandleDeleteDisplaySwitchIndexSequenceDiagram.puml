@@ -11,7 +11,7 @@ participant ":Model" as Model MODEL_COLOR
 participant ":ViewManager" as ViewManager MODEL_COLOR
 end box
 
-mainframe sd handleDeleteDisplaySwitchIndex
+mainframe sd handle delete display switch index
 activate CommandUtil
 
 alt current tab at company tab
@@ -30,7 +30,9 @@ alt current tab at company tab
             activate Model
             Model -> ViewManager : setCompanyViewIndex(index)
             activate ViewManager
+            ViewManager --> Model
             deactivate ViewManager
+            Model --> CommandUtil
             deactivate Model
         end
     end
@@ -50,7 +52,9 @@ else current tab at application tab
             activate Model
             Model -> ViewManager : setApplicationViewIndex(index)
             activate ViewManager
+            ViewManager --> Model
             deactivate ViewManager
+            Model --> CommandUtil
             deactivate Model
         end
     end
@@ -70,7 +74,9 @@ else current tab at profile tab
             activate Model
             Model -> ViewManager : setProfileViewIndex(index)
             activate ViewManager
+            ViewManager --> Model
             deactivate ViewManager
+            Model --> CommandUtil
             deactivate Model
         end
     end

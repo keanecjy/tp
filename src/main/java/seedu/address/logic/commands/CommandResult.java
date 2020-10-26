@@ -4,6 +4,10 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Objects;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import seedu.address.model.internship.InternshipItem;
+
 /**
  * Represents the result of a command execution.
  */
@@ -24,7 +28,7 @@ public class CommandResult {
     private final boolean isSwitchDisplay;
 
     /** List of matching internships generated based on user's profile skills */
-    private String matchingInternshipsText = "";
+    private ObservableList<InternshipItem> matchingInternships = FXCollections.observableArrayList();
 
     /**
      * Constructs a {@code CommandResult} with the specified fields.
@@ -68,15 +72,15 @@ public class CommandResult {
     }
 
     public boolean isShowMatchingInternships() {
-        return !matchingInternshipsText.isEmpty();
+        return !matchingInternships.isEmpty();
     }
 
-    public void setMatchingInternshipsText(String listOfInternships) {
-        matchingInternshipsText = listOfInternships;
+    public void setMatchingInternships(ObservableList<InternshipItem> listOfInternships) {
+        matchingInternships = listOfInternships;
     }
 
-    public String getMatchingInternshipsText() {
-        return matchingInternshipsText;
+    public ObservableList<InternshipItem> getMatchingInternships() {
+        return matchingInternships;
     }
 
     @Override

@@ -29,15 +29,11 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         switch (itemType) {
         case COMPANY_ALIAS:
-            // todo shawn
-            //return new FindCompanyCommandParser().parse(commandDetails);
-            return null;
+            return new FindCompanyCommandParser().parse(commandDetails);
         case APPLICATION_ALIAS:
             return new FindApplicationCommandParser().parse(commandDetails);
         case PROFILE_ALIAS:
-            // todo isaac
-            //return new FindProfileCommandParser().parse(commandDetails);
-            return null;
+            return new FindProfileCommandParser().parse(commandDetails);
         default:
             // Invalid item type
             throw new ParseException(MESSAGE_INVALID_ITEM_TYPE);

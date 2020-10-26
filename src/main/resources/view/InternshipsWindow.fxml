@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.Scene?>
 <?import javafx.stage.Stage?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.geometry.Insets?>
 <fx:root minHeight="600"
          minWidth="600"
          type="javafx.stage.Stage"
@@ -11,12 +12,11 @@
          xmlns:fx="http://javafx.com/fxml/1">
   <scene>
     <Scene stylesheets="@MainWindow.css">
-      <VBox>
-        <TextArea fx:id="matchingInternships"
-                  editable="false"
-                  wrapText="true"
-                  VBox.vgrow="ALWAYS"
-                  styleClass="windowTextDisplay"/>
+      <VBox fx:id="cardList" VBox.vgrow="ALWAYS" styleClass="cards_container_inner_style">
+        <padding>
+          <Insets top="10" right="10" bottom="10" left="10" />
+        </padding>
+        <StackPane fx:id="matchingInternships" VBox.vgrow="ALWAYS"/>
       </VBox>
     </Scene>
   </scene>

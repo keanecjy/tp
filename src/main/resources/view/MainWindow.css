@@ -224,7 +224,8 @@
 }
 
 .windowTextDisplay {
-    -fx-control-inner-background: "lightgrey";
+    -fx-focus-color: transparent;
+    -fx-control-inner-background: "white";
     -fx-font-family: "Droid Sans";
     -fx-font-size: 20px;
     -fx-text-fill: #6F67C6;

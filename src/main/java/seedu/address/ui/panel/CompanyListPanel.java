@@ -24,7 +24,7 @@ public class CompanyListPanel extends ListPanel<CompanyItem> {
     /**
      * Creates each cell in the list panel with information of {@code CompanyItem}.
      */
-    class CompanyListViewCell extends ListCell<CompanyItem> {
+    static class CompanyListViewCell extends ListCell<CompanyItem> {
         @Override
         protected void updateItem(CompanyItem companyItem, boolean empty) {
             super.updateItem(companyItem, empty);

@@ -11,10 +11,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.find.FindApplicationCommand;
+import seedu.address.logic.commands.find.FindProfileCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * todo javadocs
+ * Tests the main parser for find commands.
  */
 public class FindCommandParserTest {
 
@@ -26,8 +27,6 @@ public class FindCommandParserTest {
     }
 
     // todo shawn
-
-    // todo isaac
     // Note can just write inside these 4 methods, if i do forget any test case do inform me.
     @Test
     public void parse_invalidTypes_throwsParseException() {
@@ -49,12 +48,14 @@ public class FindCommandParserTest {
         // item type app, description present -> FindApplicationCommand
         assertTrue(findCommandParser.parse(APPLICATION_ALIAS + " 3") instanceof FindApplicationCommand);
         assertTrue(findCommandParser.parse(APPLICATION_ALIAS + " developers") instanceof FindApplicationCommand);
+        assertTrue(findCommandParser.parse(PROFILE_ALIAS + " 4") instanceof FindProfileCommand);
+        assertTrue(findCommandParser.parse(PROFILE_ALIAS + " internship html") instanceof FindProfileCommand);
     }
 
     @Test
     public void parse_listAppFalse_success() throws ParseException {
         // item type different
-        assertFalse(findCommandParser.parse(COMPANY_ALIAS) instanceof FindApplicationCommand);
-        assertFalse(findCommandParser.parse(PROFILE_ALIAS) instanceof FindApplicationCommand);
+        assertFalse(findCommandParser.parse(COMPANY_ALIAS + " google") instanceof FindApplicationCommand);
+        assertFalse(findCommandParser.parse(PROFILE_ALIAS + " internship") instanceof FindApplicationCommand);
     }
 }

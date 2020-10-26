@@ -24,6 +24,8 @@ import seedu.address.model.application.ApplicationNameContainsKeyWordsPredicate;
 import seedu.address.model.item.ItemList;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.profile.ProfileItem;
+import seedu.address.model.profile.ProfileItemContainsKeywordPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -115,17 +117,30 @@ public class CommandTestUtil {
     }
 
     /**
-     * Updates {@code model}'s filtered list to show only the person at the given {@code targetIndex} in the
-     * {@code model}'s address book.
+     * Todo: remove
+     * @param model
+     * @param targetIndex
      */
     public static void showPersonAtIndex(Model model, Index targetIndex) {
         assertTrue(targetIndex.getZeroBased() < model.getAddressBook().getFilteredItemList().size());
-
         Person person = model.getAddressBook().getFilteredItemList().get(targetIndex.getZeroBased());
         final String[] splitName = person.getName().fullName.split("\\s+");
         model.getAddressBook().updateFilteredItemList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
-
         assertEquals(1, model.getAddressBook().getFilteredItemList().size());
+    }
+
+    /**
+     * Updates {@code model}'s filtered list to show only the profileItem at the given {@code targetIndex} in the
+     * {@code model}'s profile list.
+     */
+    public static void showProfileItemAtIndex(Model model, Index targetIndex) {
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredProfileList().size());
+
+        ProfileItem profileItem = model.getProfileItemFromFilteredList(targetIndex.getZeroBased());
+        final String[] splitTitle = profileItem.getTitle().toString().split("\\s+");
+        model.updateFilteredProfileList(new ProfileItemContainsKeywordPredicate(Arrays.asList(splitTitle[0])));
+
+        assertEquals(1, model.getFilteredProfileListSize());
     }
 
     /**
@@ -133,15 +148,15 @@ public class CommandTestUtil {
      * {@code model}'s application list.
      */
     public static void showApplicationAtIndex(Model model, Index targetIndex) {
-        assertTrue(targetIndex.getZeroBased() < model.getApplicationList().getFilteredItemList().size());
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredApplicationList().size());
 
-        ApplicationItem applicationItem = model.getApplicationList().getFilteredItemList().get(
+        ApplicationItem applicationItem = model.getApplicationItemFromFilteredList(
                 targetIndex.getZeroBased());
-        final String[] splitJobTitle = applicationItem.getInternshipItem().getJobTitle().toString().split("\\s+");
-        model.getApplicationList().updateFilteredItemList(
+        final String[] splitJobTitle = applicationItem.getJobTitleOfInternshipItem().toString().split("\\s+");
+        model.updateFilteredApplicationList(
                 new ApplicationNameContainsKeyWordsPredicate(Arrays.asList(splitJobTitle[0])));
 
-        assertEquals(1, model.getApplicationList().getFilteredItemList().size());
+        assertEquals(1, model.getFilteredApplicationListSize());
     }
 
 }

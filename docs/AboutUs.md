@@ -13,7 +13,7 @@ We are a team based in the [School of Computing, National University of Singapor
 
 ### Keane Chan Jun Yu
 
-<img src="images/keanecjy.png" width="200px">
+<img src="images/about-us-images/keanecjy.png" width="200px">
 
 [[github](https://github.com/keanecjy)]
 [[portfolio](team/keanecjy.md)]
@@ -23,7 +23,7 @@ We are a team based in the [School of Computing, National University of Singapor
 
 ### Sean Lum
 
-<img src="images/seanjyjy.png" width="200px">
+<img src="images/about-us-images/seanjyjy.png" width="200px">
 
 [[github](http://github.com/seanjyjy)]
 [[portfolio](team/seanjyjy.md)]
@@ -33,7 +33,7 @@ We are a team based in the [School of Computing, National University of Singapor
 
 ### Gan Wan Cheng Isaac
 
-<img src="images/orzymandias.png" width="200px">
+<img src="images/about-us-images/orzymandias.png" width="200px">
 
 [[github](http://github.com/orzymandias)] [[portfolio](team/orzymandias.md)]
 
@@ -42,7 +42,7 @@ We are a team based in the [School of Computing, National University of Singapor
 
 ### Shawn Ng Yong Kwang
 
-<img src="images/shawn-nyk.png" width="200px">
+<img src="images/about-us-images/shawn-nyk.png" width="200px">
 
 [[github](http://github.com/shawn-nyk)]
 [[portfolio](team/shawn-nyk.md)]
@@ -52,7 +52,7 @@ We are a team based in the [School of Computing, National University of Singapor
 
 ### Fidella Widjojo
 
-<img src="images/zoroarkdarkrai.png" width="200px">
+<img src="images/about-us-images/zoroarkdarkrai.png" width="200px">
 
 [[github](http://github.com/zoroarkdarkrai)]
 [[portfolio](team/zoroarkdarkrai.md)]

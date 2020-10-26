@@ -9,12 +9,14 @@ import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.application.ApplicationItem;
 import seedu.address.model.company.CompanyItem;
@@ -24,10 +26,43 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.profile.ProfileItem;
 import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.application.ApplicationItemBuilder;
+import seedu.address.testutil.profile.ProfileItemBuilder;
 
 public class ModelManagerTest {
 
-    private ModelManager modelManager = new ModelManager();
+    private ModelManager modelManager;
+    // private CompanyItemBuilder companyItemBuilder;
+    private ApplicationItemBuilder applicationItemBuilder;
+    private ProfileItemBuilder profileItemBuilder;
+    private ObservableList<CompanyItem> companyItemList;
+    private ObservableList<ApplicationItem> applicationItemList;
+    private ObservableList<ProfileItem> profileItemList;
+    private ObservableList<CompanyItem> emptyCompanyItemList;
+    private ObservableList<ApplicationItem> emptyApplicationItemList;
+    private ObservableList<ProfileItem> emptyProfileItemList;
+
+    @BeforeEach
+    public void setUp() {
+        modelManager = new ModelManager();
+
+        // companyItemBuilder = new CompanyItemBuilder();
+        applicationItemBuilder = new ApplicationItemBuilder();
+        profileItemBuilder = new ProfileItemBuilder();
+
+        companyItemList = FXCollections.observableArrayList();
+        // companyItemList.add(companyItemBuilder.build());
+
+        applicationItemList = FXCollections.observableArrayList();
+        applicationItemList.add(applicationItemBuilder.build());
+
+        profileItemList = FXCollections.observableArrayList();
+        profileItemList.add(profileItemBuilder.build());
+
+        emptyProfileItemList = FXCollections.observableArrayList();
+        emptyApplicationItemList = FXCollections.observableArrayList();
+        emptyCompanyItemList = FXCollections.observableArrayList();
+    }
 
     @Test
     public void constructor() {
@@ -47,14 +82,18 @@ public class ModelManagerTest {
     @Test
     public void setUserPrefs_validUserPrefs_copiesUserPrefs() {
         UserPrefs userPrefs = new UserPrefs();
-        userPrefs.setAddressBookFilePath(Paths.get("address/book/file/path"));
+        userPrefs.setApplicationItemListFilePath(Paths.get("app/item/list/file/path"));
+        userPrefs.setCompanyItemListFilePath(Paths.get("com/item/list/file/path"));
+        userPrefs.setProfileItemListFilePath(Paths.get("app/me/list/file/path"));
         userPrefs.setGuiSettings(new GuiSettings(1, 2, 3, 4));
         modelManager.setUserPrefs(userPrefs);
         assertEquals(userPrefs, modelManager.getUserPrefs());
 
         // Modifying userPrefs should not modify modelManager's userPrefs
         UserPrefs oldUserPrefs = new UserPrefs(userPrefs);
-        userPrefs.setAddressBookFilePath(Paths.get("new/address/book/file/path"));
+        userPrefs.setApplicationItemListFilePath(Paths.get("new/app/item/list/file/path"));
+        userPrefs.setCompanyItemListFilePath(Paths.get("new/com/item/list/file/path"));
+        userPrefs.setProfileItemListFilePath(Paths.get("new/app/me/list/file/path"));
         assertEquals(oldUserPrefs, modelManager.getUserPrefs());
     }
 
@@ -71,37 +110,175 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void setInternHunterFilePath_nullPath_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> modelManager.setInternHunterFilePath(null));
+    public void hasCompany_nullCompany_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.hasCompany(null));
     }
 
     @Test
-    public void setInternHunterFilePath_validPath_setsInternHunterFilePath() {
-        Path path = Paths.get("address/book/file/path");
-        modelManager.setInternHunterFilePath(path);
-        assertEquals(path, modelManager.getInternHunterFilePath());
+    public void hasApplication_nullApplication_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.hasApplication(null));
     }
 
     @Test
-    public void hasPerson_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> modelManager.getAddressBook().hasItem(null));
+    public void hasProfile_nullProfile_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.hasProfileItem(null));
     }
 
     @Test
-    public void hasPerson_personNotInAddressBook_returnsFalse() {
-        assertFalse(modelManager.getAddressBook().hasItem(ALICE));
+    public void hasCompany_companyNotInCompanyList_returnsFalse() {
+        // TODO when company item is ready
+        // assertFalse(modelManager.hasCompany(companyItemBuilder.build()));
     }
 
     @Test
-    public void hasPerson_personInAddressBook_returnsTrue() {
-        modelManager.getAddressBook().addItem(ALICE);
-        assertTrue(modelManager.getAddressBook().hasItem(ALICE));
+    public void hasApplication_applicationNotInApplicationList_returnsFalse() {
+        assertFalse(modelManager.hasApplication(applicationItemBuilder.build()));
     }
 
     @Test
-    public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
-        assertThrows(UnsupportedOperationException.class, () -> modelManager.getAddressBook()
-                .getFilteredItemList().remove(0));
+    public void hasProfileItem_profileItemNotInProfileItemList_returnsFalse() {
+        assertFalse(modelManager.hasProfileItem(profileItemBuilder.build()));
+    }
+
+    @Test
+    public void addCompany_addCompanyItemToList_returnsEquals() {
+        // TODO when company item is ready
+        // modelManager.addCompany(companyItemBuilder.build());
+        // assertEquals(modelManager.getFilteredCompanyList(), companyItems);
+    }
+
+    @Test
+    public void addApplication_addApplicationItemToList_returnsEquals() {
+        modelManager.addApplication(applicationItemBuilder.build());
+        assertEquals(modelManager.getFilteredApplicationList(), applicationItemList);
+    }
+
+    @Test
+    public void addProfile_addProfileItemToList_returnsEquals() {
+        modelManager.addProfileItem(profileItemBuilder.build());
+        assertEquals(modelManager.getFilteredProfileList(), profileItemList);
+    }
+
+    @Test
+    public void hasCompany_companyInCompanyList_returnsTrue() {
+        // TODO when company item is ready
+        // modelManager.addCompany(companyItemBuilder.build());
+        // assertTrue(modelManager.hasCompany(companyItemBuilder.build()));
+    }
+
+    @Test
+    public void hasApplication_applicationInApplicationList_returnsTrue() {
+        modelManager.addApplication(applicationItemBuilder.build());
+        assertTrue(modelManager.hasApplication(applicationItemBuilder.build()));
+    }
+
+    @Test
+    public void hasProfileItem_profileItemInProfileItemList_returnsTrue() {
+        modelManager.addProfileItem(profileItemBuilder.build());
+        assertTrue(modelManager.hasProfileItem(profileItemBuilder.build()));
+    }
+
+    @Test
+    public void getFilteredCompanyList_modifyCompanyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredCompanyList()
+            .remove(0));
+    }
+
+    @Test
+    public void getFilteredApplicationList_modifyApplicationList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredApplicationList()
+            .remove(0));
+    }
+
+    @Test
+    public void getFilteredProfileList_modifyProfileList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredProfileList()
+            .remove(0));
+    }
+
+    @Test
+    public void getFilteredCompanyListSize_getCompanyListSize_returnsEqual() {
+        // TODO when company item is ready
+        // modelManager.addCompany(companyItemBuilder.build());
+        // assertEquals(modelManager.getFilteredCompanyListSize(), 1);
+    }
+
+    @Test
+    public void getFilteredApplicationListSize_getApplicationListSize_returnsEqual() {
+        modelManager.addApplication(applicationItemBuilder.build());
+        assertEquals(modelManager.getFilteredApplicationListSize(), 1);
+    }
+
+    @Test
+    public void getFilteredProfileListSize_getProfileListSize_returnsEqual() {
+        modelManager.addProfileItem(profileItemBuilder.build());
+        assertEquals(modelManager.getFilteredProfileListSize(), 1);
+    }
+
+    @Test
+    public void getCompanyList_testIfEqualCompanyList_returnsEqual() {
+        // TODO when company item is ready
+        // modelManager.addCompany(companyItemBuilder.build());
+        // assertEquals(modelManager.getCompanyList(), companyItems);
+    }
+
+    @Test
+    public void getProfileList_testIfEqualProfileList_returnsEqual() {
+        modelManager.addProfileItem(profileItemBuilder.build());
+        assertEquals(modelManager.getProfileItemList(), profileItemList);
+    }
+
+    @Test
+    public void deleteCompany_deleteCompanyFromList_returnsEqual() {
+        // TODO when company item is ready
+        // modelManager.addCompany(companyItemBuilder.build());
+        // modelManager.deleteCompany(companyItemBuilder.build());
+        // assertEquals(modelManager.getFilteredCompanyList(), emptyCompanyItemList);
+    }
+
+    @Test
+    public void deleteApplication_deleteApplicationFromList_returnsEqual() {
+        modelManager.addApplication(applicationItemBuilder.build());
+        modelManager.deleteApplication(applicationItemBuilder.build());
+        assertEquals(modelManager.getFilteredApplicationList(), emptyApplicationItemList);
+    }
+
+    @Test
+    public void deleteProfileItem_deleteProfileItemFromList_returnsEqual() {
+        modelManager.addProfileItem(profileItemBuilder.build());
+        modelManager.deleteProfileItem(profileItemBuilder.build());
+        assertEquals(modelManager.getFilteredProfileList(), emptyProfileItemList);
+    }
+
+    @Test
+    public void setCompany_changeCompanyItem_returnsEqual() {
+        // TODO when company item is ready
+        // modelManager.addCompany(companyItemList.build());
+        // CompanyItemBuilder secondCompanyItemBuilder = new CompanyItemBuilder();
+        // secondCompanyItemBuilder.
+        // modelManager.setCompany(companyItemList.build(), secondCompanyItemBuilder.build());
+        // emptyCompanyItemList.add(secondCompanyItemBuilder.build());
+        // assertEquals(modelManager.getFilteredCompanyList(), emptyCompanyItemList);
+    }
+
+    @Test
+    public void setApplication_changeApplicationItem_returnsEqual() {
+        modelManager.addApplication(applicationItemBuilder.build());
+        ApplicationItemBuilder secondApplicationItemBuilder = new ApplicationItemBuilder();
+        secondApplicationItemBuilder.withStatus("Interview");
+        modelManager.setApplication(applicationItemBuilder.build(), secondApplicationItemBuilder.build());
+        emptyApplicationItemList.add(secondApplicationItemBuilder.build());
+        assertEquals(modelManager.getFilteredApplicationList(), emptyApplicationItemList);
+    }
+
+    @Test
+    public void setProfile_changeProfileItem_returnsEqual() {
+        modelManager.addProfileItem(profileItemBuilder.build());
+        ProfileItemBuilder secondProfileItemBuilder = new ProfileItemBuilder();
+        secondProfileItemBuilder.withTitle("HELLO WORLD");
+        modelManager.setProfileItem(profileItemBuilder.build(), secondProfileItemBuilder.build());
+        emptyProfileItemList.add(secondProfileItemBuilder.build());
+        assertEquals(modelManager.getFilteredProfileList(), emptyProfileItemList);
     }
 
     @Test
@@ -147,7 +324,7 @@ public class ModelManagerTest {
 
         // different userPrefs -> returns false
         UserPrefs differentUserPrefs = new UserPrefs();
-        differentUserPrefs.setAddressBookFilePath(Paths.get("differentFilePath"));
+        differentUserPrefs.setApplicationItemListFilePath(Paths.get("differentFilePath"));
         assertNotEquals(new ModelManager(addressBook, companyList,
                 applicationList, profileList, differentUserPrefs), modelManager);
     }

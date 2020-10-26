@@ -60,7 +60,7 @@ public class ApplicationCard extends Card<ApplicationItem> {
      */
     private void initializeInternshipCardGui() {
         setId(displayedIndex);
-        setName();
+        setJobTitle();
         setRequirements();
         setStatus();
         setPeriod();
@@ -72,7 +72,7 @@ public class ApplicationCard extends Card<ApplicationItem> {
     /**
      * Sets the name on the card.
      */
-    private void setName() {
+    private void setJobTitle() {
         Object jobTitle = mapping.get(JOB_TITLE_DISPLAY_NAME);
         setName(jobTitle.toString());
     }

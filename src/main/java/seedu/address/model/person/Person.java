@@ -10,7 +10,7 @@ import java.util.Set;
 
 import seedu.address.model.item.Item;
 import seedu.address.model.tag.Tag;
-import seedu.address.storage.person.JsonAdaptedPerson;
+import seedu.address.storage.item.JsonAdaptedItem;
 
 /**
  * Represents a Person in the address book.
@@ -144,8 +144,8 @@ public class Person extends Item {
     }
 
     @Override
-    public JsonAdaptedPerson getJsonAdaptedItem() {
-        return new JsonAdaptedPerson(this);
+    public JsonAdaptedItem getJsonAdaptedItem() {
+        return null;
     }
 
 }

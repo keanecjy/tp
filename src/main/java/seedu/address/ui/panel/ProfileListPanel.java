@@ -24,7 +24,7 @@ public class ProfileListPanel extends ListPanel<ProfileItem> {
     /**
      * Creates each cell in the list panel with information of {@code ProfileItem}.
      */
-    class ProfileListViewCell extends ListCell<ProfileItem> {
+    static class ProfileListViewCell extends ListCell<ProfileItem> {
 
         protected void updateItem(ProfileItem profileItem, boolean empty) {
             super.updateItem(profileItem, empty);

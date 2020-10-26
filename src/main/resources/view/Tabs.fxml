@@ -4,7 +4,7 @@
 <?import javafx.scene.control.Label?>
 
 <?import javafx.scene.image.ImageView?>
-<fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" prefHeight="100.0" prefWidth="95.0">
+<VBox xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" prefHeight="100.0" prefWidth="95.0">
     <HBox styleClass="tab_parameter_style">
         <Button fx:id="companyButton" mnemonicParsing="false" styleClass="tab_button_style">
             <graphic>
@@ -41,4 +41,4 @@
         </Button>
         <VBox fx:id="profile" styleClass="tab_bar_style"/>
     </HBox>
-</fx:root>
+</VBox>

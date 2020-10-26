@@ -1,48 +1,46 @@
 @startuml
-!include InternHunterStyle.puml
-!pragma useVerticalIf on
+
 start
 :user enters switch command;
 :InternHunter parse the user input;
-if () then ([command starts with switch, with item type])
+if () then ([switch command, with item type])
     if () then ([Command is "switch com"])
-        if () then ([current tab is already at company])
-            :Returns already
-            in same tab message;
-        else ([current tab is not at company])
-            :Switch the current tab
-            to company screen;
-            :Returns success message;
+        if () then ([tab is at company])
+            :Returns same
+            tab message;
+        else ([tab is not at company])
+            :Switch tab
+            to company;
+            :Returns
+            success message;
         endif
-    else ([Command is not "switch com"])
-        if () then ([Command is "switch app"])
-            if () then ([current tab is already at application])
-                :Returns already
-                in same tab message;
-            else ([current tab is not at application])
-                :Switch the current tab
-                to application screen;
-                :Returns success message;
-            endif
-        else ([Command is not "switch app"])
-            if () then ([Command is "switch me"])
-                if () then ([current tab is already at profile])
-                    :Returns already
-                    in same tab message;
-                else ([current tab is not at profile])
-                    :Switch the current tab
-                    to profile screen;
-                    :Returns success message;
-                endif
-            else ([Command is neither of the three commands])
-                :Returns failure message
-                (Invalid Command message for switch);
-            endif
+    elseif () then ([Command is "switch app"])
+        if () then ([tab is at application])
+            :Returns same
+            tab message;
+        else ([tab is not at application])
+            :Switch tab
+            to application;
+            :Returns
+            success message;
         endif
+    elseif () then ([Command is "switch me"])
+        if () then ([tab is at profile])
+            :Returns same
+            tab message;
+        else ([tab is not at profile])
+            :Switch tab
+            to profile;
+            :Returns
+            success message;
+        endif
+    else ([Command is neither of the three commands])
+        :Returns
+        failure message;
     endif
-else ([command starts with switch, without any input behind])
-:Returns failure message
-(Invalid Command message for switch);
+else ([switch command, without any item type])
+:Returns
+failure message;
 endif
 :InternHunter app prints message to user;
 

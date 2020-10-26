@@ -49,6 +49,7 @@ public class ResultDisplay extends UiPart<Region> {
      * @param text The text to be styled.
      */
     private void setTextStyle(Text text) {
+        requireNonNull(text);
         text.setFill(Color.web(TEXT_COLOR));
         text.setFont(Font.font(TEXT_FONT));
     }
@@ -66,6 +67,7 @@ public class ResultDisplay extends UiPart<Region> {
      * @param text The new text to be displayed.
      */
     private void setNewText(Text text) {
+        requireNonNull(text);
         setTextStyle(text);
         resultDisplay.getChildren().add(text);
     }

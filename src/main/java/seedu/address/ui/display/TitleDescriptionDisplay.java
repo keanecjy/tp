@@ -1,5 +1,6 @@
 package seedu.address.ui.display;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.ui.textstyle.TitleDescription.createTitleDescription;
 
 import java.io.IOException;
@@ -77,6 +78,7 @@ public class TitleDescriptionDisplay extends HBox {
      * @param displayDescription A string representing the description for the display.
      */
     private void addDisplayInformation(String displayTitle, String displayDescription) {
+        requireNonNull(displayDescription, displayDescription);
         TitleDescription titleDescription = createTitleDescription(displayTitle, displayDescription);
         title.getChildren().addAll(titleDescription.getTitle());
         description.getChildren().addAll(titleDescription.getDescription());
@@ -88,6 +90,7 @@ public class TitleDescriptionDisplay extends HBox {
      * @param tab The tab that the display is currently at.
      */
     private void setWidth(TabName tab) {
+        assert (tab.equals(TabName.PROFILE) || tab.equals(TabName.APPLICATION) || tab.equals(TabName.COMPANY));
         switch (tab) {
         case COMPANY:
             //Fallthrough

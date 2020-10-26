@@ -17,9 +17,6 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.item.ItemList;
 import seedu.address.ui.tabs.TabName;
 
-/**
- * todo javadocs
- */
 public class ListApplicationCommandTest {
 
     private Model model;
@@ -31,7 +28,7 @@ public class ListApplicationCommandTest {
         model = new ModelManager(new ItemList<>(), new ItemList<>(), getSampleApplicationItemList(),
             new ItemList<>(), new UserPrefs());
         expectedModel = new ModelManager(new ItemList<>(), new ItemList<>(),
-            model.getApplicationList().getUnfilteredItemList(), new ItemList<>(), new UserPrefs());
+            model.getUnfilteredApplicationList(), new ItemList<>(), new UserPrefs());
         commandResult = new CommandResult(ListApplicationCommand.MESSAGE_SUCCESS, false, false, true, true);
     }
 

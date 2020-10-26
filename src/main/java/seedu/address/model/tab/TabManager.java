@@ -1,5 +1,7 @@
 package seedu.address.model.tab;
 
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.ui.tabs.TabName;
 
 /**
@@ -27,6 +29,7 @@ public class TabManager implements Tab {
      * Replaces {@code this.tabName} with {@code tabName}.
      */
     public void setTabName(TabName tabName) {
+        requireNonNull(tabName);
         this.tabName = tabName;
     }
 

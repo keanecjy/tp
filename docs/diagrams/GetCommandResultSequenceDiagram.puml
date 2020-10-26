@@ -30,7 +30,9 @@ alt different tab
     activate Model
     Model -> TabManager : setTabName(tabName)
     activate TabManager
+    TabManager --> Model
     deactivate TabManager
+    Model --> CommandUtil
     deactivate Model
 
     create CommandResult

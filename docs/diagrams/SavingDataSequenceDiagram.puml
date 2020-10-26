@@ -1,0 +1,51 @@
+@startuml
+!include InternHunterStyle.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as Logic LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":ModelManager" as Model MODEL_COLOR
+end box
+
+box Storage STORAGE_COLOR_T1
+participant ":StorageManager" as Storage STORAGE_COLOR
+end box
+
+[-> Logic : execute(commandString)
+activate Logic
+
+Logic -> Model: getUnfilteredApplicationList()
+activate Model
+Model --> Logic: unfilteredApplicationList
+deactivate Model
+
+Logic -> Storage: saveApplicationItemList(unfilteredApplicationList)
+activate Storage
+Storage --> Logic
+deactivate Storage
+
+Logic -> Model: getUnfilteredCompanyList()
+activate Model
+Model --> Logic: unfilteredCompanyList
+deactivate Model
+
+Logic -> Storage: saveCompanyItemList(unfilteredCompanyList)
+activate Storage
+Storage --> Logic
+deactivate Storage
+
+Logic -> Model: getUnfilteredProfileList()
+activate Model
+Model --> Logic: unfilteredProfileList
+deactivate Model
+
+Logic -> Storage: saveProfileItemList(unfilteredProfileList)
+activate Storage
+Storage --> Logic
+deactivate Storage
+
+[<--Logic
+deactivate Logic
+@enduml

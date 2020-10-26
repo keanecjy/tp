@@ -89,7 +89,7 @@ public class EditCommandTest {
 
     @Test
     public void execute_filteredList_success() {
-        showPersonAtIndex(model, INDEX_FIRST);
+        //        showPersonAtIndex(model, INDEX_FIRST);
 
         Person personInFilteredList = model.getAddressBook().getFilteredItemList()
                 .get(INDEX_FIRST.getZeroBased());

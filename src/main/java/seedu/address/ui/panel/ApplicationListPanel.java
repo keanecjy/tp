@@ -1,6 +1,5 @@
 package seedu.address.ui.panel;
 
-
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListCell;
 import seedu.address.model.application.ApplicationItem;
@@ -25,7 +24,7 @@ public class ApplicationListPanel extends ListPanel<ApplicationItem> {
     /**
      * Creates each cell in the list panel with information of {@code ApplicationItem}.
      */
-    class ApplicationListViewCell extends ListCell<ApplicationItem> {
+    static class ApplicationListViewCell extends ListCell<ApplicationItem> {
         @Override
         protected void updateItem(ApplicationItem applicationItem, boolean empty) {
             super.updateItem(applicationItem, empty);

@@ -28,6 +28,9 @@ import seedu.address.model.profile.ProfileItemCategory;
 import seedu.address.model.profile.Title;
 import seedu.address.ui.tabs.TabName;
 
+/**
+ * Edits the details of a existing profileItem in the InternHunter.
+ */
 public class EditProfileCommand extends EditCommandAbstract {
 
     public static final String COMMAND_WORD = "edit";

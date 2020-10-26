@@ -26,11 +26,16 @@ class TabName <<enumeration>> {
 }
 
 class Model <<interface>> {
-    +getTabName(): void
+    +getTabName(): TabName
+}
+
+class TabManager {
+    +getTabName(): TabName
 }
 
 TabName <-- SwitchCommand
 Command <|-- SwitchCommand
 Model <.. SwitchCommand
+TabManager <-- Model
 
 @enduml

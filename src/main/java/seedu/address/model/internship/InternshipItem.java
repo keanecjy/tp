@@ -25,7 +25,6 @@ import seedu.address.model.item.Item;
 import seedu.address.storage.internship.JsonAdaptedInternshipItem;
 
 /**
- * todo: javadocs
  * Represents an InternshipItem in the InternHunter application.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */

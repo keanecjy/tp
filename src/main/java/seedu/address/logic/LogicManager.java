@@ -1,7 +1,6 @@
 package seedu.address.logic;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -16,8 +15,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.application.ApplicationItem;
 import seedu.address.model.company.CompanyItem;
-import seedu.address.model.item.ReadOnlyItemList;
-import seedu.address.model.person.Person;
 import seedu.address.model.profile.ProfileItem;
 import seedu.address.storage.Storage;
 import seedu.address.ui.tabs.TabName;
@@ -52,26 +49,14 @@ public class LogicManager implements Logic {
         commandResult = command.execute(model);
 
         try {
-            storage.saveCompanyItemList(model.getCompanyList().getUnfilteredItemList());
-            storage.saveApplicationItemList(model.getApplicationList().getUnfilteredItemList());
-            storage.saveProfileItemList(model.getProfileList().getUnfilteredItemList());
+            storage.saveCompanyItemList(model.getUnfilteredCompanyList());
+            storage.saveApplicationItemList(model.getUnfilteredApplicationList());
+            storage.saveProfileItemList(model.getUnfilteredProfileList());
         } catch (IOException ioe) {
             throw new CommandException(FILE_OPS_ERROR_MESSAGE + ioe, ioe);
         }
 
         return commandResult;
-    }
-
-    // todo: remove when possible
-    @Override
-    public ReadOnlyItemList<Person> getAddressBook() {
-        return model.getAddressBook().getUnfilteredItemList();
-    }
-
-    // todo: remove when possible
-    @Override
-    public ObservableList<Person> getFilteredPersonList() {
-        return model.getAddressBook().getFilteredItemList();
     }
 
     @Override
@@ -87,11 +72,6 @@ public class LogicManager implements Logic {
     @Override
     public ObservableList<ProfileItem> getFilteredProfileItemList() {
         return model.getFilteredProfileList();
-    }
-
-    @Override
-    public Path getAddressBookFilePath() {
-        return model.getInternHunterFilePath();
     }
 
     @Override

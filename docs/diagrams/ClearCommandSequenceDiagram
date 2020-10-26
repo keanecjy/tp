@@ -1,0 +1,67 @@
+@startuml
+!include InternHunterStyle.puml
+!$userInput = "clear"
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":MainParser" as MainParser LOGIC_COLOR
+participant "clear:ClearCommand" as ClearCommand LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":ModelManager" as ModelManager MODEL_COLOR
+participant "app:ItemList" as appItemList MODEL_COLOR
+participant "com:ItemList" as comItemList MODEL_COLOR
+participant "me:ItemList" as meItemList MODEL_COLOR
+end box
+
+[-> LogicManager : execute("$userInput")
+activate LogicManager
+
+LogicManager -> MainParser : parseCommand("$userInput")
+activate MainParser
+create ClearCommand
+MainParser -> ClearCommand
+activate ClearCommand
+ClearCommand --> MainParser
+deactivate ClearCommand
+MainParser --> LogicManager : clear
+deactivate MainParser
+
+LogicManager -> ClearCommand : execute(model)
+activate ClearCommand
+create appItemList
+ClearCommand -> appItemList
+activate appItemList
+appItemList --> ClearCommand
+deactivate appItemList
+ClearCommand -> ModelManager : setApplicationList(app)
+activate ModelManager
+ModelManager --> ClearCommand
+deactivate ModelManager
+
+create comItemList
+ClearCommand -> comItemList
+activate comItemList
+comItemList --> ClearCommand
+deactivate comItemList
+ClearCommand -> ModelManager : setCompanyList(com)
+activate ModelManager
+ModelManager --> ClearCommand
+deactivate ModelManager
+
+create meItemList
+ClearCommand -> meItemList
+activate meItemList
+meItemList --> ClearCommand
+deactivate meItemList
+ClearCommand -> ModelManager : setProfileList(me)
+activate ModelManager
+ModelManager --> ClearCommand
+deactivate ModelManager
+ClearCommand --> LogicManager : commandResult
+deactivate ClearCommand
+
+[<--LogicManager : commandResult
+deactivate LogicManager
+@enduml

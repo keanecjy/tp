@@ -26,14 +26,16 @@ Model --> CommandUtil : currentTabName
 deactivate Model
 
 CommandUtil -> CommandUtil : handleDeleteDisplaySwitchIndex(model, changedTabName, newIndex)
-ref over CommandUtil, CommandUtil : handleDeleteDisplaySwitchIndex
+ref over CommandUtil, CommandUtil : handle delete display switch index
 
 alt different tab
     CommandUtil -> Model : setTabName(tabName)
     activate Model
     Model -> TabManager : setTabName(tabName)
     activate TabManager
+    TabManager --> Model
     deactivate TabManager
+    Model --> CommandUtil
     deactivate Model
     create CommandResult
     CommandUtil -> CommandResult : getCommandResult(message, false, false, true, true)

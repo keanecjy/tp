@@ -1,0 +1,17 @@
+@startuml
+(*)  --> If "" then
+    [[applicationItemList.json is empty&#93;] If "" then
+        [[companyItemList.json is empty&#93;] If "" then
+        ---> [[profileItemList.json is empty&#93;] "use sample data"
+        -->(*)
+        else
+        --> [[else&#93;] "use user data"
+        Endif
+    else
+    --> [[else&#93;] "use user data"
+    Endif
+else
+--> [[else&#93;] "use user data"
+Endif
+-->(*)
+@enduml

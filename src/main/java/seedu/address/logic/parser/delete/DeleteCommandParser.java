@@ -38,7 +38,7 @@ public class DeleteCommandParser implements Parser<DeleteCommandAbstract> {
             return new DeleteApplicationCommandParser().parse(commandDetails);
 
         case PROFILE_ALIAS:
-            // return new DeleteProfileCommandParser().parse(commandDetails);
+            return new DeleteProfileCommandParser().parse(commandDetails);
 
         default:
             // Invalid item type

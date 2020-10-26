@@ -8,19 +8,19 @@ import static seedu.address.model.util.ItemUtil.PROFILE_NAME;
 import seedu.address.logic.commands.Command;
 
 /**
- * todo javadocs
+ * Lists all items of a specified item type in the InternHunter to the user.
  */
 public abstract class ListCommand extends Command {
 
     public static final String COMMAND_WORD = "list";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-        + ": List out all the items in either "
-        + COMPANY_NAME + " or "
+        + ": Lists out all the items in the "
+        + COMPANY_NAME + ", "
         + APPLICATION_NAME + " or "
-        + PROFILE_NAME + ".\n"
-        + "Parameters: list ITEM_TYPE\n"
+        + PROFILE_NAME + " list.\n"
+        + "Parameters: ITEM_TYPE\n"
         + "Example: " + COMMAND_WORD + " " + COMPANY_ALIAS + "\n";
 
-    public static final String EXCESS_MESSAGE = "Note that that should not be anything inputs after the ITEM_TYPE";
+    public static final String EXCESS_MESSAGE = "Note that there should not be any inputs after the ITEM_TYPE";
 }

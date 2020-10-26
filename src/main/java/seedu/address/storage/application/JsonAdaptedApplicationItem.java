@@ -40,8 +40,8 @@ public class JsonAdaptedApplicationItem extends JsonAdaptedItem {
      */
     public JsonAdaptedApplicationItem(ApplicationItem source) {
         assert source != null : JsonAdaptedItem.NULL_SOURCE_ERROR_MESSAGE;
-        status = source.getStatus().toString();
-        statusDate = source.getStatusDate().toString();
+        status = source.getStatusString();
+        statusDate = source.getStatusDateString();
         internshipItem = new JsonAdaptedInternshipItem(source.getInternshipItem());
     }
 

@@ -33,7 +33,7 @@ activate SwitchCommandParser
 SwitchCommandParser -> ParserUtil : parseTab(" me")
 activate ParserUtil
 
-ParserUtil -> SwitchCommandParser : TabName.PROFILE
+ParserUtil --> SwitchCommandParser : TabName.PROFILE
 deactivate ParserUtil
 
 create SwitchCommand

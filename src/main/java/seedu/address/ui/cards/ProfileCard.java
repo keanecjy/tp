@@ -36,14 +36,14 @@ public class ProfileCard extends Card<ProfileItem> {
      */
     private void initializeUserCardGui() {
         setId(displayedIndex);
-        setName();
+        setTitle();
         setImageType();
     }
 
     /**
      * Sets the name on the card.
      */
-    protected void setName() {
+    protected void setTitle() {
         Object title = mapping.get(TITLE_DISPLAY_NAME);
         setName(title.toString());
     }

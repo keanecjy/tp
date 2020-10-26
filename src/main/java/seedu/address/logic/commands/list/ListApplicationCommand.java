@@ -12,7 +12,7 @@ import seedu.address.model.Model;
 import seedu.address.ui.tabs.TabName;
 
 /**
- * todo javadocs
+ * Lists all application items in the InternHunter to the user.
  */
 public class ListApplicationCommand extends ListCommand {
 

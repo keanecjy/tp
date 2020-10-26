@@ -42,7 +42,6 @@ import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.application.JsonAdaptedApplicationItem;
 import seedu.address.storage.company.JsonAdaptedCompanyItem;
-import seedu.address.storage.person.JsonAdaptedPerson;
 import seedu.address.storage.profile.JsonAdaptedProfileItem;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.ui.tabs.TabName;
@@ -53,14 +52,11 @@ public class LogicManagerTest {
     @TempDir
     public Path temporaryFolder;
 
-    private Model model = new ModelManager();
+    private final Model model = new ModelManager();
     private Logic logic;
 
     @BeforeEach
     public void setUp() {
-        JsonItemListStorage<Person, JsonAdaptedPerson> addressBookStorage =
-                new JsonItemListStorage<>(temporaryFolder.resolve("addressBook.json"),
-                        Person.class, JsonAdaptedPerson.class);
         JsonItemListStorage<ApplicationItem, JsonAdaptedApplicationItem> applicationItemListStorage =
                 new JsonItemListStorage<>(temporaryFolder.resolve("applicationitemlist.json"),
                         ApplicationItem.class, JsonAdaptedApplicationItem.class);
@@ -71,8 +67,8 @@ public class LogicManagerTest {
                 new JsonItemListStorage<>(temporaryFolder.resolve("profileitemlist.json"),
                         ProfileItem.class, JsonAdaptedProfileItem.class);
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(temporaryFolder.resolve("userPrefs.json"));
-        StorageManager storage = new StorageManager(addressBookStorage, applicationItemListStorage,
-                companyItemListStorage, profileItemListStorage, userPrefsStorage);
+        StorageManager storage = new StorageManager(applicationItemListStorage, companyItemListStorage,
+                profileItemListStorage, userPrefsStorage);
         logic = new LogicManager(model, storage);
     }
 
@@ -97,8 +93,6 @@ public class LogicManagerTest {
     @Test
     public void execute_storageThrowsIoException_throwsCommandException() {
         // Setup LogicManager with JsonItemListIoExceptionThrowingStub
-        JsonItemListStorage<Person, JsonAdaptedPerson> addressBookStorage =
-                new JsonItemListIoExceptionThrowingStub(temporaryFolder.resolve("ioExceptionAddressBook.json"));
         JsonItemListStorage<ApplicationItem, JsonAdaptedApplicationItem> applicationItemListStorage =
                 new JsonItemListStorage<>(temporaryFolder.resolve("applicationitemlist.json"),
                         ApplicationItem.class, JsonAdaptedApplicationItem.class);
@@ -110,8 +104,8 @@ public class LogicManagerTest {
                         ProfileItem.class, JsonAdaptedProfileItem.class);
         JsonUserPrefsStorage userPrefsStorage =
                 new JsonUserPrefsStorage(temporaryFolder.resolve("ioExceptionUserPrefs.json"));
-        StorageManager storage = new StorageManager(addressBookStorage, applicationItemListStorage,
-                companyItemListStorage, profileItemListStorage, userPrefsStorage);
+        StorageManager storage = new StorageManager(applicationItemListStorage, companyItemListStorage,
+                profileItemListStorage, userPrefsStorage);
         logic = new LogicManager(model, storage);
 
         // Execute add command
@@ -123,11 +117,6 @@ public class LogicManagerTest {
         String expectedMessage = LogicManager.FILE_OPS_ERROR_MESSAGE + DUMMY_IO_EXCEPTION;
         // Todo: Update testcase for expected model
         //        assertCommandFailure(addCommand, CommandException.class, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
-        assertThrows(UnsupportedOperationException.class, () -> logic.getFilteredPersonList().remove(0));
     }
 
     @Test
@@ -263,13 +252,14 @@ public class LogicManagerTest {
     /**
      * A stub class to throw an {@code IOException} when the save method is called.
      */
-    private static class JsonItemListIoExceptionThrowingStub extends JsonItemListStorage<Person, JsonAdaptedPerson> {
+    private static class JsonItemListIoExceptionThrowingStub extends
+            JsonItemListStorage<ApplicationItem, JsonAdaptedApplicationItem> {
         private JsonItemListIoExceptionThrowingStub(Path filePath) {
-            super(filePath, Person.class, JsonAdaptedPerson.class);
+            super(filePath, ApplicationItem.class, JsonAdaptedApplicationItem.class);
         }
 
         @Override
-        public void saveItemList(ReadOnlyItemList<Person> addressBook, Path filePath) throws IOException {
+        public void saveItemList(ReadOnlyItemList<ApplicationItem> addressBook, Path filePath) throws IOException {
             throw DUMMY_IO_EXCEPTION;
         }
     }

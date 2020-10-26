@@ -17,7 +17,7 @@ import seedu.address.ui.UiPart;
  * A generic UI component that contains all the information of {@code Item} and displays it
  * as a scrollable list of cards.
  */
-public abstract class ListPanel<T extends Item> extends UiPart<Region> {
+public class ListPanel<T extends Item> extends UiPart<Region> {
 
     private static final String FXML = "ListPanel.fxml";
 
