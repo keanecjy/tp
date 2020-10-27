@@ -8,19 +8,22 @@ package Logic {
 
 package Parser {
 Interface Parser <<Interface>>
-Class AddressBookParser
-Class XYZCommandParser
-Class CliSyntax
-Class ParserUtil
+Class MainParser
+Class ABCItemCommandParser
+Class ABCCommandParser
+Class XYZCliSyntax
+Class XYZParserUtil
 Class ArgumentMultimap
 Class ArgumentTokenizer
 Class Prefix
 }
 
 package Command {
-Class XYZCommand
+Class "{abstract}\nABCCommand" as ABCCommand
+Class ABCItemCommand
 Class CommandResult
 Class "{abstract}\nCommand" as Command
+Class "CommandUtil" as CommandUtil
 }
 
 Interface Logic <<Interface>>
@@ -35,25 +38,31 @@ Class HiddenOutside #FFFFFF
 HiddenOutside ..> Logic
 
 LogicManager .up.|> Logic
-LogicManager -->"1" AddressBookParser
-AddressBookParser .left.> XYZCommandParser: creates >
+LogicManager -->"1" MainParser
+MainParser .left.> ABCCommandParser: creates >
+ABCCommandParser .down.> ABCItemCommandParser: creates >
 
-XYZCommandParser ..> XYZCommand : creates >
-XYZCommandParser ..|> Parser
-XYZCommandParser ..> ArgumentMultimap
-XYZCommandParser ..> ArgumentTokenizer
+ABCItemCommandParser ..> ABCItemCommand : creates >
+ABCCommandParser ..|> Parser
+ABCItemCommandParser ..|> Parser
+ABCItemCommandParser ..> ArgumentMultimap
+ABCItemCommandParser ..> ArgumentTokenizer
 ArgumentTokenizer .left.> ArgumentMultimap
-XYZCommandParser ..> CliSyntax
-CliSyntax ..> Prefix
-XYZCommandParser ..> ParserUtil
-ParserUtil .down.> Prefix
+ABCItemCommandParser ..> XYZCliSyntax
+XYZCliSyntax ..> Prefix
+ABCItemCommandParser ..> XYZParserUtil
+XYZParserUtil .down.> Prefix
 ArgumentTokenizer .down.> Prefix
-XYZCommand -up-|> Command
+ABCCommand -up-|> Command
+ABCItemCommand -up-|> ABCCommand
+ABCItemCommand -left..-> CommandUtil
 LogicManager .left.> Command : executes >
+
+note top of XYZCliSyntax: XYZCliSyntax = ProfileCliSyntax,\nGeneralCliSyntax, etc \n(Same definition of XYZ \nused for XYZParserUtil)
 
 LogicManager --> Model
 Command .right.> Model
-note right of XYZCommand: XYZCommand = AddCommand, \nFindCommand, etc
+note right of ABCItemCommand: ABCItemCommand = AddProfileCommand, \nViewCompanyCommand, etc
 
 Logic ..> CommandResult
 LogicManager .down.> CommandResult

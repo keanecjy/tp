@@ -1,0 +1,72 @@
+@startuml
+!include InternHunterStyle.puml
+!$userInput = "edit me 1 t/Learn HTML"
+!$commandDetails = " 1 t/Learn HTML"
+!$index = 1
+!$title = "Learn HTML"
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":MainParser" as MainParser LOGIC_COLOR
+participant ":EditCommandParser" as EditCommandParser LOGIC_COLOR
+participant ":EditProfileCommandParser" as EditProfileCommandParser LOGIC_COLOR
+participant ":EditProfileCommand" as EditProfileCommand LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("$userInput")
+activate LogicManager
+
+LogicManager -> MainParser : parseCommand("$userInput")
+activate MainParser
+
+create EditCommandParser
+MainParser -> EditCommandParser
+activate EditCommandParser
+
+EditCommandParser --> MainParser
+deactivate EditCommandParser
+
+MainParser -> EditCommandParser : parse("$commandDetails")
+activate EditCommandParser
+
+create EditProfileCommandParser
+EditCommandParser -> EditProfileCommandParser
+activate EditProfileCommandParser
+
+EditProfileCommandParser --> EditCommandParser
+deactivate EditProfileCommandParser
+
+EditCommandParser -> EditProfileCommandParser : parse("$commandDetails")
+activate EditProfileCommandParser
+
+create EditProfileCommand
+EditProfileCommandParser -> EditProfileCommand : EditProfileCommand($index, editProfileItemDescriptor)
+activate EditProfileCommand
+
+EditProfileCommand --> EditProfileCommandParser
+deactivate EditProfileCommand
+
+EditProfileCommandParser --> EditCommandParser
+deactivate EditProfileCommandParser
+
+EditCommandParser --> MainParser
+deactivate EditCommandParser
+
+MainParser --> LogicManager
+deactivate MainParser
+
+LogicManager -> EditProfileCommand : execute(model)
+activate EditProfileCommand
+
+ref over EditProfileCommand, Model : execute edit me command
+
+EditProfileCommand --> LogicManager : commandResult
+deactivate EditProfileCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

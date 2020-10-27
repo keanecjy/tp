@@ -8,18 +8,52 @@ title: Developer Guide
 --------------------------------------------------------------------------------------------------------------------
 ## **Design**
 
+### Logic component
+
+![Structure of the Logic Component](images/LogicClassDiagram.png)
+
+<div markdown="span" class="alert alert-info">
+
+  :information_source: <strong>Note:</strong> Implementation of the command class is not accurate for commands
+  independent of type as the diagram is simplified for better readability.
+  Refer to the [command implementation](#implementation-of-command-classes) to see how is it implemented in full.
+
+</div>
+
+**API** :
+[`Logic.java`](https://github.com/AY2021S1-CS2103T-T15-4/tp/blob/master/src/main/java/seedu/internhunter/logic/Logic.java)
+
+1. `Logic` uses the `MainParser` class to parse the user command.
+2. This results in a `Command` object which is executed by the `LogicManager`.
+3. The command execution can affect the `Model` (e.g. deleting an application).
+4. The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+5. In addition, the `CommandResult` object can also instruct the `Ui` to perform certain actions, such as switching
+tabs or displaying the matching internships window to the user.
+
+Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete app 1")`
+API call.
+
+![Interactions Inside the Logic Component for the `delete app 1` Command](images/DeleteSequenceDiagram.png)
+
+<div markdown="span" class="alert alert-info">
+  :information_source: <strong>Note:</strong> The lifeline for <code>DeleteCommandParser</code> and
+  <code>DeleteApplicationCommandParser</code> should end at the destroy marker (X) but due to a limitation of PlantUML,
+  the lifeline reaches the end of diagram.
+</div>
+
+### Model component
+
 ### Storage Component
 
 <p id="storage-class-diagram" align="center"><img src="images/StorageClassDiagram.png"/></p>
 
-API : [Storage.java]
-(https://github.com/AY2021S1-CS2103T-T15-4/tp/blob/master/src/main/java/seedu/address/storage/Storage.java)
+**API** :
+[`Storage.java`](https://github.com/AY2021S1-CS2103T-T15-4/tp/blob/master/src/main/java/seedu/internhunter/storage/Storage.java)
 
 The Storage component,
 * can save UserPref objects in json format and read it back.
 * can save the InternHunter data in json format and read it back.
 
-        
 ## **Implementation**
 
 This section describes some noteworthy details on how certain features are implemented.
@@ -40,19 +74,21 @@ There are 2 types of commands:
     - e.g. `SwitchCommand`, `HelpCommand`, `ExitCommand`
     - These commands are implemented as _concrete_ classes and inherit directly from the `Command` class
 
-From this point on, we will be using `XCommand` to represent commands that are dependent on type and
-`YCommand` to represent commands that are independent of type.
+From this point on, we will be using `ABCCommand` to represent commands that are dependent on type and
+`XYZCommand` to represent commands that are independent of type.
 
-The following is an example of the class hierachy:
+The following shows the class diagram for `Command` and its subclasses:
 
 ![CommandClassDiagram](images/CommandClassDiagram.png)
 
+Figure xx. `ABCCommand` refers to a command dependent on type while `XYZCommand` refers to a command indepedent of type
+
 #### Design considerations
 
-##### Aspect: Whether `XCommand` should be abstract and split into 4 other `XItemCommand` or handle the 4 `Item` types on its own
+##### Aspect: Whether `ABCCommand` should be abstract and split into 4 other `ABCItemCommand` or handle the 4 `Item` types on its own
 
-**Alternative 1 (current choice)**: `XCommand` is split into 4 other `XItemCommand`. Parser parses the
-user input and creates the specific `XItemCommand` for execution. The following activity diagram shows how the 
+**Alternative 1 (current choice)**: `ABCCommand` is split into 4 other `ABCItemCommand`. Parser parses the
+user input and creates the specific `ABCItemCommand` for execution. The following activity diagram shows how the 
 execution of the `AddApplicationCommand` will work.
 
 ![AddApplicationCommandActivityDiagram](images/AddApplicationCommandActivityDiagram.png)
@@ -65,8 +101,8 @@ execution of the `AddApplicationCommand` will work.
 - Cons:
     - More classes have to be created
         
-- **Alternative 2**: `XCommand` is a _concrete_ class and handles the execution of all 4 `Item` types.
-Parser parses the user input and creates the general `XCommand` for execution. The following
+- **Alternative 2**: `ABCCommand` is a _concrete_ class and handles the execution of all 4 `Item` types.
+Parser parses the user input and creates the general `ABCCommand` for execution. The following
 activity diagram shows how the `AddCommand` will work.
 
 ![AddCommandActivityDiagram](images/AddCommandActivityDiagram.png)
@@ -76,18 +112,18 @@ activity diagram shows how the `AddCommand` will work.
 - Cons:
     - `execute` method becomes extremely long as it needs to contain switch statements to handle the execution of
     command X for the 4 different types of `Item`
-    - `XCommand` class is vulnerable to drastic changes when the parsing method of any one `Item` class changes
-    - `XCommand` class holds more dependencies as it is now dependent on the 4 `Item` classes  
+    - `ABCCommand` class is vulnerable to drastic changes when the parsing method of any one `Item` class changes
+    - `ABCCommand` class holds more dependencies as it is now dependent on the 4 `Item` classes  
     - Poor readability and maintainability
-    - A slight overhead increase as `Item` type needs to be passed in as a parameter to the `XCommand`,
+    - A slight overhead increase as `Item` type needs to be passed in as a parameter to the `ABCCommand`,
     additional check for nullity in the parameter passed in is required
 
 **Conclusion**: Our group settled on the first design, since it better adheres to OOP principles such as
-Single Responsiblity Principle. Our design meant that each specific `Item` command is only dependent on the `Item`
+Single Responsibility Principle. Our design meant that each specific `Item` command is only dependent on the `Item`
 itself and not subjected to the changes in implementation of the other `Item` classes. This means that it will only
 have one reason to change. Moreover, this leads to lower coupling, which makes maintenance, integration and
 testing easier. This ended up being a good choice as we had some changes in the parsing requirements of one
-of the `Item` classes, `Internship`. If we had gone with the second design, the concrete `XCommand` might
+of the `Item` classes, `Internship`. If we had gone with the second design, the concrete `ABCCommand` might
 have broken down as it might not be suited to the different parsing requirements in the of the `Internship` item.
 
 ### Delete company feature
@@ -169,7 +205,7 @@ delete internship commands, i.e. by implementing delete internship command’s i
     * Not dependent on `DeleteInternshipCommand`.
   * Cons:
     * Introduces dependencies on `InternshipItem` and `ApplicationItem`.
-    * Violates the DRY (Don't Repeat Yourself) principle:
+    * Violates the DRY principle:
       * Introduces code duplication.
       * Decentralizes the behaviour of what happens to an application made for an internship that is being deleted, 
       since there are now 2 separate implementations for this (one in `DeleteCompanyCommand` and the other in 
@@ -179,48 +215,52 @@ delete internship commands, i.e. by implementing delete internship command’s i
         internship command was executed directly by the user for the same internship.
         * Updating this behaviour will require updating code in both places rather than one centralised place.
 
-### User profile feature
+### User Profile feature
 
 The user profile feature behaves like a resume for the user to keep track of noteworthy events and milestones in one
-'s professional life. There are three categories of profile items namely: `ACHIEVEMENT`, `SKILL` and `EXPERIENCE`. 
+'s professional life. There are three categories of profile items namely: `ACHIEVEMENT`, `SKILL` and `EXPERIENCE
+`.
 
-#### Editing User profile
+#### Editing User profile item
 
 The `edit me` command for the user profile allows the user to update the fields of the each profile item by
-specifying the targeted index and at least one field. The following activity diagram illustrates the possible
-behaviour of the `edit me` command depending on the user input:
-
-to Add: activity diagram
+specifying the targeted index and at least one field. 
 
 #### Implementation
 
-* The functionality edit profile is implemented as part of the `EditProfileCommand` which extends the the abstract class
- `EditCommand` which further extends the `Command` class.
-* The `EditProfileCommand` is produced by its own `EditProfileCommandParser#parse` method.
+* The `edit me` command is implemented by the `EditProfileCommandParser` and `EditProfileCommand`.
+* `EditProfileCommandParser#parse` method creates a `EditProfileItemDescriptor` based on the fields of the input
+ provided by the user. The `EditProfileItemDescriptor` is then used in instantiating the `EditProfileCommand`.
 
-This is an example of what the edit feature does at every step to achieve its intended behaviour:
+* `EditProfileCommand` implements the `execute()` method from the `Command` abstract class whereby upon execution
+, the method will edit the specified profile item in the model’s profile item.
 
-![EditProfileCommandSequenceDiagramSimplified](images/EditProfileCommandSequenceDiagramSimplified.png)
 
 
-1. Assuming user enters an input complying with the specification of the user guide to edit the user profile, the
- input is first parsed by the `MainParser` looks out for the command word, recognizes the `edit` command and
-  funnels the input to `EditCommandParser`.
+The following sequence diagrams show how the editing profile Item feature works successfully, using the example command 
+`edit me t/HTML`:
+
+![EditProfileCommandSequenceDiagramSimplified](images/dg-profile/EditProfileCommandSequenceDiagramSimplified.png)
+
+
+1. After the user enters an input  to edit the user profile, the input is first parsed by the `MainParser` looks out
+ for the command word, recognizes the `edit` command and  funnels the input to `EditCommandParser`.
 2. The `EditCommandParser` then identifies the item type, which is profile item and returns the
  `EditProfileCommandParser`.
-3. The `EditProfileCommandParser` creates a editedProfileItem based on the details of the input provided and returns a
- `EditProfileCommand` containing with the editedProfileItem. The following sequence diagram depicts how the `EditProfileCommand` works:
+3. The `EditProfileCommandParser` then parses for the index and fields to be edited and returns a `EditProfileCommand` 
+containing a editProfileItemDescriptor. The following sequence diagram depicts how the `EditProfileCommand` works:
 
-![ExecuteEditMeCommand](images/ExecuteEditMeCommand.png)
+![ExecuteEditMeCommand](images/dg-profile/ExecuteEditMeCommand.png)
 
-4. The `EditProfileCommand` is executed by `LogicManager` which retrieves the targeted `profileItemToEdit` from the `lastShownList` and updates
- the model with the `editedProfileItem` associated with the `EditProfileCommand`.
+4. The `EditProfileCommand` is executed by `LogicManager` which retrieves the targeted `profileItemToEdit` from the
+ `lastShownList` *(which contains the profile items the user is able to see)* and updates the model with the
+  `editedProfileItem` associated with the `EditProfileCommand`.
 5. CommandResult is return to indicate a successful operation.
  
 #### Design considerations
 
 #### Aspect: How EditProfileCommand Object interacts with Model
-#### Alternatives considered
+##### Alternatives considered
 * **Alternative 1 (current choice)**: `EditProfileCommand` interact with the model solely and not directly with model's 
  internal components: `ProfileItemList` and `FilteredProfileItemList`.
   * Pros:
@@ -241,7 +281,7 @@ This is an example of what the edit feature does at every step to achieve its in
   ```
   model.getProfileList().setItem(profileItemToEdit, EditedProfileItem)
   ```
-![ExecuteEditMeCommandAlt.png](images/ExecuteEditMeCommandAlt.png)
+![ExecuteEditMeCommandAlt.png](images/dg-profile/ExecuteEditMeCommandAlt.png)
 
   * Pros: 
     * This reduces code volume by keeping `Model` lean and for `EditProfileObject`to interact with the objects it needs.
@@ -281,7 +321,7 @@ This is how the `SwitchCommand#execute()` method works upon execution:
 
 <p align="center">The overall process of how <code>SwitchCommand</code> was generated.</p>
 
-<p align="center"><img src="images/switchcommand/SwitchCommandSequenceDiagram.png"</p>
+<p align="center"><img src="images/switchcommand/SwitchCommandSequenceDiagram.png"/></p>
 
 <p align="center">The process of how <code>SwitchCommand</code> interacts with the model.</p>
 
@@ -308,7 +348,7 @@ The above activity diagram shows the logic and the path execution when the switc
 * **Alternative 1 (current choice):** Allow the switch of tabs to not only be accessible via the switch command, but rather extract it out for all commands excluding `exit` and `help`.
     * Pros:
         * Allows user to type once instead of twice when executing a single command and wanting to view it. (This optimzation is to allow for a faster way to type and view the changes). <br/>
-        * By abstract the method out from switch command, it obeys the DRY (Don't Repeat Yourself) principle as all the commands will be calling a single method.
+        * By abstract the method out from switch command, it obeys the DRY principle as all the commands will be calling a single method.
         * This allows and obeys the Open-Close princple as new implementation of commands can just be calling this single method at the end.
         * Allows user to have a second alternative to switch tabs for just viewing purpose.
     * Cons:
@@ -421,6 +461,85 @@ InternHunter only lets users create applications for internships already added t
     
     * Cons:
         * High risk of data inconsistency due to the linkage between company and application lists.
+
+### Match Command feature
+
+#### What it is
+Users are able to execute a command to generate a list of matching internships that matches their current profile
+skills. This matching is done by accumulating the list of profile items that has the category `SKILL` and
+filtering the list of internships from them. Remaining internships are those that consist of at least one
+`Requirement` that matches the user's list of skills. 
+
+**Command format:** `match`
+
+#### Implementation
+
+`MatchCommand` is a class that extends the `Command` _abstract_ class. It has a dependency to the `Model`
+interface as it relies on getting the profile list and company item list from the model.
+
+Here is a class diagram to show how the `MatchCommand` is implemented:
+
+![MatchCommandClassDiagram](images/MatchCommandClassDiagram.png)
+
+This is how the `MatchCommand#execute()` method works upon execution:
+
+1. The list of profile items and company items are first obtained via the `Model#getProfileItemList()` method and
+`Model#getCompanyItemList()` respectively.
+2. Then, the list of profile skills that the user has is obtained via a self-invocation to
+`MatchCommand`'s own `getSkillList(...)` method.
+3. Next, the list of all internships from the list of companies is obtained via its own
+`getInternshipList(...)` method.
+4. Then, the `MatchCommand`'s own `getMatchingInternships(...)` is invoked to obtain
+the list of matching internships.
+5. Finally, `MatchCommand`'s own `getMatchingInternshipsCommandResult(...)` is used to generate the
+`CommandResult`. This method returns different `CommandResult` depending if the matchingInternships is empty or not. 
+ 5a. If the matchingInternships list is empty, then no matching internships message will be passed to the `CommandResult`.
+ 5b. Otherwise, the showing matching internships message will be passed to the `CommandResult`. This internship list
+ will be passed into `CommandResult#setMatchingInternships(...)` method.
+
+The following sequence diagram show how the match command works:
+
+![MatchCommandClassDiagram](images/MatchCommandSequenceDiagram.png)
+
+#### Design considerations
+
+##### Aspect: How to generate the matching internships
+
+**Alternative 1 (current choice):** Methods to generate the matching internships, namely `getSkillList`, 
+`getInternshipList`, and `getMatchingInternships` are implemented within `MatchCommand`.
+
+- Pros:
+    - Still adheres to the Single Responsibility Principle as the `MatchCommand` is meant to generate the list of
+    matching internships. Having additional methods to match internships to profile skills are still within the
+    responsibility of this class
+    - Higher cohesion as `Model` does not need to have additional responsibilities like executing algorithms
+    - Increased flexibility as the matching algorithm can be easily changed within this `MatchCommand`
+    
+- Cons:
+    - `MatchCommand` becomes longer as it needs additional methods to generate the list of matching internships
+
+**Alternative 2:** Methods to generate the matching internships, namely `getSkillList`, 
+`getInternshipList`, and `getMatchingInternships` are implemented within `Model`.
+
+- Pros:
+    - `MatchCommand` will be very short as it just needs to call the `getMatchingInternships` method from the
+    `Model` interface and generate the correct `CommandResult` from there
+    
+- Cons:
+    - `Model` becomes more complicated as it needs to support more methods. This in turns causes the `ModelManager`
+    class, which implements the `Model` interface to be overly complex as it needs to provide the algorithms to
+    filter and generate the matching internship list.
+    - Lower cohesion as the `Model` interface has additional responsibilities and functionalities.
+    `Model` now has to deal with algorithms, instead of keeping to what a `Model` does which is to manage the app data
+    of the user.
+
+## **Documentation, logging, testing, configuration, dev-ops**
+
+* [Documentation guide](Documentation.md)
+* [Testing guide](Testing.md)
+* [Logging guide](Logging.md)
+* [Configuration guide](Configuration.md)
+* [DevOps guide](DevOps.md)
        
 ## **Appendix**
 ### Appendix A: Product Scope
@@ -440,34 +559,36 @@ InternHunter only lets users create applications for internships already added t
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​    | I want to …​                                                   | So that I can…​                                                                   |
-| -------- | ---------- | -------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| `* * *`  | new user   | see usage instructions                                         | refer to instructions when I forget how to use the app                            |
-| `* * *`  | user       | get error feedback when a command fails                        | know what went wrong                                                              |
-| `* * *`  | user       | maintain a list of company profiles                            | keep track of companies that I'm interested in                                    |
-| `* * *`  | user       | add a company profile                                          | keep track of companies that I'm interested in                                    |
-| `* * *`  | user       | delete a company profile                                       | remove company profiles that I no longer need / am no longer interested in        |
-| `* * *`  | user       | edit a company profile                                         | keep my company profiles updated and accurate                                     |
-| `* * *`  | user       | view a company profile                                         | see its details                                                                   |
-| `* * *`  | user       | add an internship to a company profile                         | keep track of the internships that that company is offering                       |
-| `* * *`  | user       | delete an internship from a company profile                    | remove erroneous / outdated entries                                               |
-| `* * *`  | user       | edit an internship from a company profile                      | keep the list of internships that a company offers updated and accurate           |
-| `* * *`  | user       | view a company’s internships when I view their profile         | see what internships they are offering                                            |
-| `* * *`  | user       | maintain a list of my internship applications                  | keep track of them                                                                |
-| `* * *`  | user       | add an internship application                                  | keep track of the internships that I have applied for                             |
-| `* * *`  | user       | delete an internship application                               | remove internship applications that I no longer need / am no longer interested in |
-| `* * *`  | user       | edit an internship application                                 | keep my internship applications updated and accurate                              |
-| `* * *`  | user       | view an internship application                                 | see its details                                                                   |
-| `* * *`  | user       | record and see an internship application's status              | keep track of them                                                                |
-| `* * *`  | user       | save the dates of my upcoming interviews                       | keep track of them                                                                |
-| `* * *`  | user       | maintain a user profile                                        | have an overview of my experience, skills and achievements                        |
-| `* * *`  | user       | add information to my user profile                             | keep my user profile updated and accurate                                         |
-| `* * *`  | user       | delete information from my user profile                        | keep my user profile updated and accurate                                         |
-| `* * *`  | user       | edit information in my user profile                            | keep my user profile updated and accurate                                         |
-| `* * *`  | user       | view information in my user profile                            | see its details                                                                   |
-| `* *`    | user       | navigate the application easily through a clear user interface |                                                                                   |
-| `* *`    | user       | get fast feedback from the app                                 |                                                                                   |
-| `* *`    | user       | clears all entries from InterhHunter                           | start from a clean slate
+Priority | As a …​    | I want to …​                                                   | So that I can…​                                                           
+-------- | ---------- | -------------------------------------------------------------- | --------------------------------------------------------------------------------- 
+`* * *`  | new user   | see usage instructions                                         | refer to instructions when I forget how to use the app                            
+`* * *`  | user       | get error feedback when a command fails                        | know what went wrong                                                              
+`* * *`  | user       | maintain a list of company profiles                            | keep track of companies that I'm interested in                                    
+`* * *`  | user       | add a company profile                                          | keep track of companies that I'm interested in                                    
+`* * *`  | user       | delete a company profile                                       | remove company profiles that I no longer need / am no longer interested in        
+`* * *`  | user       | edit a company profile                                         | keep my company profiles updated and accurate                                     
+`* * *`  | user       | view a company profile                                         | see its details                                                                   
+`* * *`  | user       | add an internship to a company profile                         | keep track of the internships that that company is offering                       
+`* * *`  | user       | delete an internship from a company profile                    | remove erroneous / outdated entries                                               
+`* * *`  | user       | edit an internship from a company profile                      | keep the list of internships that a company offers updated and accurate           
+`* * *`  | user       | view a company’s internships when I view their profile         | see what internships they are offering                                            
+`* * *`  | user       | maintain a list of my internship applications                  | keep track of them                                                                
+`* * *`  | user       | add an internship application                                  | keep track of the internships that I have applied for                             
+`* * *`  | user       | delete an internship application                               | remove internship applications that I no longer need / am no longer interested in 
+`* * *`  | user       | edit an internship application                                 | keep my internship applications updated and accurate                              
+`* * *`  | user       | view an internship application                                 | see its details                                                                   
+`* * *`  | user       | record and see an internship application's status              | keep track of them                                                                
+`* * *`  | user       | save the dates of my upcoming interviews                       | keep track of them                                                                
+`* * *`  | user       | maintain a user profile                                        | have an overview of my experience, skills and achievements                        
+`* * *`  | user       | add information to my user profile                             | keep my user profile updated and accurate                                         
+`* * *`  | user       | delete information from my user profile                        | keep my user profile updated and accurate                                         
+`* * *`  | user       | edit information in my user profile                            | keep my user profile updated and accurate                                         
+`* * *`  | user       | view information in my user profile                            | see its details  
+`* * *`  | user       | find internships based on my skills set                        | know which internships I can apply for                                
+`* *`    | user       | navigate the application easily through a clear user interface |                                                                                   
+`* *`    | user       | get fast feedback from the app                                 |                                                                                   
+`* *`    | user       | clears all entries from InternHunter                           | start from a clean slate
+
 ### Appendix C: Use Cases
 
 (For all use cases below, the **System** is `InternHunter` and the **Actor** is the `user`)
@@ -551,16 +672,16 @@ Use case ends.
   1b1. InternHunter displays an error message and informs the user that the index is out of bounds. <br/>
   Use case resumes from step 1.
 
-#### Use case: UC05 - Add an internship
+#### Use case: UC05 - Find companies
 
 Precondition: User already has an existing list of companies <br/>
-Guarantees: Addition of internship is successful
+Guarantees: Companies whose names matches the keywords specified are listed 
 
 **MSS**
 
-1.  User requests to add an internship to a company and provides the index and relevant details.
-2.  InternHunter adds the internship to the list of internships of the company. <br/>
-    Use case ends.
+1. User searches for a company by name.
+2. InternHunter displays the companies sought.<br/>
+Use case ends.
 
 **Extensions**
 
@@ -568,20 +689,17 @@ Guarantees: Addition of internship is successful
   1a1. InternHunter displays an error message and informs the user of the valid input format. <br/>
   Use case resumes from step 1.
 
- 1b. InternHunter detects an invalid index. <br/>
-  1b1. InternHunter displays an error message and informs the user that the index is out of bounds. <br/>
-  Use case resumes from step 1.
 
-#### Use case: UC06 - Delete an internship
+#### Use case: UC06 - List all companies
 
-Precondition: User already has an existing list of internships in a company <br/>
-Guarantees: Deletion of internship is successful
+Precondition: User already has an existing list of companies <br/>
+Guarantees: All companies stored in Internhunter are shown
 
 **MSS**
 
-1.  User requests to delete an internship of a company and provides the index.
-2.  InternHunter removes the internship from the list of internships in a company. <br />
-    Use case ends.
+1. User queries for all companies. 
+2. InternHunter displays all company it stores.<br/>
+Use case ends.
 
 **Extensions**
 
@@ -589,196 +707,104 @@ Guarantees: Deletion of internship is successful
   1a1. InternHunter displays an error message and informs the user of the valid input format. <br/>
   Use case resumes from step 1.
 
+
+#### Use case: UC07 - Add an internship
+
+Precondition: User already has an existing list of companies <br/>
+Guarantees: Addition of internship to company is successful
+
+**MSS**
+*  Similar MSS to adding a company except user is now adding an internship.
+
+**Extensions**
+
+ 1a. Similar to extension 1a of adding a company.
+
  1b. InternHunter detects an invalid index. <br/>
   1b1. InternHunter displays an error message and informs the user that the index is out of bounds. <br/>
   Use case resumes from step 1.
+
+#### Use case: UC08 - Delete an internship
+
+* Similar to UC02 - delete a company except user is deleting an internship
   
-#### Use case: UC07 - Edit an internship
+#### Use case: UC09 - Edit an internship
+
+* Similar to UC03 - editing a company except user is editing an internship
+
+#### Use case: UC10 - Add an application
 
 Precondition: User already has an existing list of internships in a company <br/>
-Guarantees: Editing of internship is successful
+Guarantees: Addition of application is successful
 
 **MSS**
 
-1.  User requests to edit the details of an internship and inputs the index and details.
-2.  InternHunter edits the details of the internship, and updates the list. <br />
-    Use case ends.
+*  Similar MSS to UC01 - adding a company except user is now adding an application
 
 **Extensions**
 
- 1a. InternHunter detects an error in the input format. <br/>
-  1a1. InternHunter displays an error message and informs the user of the valid input format. <br/>
-  Use case resumes from step 1.
+* Similar to extension of UC07 - Add an internship.
 
- 1b. InternHunter detects an invalid index. <br/>
-  1b1. InternHunter displays an error message and informs the user that the index is out of bounds. <br/>
-  Use case resumes from step 1.
+#### Use case: UC11 - Delete an application
 
-#### Use case: UC08 - Add an application
+* Similar to UC02 - deleting a company except user is deleting an application.
 
-Precondition: User already has an existing list of internships in a company <br/>
-Guarantees: Adding of application is successful
+#### Use case: UC12 - Edit an application
+
+* Similar to UC03 - editing a company except user is editing an application.
+
+#### Use case: UC13 - View an application
+
+* Similar to UC04 - viewing a company except  user is viewing an application.
+
+#### Use case: UC14 - Find applications
+
+* Similar to UC05 - finding companies except user is finding applications.
+
+#### Use case: UC15 - List all applications
+
+* Similar to UC06 - listing all companies except user is listing all applications.
+
+#### Use case: UC16 - Add user profile item
+
+* Similar to UC01 - adding a company except user is adding a user profile item.
+
+#### Use case: UC17 - Delete a user profile item 
+
+* Similar to UC02 - deleting a company except user is deleting a user profile item.
+
+#### Use case: UC18 - Edit a user profile item
+
+* Similar to UC03 - editing a company except user is editing a user profile item.
+
+#### Use case: UC19 - View a user profile item
+
+* Similar to UC04 - viewing a company except  user is viewing a user profile item.
+
+#### Use case: UC20 - Find user profile items
+
+* Similar to UC05 - finding companies except user is finding user profile items.
+
+#### Use case: UC21 - List all user profile items
+
+* Similar to UC06 - listing all companies except user is listing all user profiles items.
+
+#### Use case: UC22 - Match skills in user profile to internship requirements
 
 **MSS**
 
-1.  User requests to apply for an internship and provides the index and relevant details.
-2.  InternHunter adds the application to the list of applications and prompts the user to switch to the Applications
-tab to view the newly added application. <br/>
-    Use case ends.
+1. User requests to see the list of internships that matches her profile skills.
+2. InternHunter generates and displays the list of internships.
 
 **Extensions**
 
- 1a. InternHunter detects an error in the input format. <br />
-  1a1. InternHunter displays an error message and informs the user of the valid input format. <br />
-  Use case resumes from step 1.
+ 2a. User have no internships that matches her profile skills. <br/>
+  2a1. InternHunter displays an error message and informs the user that she has no matching internships. <br/>
+  2a2. Use case ends.
 
- 1b. InternHunter detects an invalid index. <br />
-  1b1. InternHunter displays an error message and informs the user that the index is out of bounds. <br />
-  Use case resumes from step 1.
+#### Use case: UC23 - Switch tabs
 
-#### Use case: UC09 - Delete an application
-
-Precondition: User already has an existing list of applications <br />
-Guarantees: Deletion of application is successful
-
-**MSS**
-
-1.  User requests to delete an application and provides the index.
-2.  InternHunter removes the application from the list of applications. <br />
-    Use case ends.
-
-**Extensions**
-
- 1a. InternHunter detects an error in the input format. <br />
-  1a1. InternHunter displays an error message and informs the user of the valid input format. <br />
-  Use case resumes from step 1.
-
- 1b. InternHunter detects an invalid index. <br />
-  1b1. InternHunter displays an error message and informs the user that the index is out of bounds. <br />
-  Use case resumes from step 1.
-
-#### Use case: UC10 - Edit an application
-
-Precondition: User already has an existing list of applications <br />
-Guarantees: Editing of application is successful
-
-**MSS**
-
-1.  User requests to edit the details of an application and inputs the index and details.
-2.  InternHunter edits the details of this application and the list is updated accordingly. <br />
-    Use case ends.
-
-**Extensions**
-
- 1a. InternHunter detects an error in the input format. <br />
-  1a1. InternHunter displays an error message and informs the user of the valid input format. <br />
-  Use case resumes from step 1.
-
- 1b. InternHunter detects an invalid index. <br />
-  1b1. InternHunter displays an error message and informs the user that the index is out of bounds. <br />
-  Use case resumes from step 1.
-
-#### Use case: UC11 - View an application
-
-Precondition: User already has an existing list of applications <br />
-Guarantees: Viewing of application is successful
-
-**MSS**
-
-1.  User requests to view the details of an application and provides the index.
-2.  InternHunter shows the details of this application. <br />
-    Use case ends.
-
-**Extensions**
-
- 1a. InternHunter detects an error in the input format. <br />
-  1a1. InternHunter displays an error message and informs the user of the valid input format. <br />
-  Use case resumes from step 1.
-  
- 1b. InternHunter detects an invalid index. <br />
-  1b1. InternHunter displays an error message and informs the user that the index is out of bounds. <br />
-  Use case resumes from step 1.
-
-#### Use case: UC12 - Add user profile item
-
-Guarantees: Addition of user profile item is successful
-
-**MSS**
-
-1.  User requests to add a user profile item to the user profile and provides details.
-2.  InternHunter adds the user profile item to the user profile. <br />
-    Use case ends.
-
-**Extensions**
-
- 1a. InternHunter detects an error in the input format. <br />
-  1a1. InternHunter displays an error message and informs the user of the valid input format. <br />
-  Use case resumes from step 1.
-
-#### Use case: UC13 - Delete a user profile item 
-
-Precondition: User already has an existing list of user profile items <br/>
-Guarantees: Deletion of user profile item is successful
-
-**MSS**
-
-1.  User requests to delete a user profile item from the user profile.
-2.  InternHunter removes the user profile item from the user profile. <br/>
-    Use case ends.
-
-**Extensions**
-
- 1a. InternHunter detects an error in the input format. <br/>
-  1a1. InternHunter displays an error message and informs the user of the valid input format. <br/>
-  Use case resumes from step 1.
-
- 1b. InternHunter detects an invalid index. <br/>
-  1b1. InternHunter displays an error message and informs the user that the index is out of bounds. <br/>
-  Use case resumes from step 1.
-
-#### Use case: UC14 - Edit a user profile item
-
-Precondition: User already has an existing list of user profile items <br/>
-Guarantees: Editing of user profile item is successful
-
-**MSS**
-
-1.  User requests to edit the details of a user profile item and provides details.
-2.  InternHunter edits the user profile item in the user profile. <br/>
-    Use case ends.
-
-**Extensions**
-
- 1a. InternHunter detects an error in the input format. <br/>
-  1a1. InternHunter displays an error message and informs the user of the valid input format. <br/>
-  Use case resumes from step 1.
-
- 1b. InternHunter detects an invalid index. <br/>
-  1b1. InternHunter displays an error message and informs the user that the index is out of bounds. <br/>
-  Use case resumes from step 1.
-
-#### Use case: UC15 - View a user profile item
-
-Precondition: User already has an existing list of user profile items <br/>
-Guarantees: Viewing of user profile item is successful
-
-**MSS**
-
-1.  User requests to view the details of a user profile item.
-2.  InternHunter shows the details of this user profile item. <br/>
-    Use case ends.
-    
-**Extensions**
-
- 1a. InternHunter detects an error in the input format. <br/>
-  1a1. InternHunter displays an error message and informs the user of the valid input format. <br/>
-  Use case resumes from step 1.
-
- 1b. InternHunter detects an invalid index. <br/>
-  1b1. InternHunter displays an error message and informs the user that the index is out of bounds. <br/>
-  Use case resumes from step 1.
-
-#### Use case: UC16 - Switch tabs
+Guarantees: InternHunter switches to the queried tab.
 
 **MSS**
 
@@ -792,7 +818,7 @@ Guarantees: Viewing of user profile item is successful
   1a1. InternHunter displays an error message and informs the user of the valid input format. <br/>
   Use case resumes from step 1.
 
-#### Use case: UC17 - Clear all entries
+#### Use case: UC24 - Clear all entries
 
 Guarantees: All entries in InternHunter will be cleared
 
@@ -802,7 +828,7 @@ Guarantees: All entries in InternHunter will be cleared
 2.  InternHunter deletes all of its entries. <br/>
     Use case ends.
 
-#### Use case: UC18 - Get help
+#### Use case: UC25 - Get help
 
 Guarantees: User will get directions to the user guide
 
@@ -813,7 +839,7 @@ Guarantees: User will get directions to the user guide
     Use case ends.
 
 
-#### Use case: UC19 - Exit 
+#### Use case: UC26 - Exit 
 
 **MSS**
 
@@ -824,30 +850,57 @@ Guarantees: User will get directions to the user guide
     Use case ends.
 
 **Extensions**
+
  2a. User chooses to cancel the confirmation. <br/>
   Use case ends.
     
 ### Appendix D: Non-Functional Requirements
 
-* Should be for a single user i.e. (not a multi-user product).
-* The data should be stored locally and should be in a human editable text file.
-* The software should work without requiring an installer.
 * Should work on any mainstream OS as long as it has Java 11 or above installed.
 * Should work on both 32-bit and 64-bit environment.
+* Should be for a single user i.e. (not a multi-user product).
+* The data should be stored locally and should be in a human editable text file.
+* InternHunter should work without requiring an installer.
 * Should only use third-party frameworks or libraries which are free, open-source and have permissive license term and 
 do not require installation by user of the software.
 * A user with above average typing speed for regular English text should be able to accomplish most of the tasks faster 
 using commands than using the mouse.
-* Should be a result of evolving and morphing the given code base.
-* Should be developed in a breadth-first incremental manner over the project duration.
 
 ### Appendix E: Glossary
 
 * **OS**: Operating System
 * **Mainstream OS**: Windows, Linux, Unix, OS-X
 * **Json**: JavaScript Object Notation
+* **DRY**: Don't Repeat Yourself
 
-### Appendix F: Sequence Diagrams
+### Appendix F: Instructions for manual testing
+
+Given below are instructions to test the app manually.
+
+<div markdown="span" class="alert alert-info">
+
+:information_source: <strong>Note:</strong> These instructions only provide a starting point for testers to work on;
+testers are expected to do more *exploratory* testing.
+
+</div>
+
+#### Launch and shutdown
+
+1. Initial launch
+
+   1. Download the jar file and copy into an empty folder.
+
+   1. Double-click the jar file. <br>
+       Expected: Shows the GUI with a set of sample data. The window size may not be optimum.
+
+1. Saving window preferences
+
+   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
+
+   1. Re-launch the app by double-clicking the jar file.<br>
+       Expected: The most recent window size and location is retained.
+
+### Appendix G: Sequence Diagrams
 
 <p align="center">Sequence diagram for HandleDeleteDisplaySwitchIndex</p>
 

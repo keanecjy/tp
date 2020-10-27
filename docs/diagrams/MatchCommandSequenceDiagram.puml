@@ -1,0 +1,73 @@
+@startuml
+!include style.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":MainParser" as MainParser LOGIC_COLOR
+participant "m:MatchCommand" as MatchCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+autoactivate on
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("match")
+
+LogicManager -> MainParser : parseCommand("match")
+
+create MatchCommand
+MainParser -> MatchCommand
+
+MatchCommand --> MainParser : m
+
+MainParser --> LogicManager : m
+
+LogicManager -> MatchCommand : execute(model)
+
+MatchCommand -> Model : getProfileItemList()
+
+Model --> MatchCommand : profileItemList
+
+MatchCommand -> Model : getCompanyItemList()
+
+Model --> MatchCommand : companyItemList
+
+MatchCommand -> MatchCommand : getSkillList(profileItemList)
+
+return skillList
+
+MatchCommand -> MatchCommand : getInternshipList(companyItemList)
+
+return fullInternshipList
+
+MatchCommand -> MatchCommand : getMatchingInternships(fullInternshipList, skillList)
+
+return matchingInternships
+
+MatchCommand -> MatchCommand : getMatchingInternshipsCommandResult(matchingInternships)
+
+alt matchingInternships is empty
+
+    create CommandResult
+    MatchCommand -> CommandResult : CommandResult(noMatchingInternshipsMessage)
+    CommandResult --> MatchCommand : result
+
+else matchingInternships is not empty
+
+    create CommandResult
+    MatchCommand -> CommandResult : CommandResult(showMatchingInternshipsMessage)
+    CommandResult --> MatchCommand : result
+    MatchCommand -> CommandResult : setMatchingInternships(matchingInternships)
+    CommandResult --> MatchCommand
+
+end
+
+return result
+
+MatchCommand --> LogicManager : result
+
+[<--LogicManager
+@enduml

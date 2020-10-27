@@ -52,7 +52,7 @@ title: User Guide
 ## **Introduction**
 
 **InternHunter is a CLI-centric desktop application which aids university students in applying for internships**.
-It lets you manage your own customisable collection of companies, internships, internship applications and your own 
+It lets you manage your own customisable collection of companies, internships, internship applications and your 
 user profile, so that you can keep track of internships that you are interested in - all from one centralised place.
 
 Never lose track of a good internship opportunity again.
@@ -146,7 +146,9 @@ Symbol | What it means
 
 #### Understanding the usage of the commands
 
-**:information_source: Notes about the commands:**<br>
+<div markdown="block" class="alert alert-info">
+
+:information_source: **Notes about the commands:**<br>
 
 * Words in `UPPER_CASE` are the parameters to be supplied by you.<br>
   e.g. in `add com n/COMPANY_NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/INDUSTRY]...`, `COMPANY_NAME`, `PHONE_NUMBER`, `EMAIL`, `ADDRESS`, `INDUSTRY`,
@@ -164,6 +166,8 @@ Symbol | What it means
 
 * `INDEX` refers to the index of the item (Company, Application, or Profile Item) in its respective displayed list of
  items unless stated otherwise. All `INDEX`es are positive integers *(1, 2, 3, ...)*.<br>
+ 
+</div>
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -185,8 +189,8 @@ Format: `add com n/COMPANY_NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/INDUSTRY]...
 Examples:
 - `add com n/Garena a/201 Victoria St e/GarenaHires@garena.com p/65093545` *(notice that the company's industry types
  need not be specified)*
-- Executing `add com n/Google p/65218000 e/GoogleHires@gmail.com a/70 Pasir Panjang Rd, #03-71 t/Cloud Computing t
-/Artificial Intelligence` on an empty company list will add the company as follows: <br />
+- Executing `add com n/Google p/65218000 e/GoogleHires@gmail.com a/70 Pasir Panjang Rd, #03-71 t/Cloud Computing t/Artificial Intelligence`
+on an empty company list will add the company as follows: <br />
 ![AddCompanySS](images/AddCompanySS.PNG)
 
 #### Deleting a company: `delete com`
@@ -310,8 +314,10 @@ Now that you have learnt how to manage your companies and internships, the next 
 how to use InternHunter to apply, track and manage your internship applications. Read on through this section to find 
 out how.
 
-:information_source: Each application comes with a `STATUS` and `STATUS_DATE` field which indicates the date that the
-`STATUS` was set/updated.
+<div markdown="span" class="alert alert-info">
+  :information_source: <strong>Note:</strong> Each application comes with a `STATUS` and `STATUS_DATE` field which indicates the
+date that the `STATUS` was set/updated.
+</div>
 
 Valid `STATUS` specifiers:
 - `Applied`
@@ -321,17 +327,21 @@ Valid `STATUS` specifiers:
 - `Offered`
 - `Accepted`
 
-:information_source: Note that status added are case-insensitive
+<div markdown="span" class="alert alert-info">
+  :information_source: <strong>Note:</strong> Status added are case-insensitive
+</div>
 
 Valid `STATUS_DATE` formats:
 
 - d-M-yy HHmm
-    - e.g. `23-12-19 2230`
+    - e.g. `23-12-20 2230`
 - d-M-yy
-    - e.g. `23-12-19`
+    - e.g. `23-12-20`
     - Time will be taken as 2359
 
-:information_source: Note that dates added must be in the future
+<div markdown="span" class="alert alert-info">
+  :information_source: <strong>Note:</strong> Dates added must be in the future
+</div>
 
 #### Applying for an internship: `add app`
 
@@ -346,10 +356,9 @@ Example:
 - Suppose you are interested in applying for the Software Engineer internship in Google Singapore:
 <p align="center"><img src="images/ug-application/Internship.png" width="100%"/></p>
 
-Executing `add app 1 i/1` will apply for the internship as follows. The default status and status date will be used
-since the status and status date are not specified in this case. Note that you will be automatically switched to
-the application tab to view this application made:
-<p align="center"><img src="images/ug-application/AddApplication.png" width="100%"/></p>
+Executing `add app 1 i/1 d/24-12-2020` will apply for the internship as follows.
+Note that you will be automatically switched to the application tab to view the application made:
+<p align="center"><img src="images/ug-application/AddApplication1.png" width="100%"/></p>
 
 #### Deleting an application: `delete app`
 
@@ -369,9 +378,9 @@ Format: `edit app INDEX [s/STATUS] [d/STATUS_DATE]`
 
 Example:
 - Suppose Google Singapore has replied to your application for the Software Engineer internship and has called you up 
-for an interview on the 28 Oct 2020, 2pm. Executing `edit app 1 s/interview d/28-10-2020 1400` will update this 
-application:
-<p align="center"><img src="images/ug-application/EditApplication.png" width="70%" height="70%"/></p>
+for an interview on the 28 Dec 2020, 2pm. Executing `edit app 1 s/interview d/28-12-20 1400` will update this 
+application as follows:
+<p align="center"><img src="images/ug-application/EditApplication1.png" width="90%" height="90%"/></p>
 
 #### Viewing an application: `view app`
 
@@ -382,7 +391,7 @@ Format: `view app INDEX`
 Example:
 - Suppose you are currently viewing the first application and you want to view the second application. 
 Executing `view app 2` will update the right panel to display the second application:
-<p align="center"><img src="images/ug-application/ViewApplication2.png" width="70%" height="70%"/></p>
+<p align="center"><img src="images/ug-application/ViewApplication.png" width="90%" height="90%"/></p>
 
 #### Finding applications: `find app`
 
@@ -395,7 +404,7 @@ job titles are used in placed of company names.
 Example:
 - Suppose you have this list of applications. Executing `find app engineer` will update the list to show matching
 applications:
-<p align="center"><img src="images/ug-application/FindApplication.png" width="100%"/></p>
+<p align="center"><img src="images/ug-application/FindApplication1.png" width="100%"/></p>
 
 #### Listing all applications: `list app`
 
@@ -444,7 +453,7 @@ Examples:
  Govtech d/Implemented automate testing using TravisCI d/Implemented dashboard to track code coverage` on an empty 
  profile will add the profile item as follows: <br />
  
-![AddProfileSS](images/AddProfileItem.png)
+![AddProfileSS](images/ug-profile/AddProfileItem.png)
 
 #### Deleting item in profile: `delete me`
 
@@ -469,7 +478,7 @@ Examples:
 * `edit me 2 c/skill t/CSS d/learnt how to use flexbox`
 * For example if you want to update the title and descriptor of the first item in your profile.
 * Executing `edit me 1 t/Internship at Google d/Build a dashboard` will edit the profile item to:<br />
-![EditProfileSS](images/EditProfile.PNG)<br />
+![EditProfileSS](images/ug-profile/EditProfile.PNG)<br />
  *(Note that the existing descriptors get replaced)*
  
 #### Viewing item in profile: `view me`
@@ -482,7 +491,7 @@ Example:
 * `view me 3`
 * For example if you have the following profile items and you want to view the third item in your user profile. Executing `view me 3` will show the following:<br />
 
-![ViewProfile](images/ViewProfile.png)<br />
+![ViewProfile](images/ug-profile/ViewProfile.png)<br />
 *(As you can see the details of the third item can be seen in the right panel)*
 
 #### Finding items in profile: `find me`
@@ -502,9 +511,9 @@ Examples:
 - `find me Internship`
 - For the following example, if the profile contains the following items. Executing `find me internship` will return
  the following: <br />
-     ![FindProfile](images/FindProfileSingle.png) <br />
+     ![FindProfile](images/ug-profile/FindProfileSingle.png) <br />
      And executing `find me internship google` will return the following: <br />
-     ![FindProfileDouble](images/FindProfileDouble.png) <br />
+     ![FindProfileDouble](images/ug-profile/FindProfileDouble.png) <br />
      *(As you can see, the search results match at least one of the keywords specified regardless of its casing)*
 
 #### Listing all items in profile: `list me`
@@ -533,7 +542,9 @@ Executing `match` will generate the list of matching internships in a new window
 
 <p align="center"><img src="images/ug-application/MatchCommand2.png" width="100%"/></p>
 
-:bulb: You can press Esc key to close the popup window!
+<div markdown="span" class="alert alert-primary">
+  :bulb: <strong>Tip:</strong> You can press Esc key to close the popup window!
+</div>
 
 #### Switching Tabs: `switch`
 
@@ -561,7 +572,9 @@ Displays a link to the InternHunter user guide.
 
 Format: `help`
 
-:bulb: You can press Esc key to close the help window!
+<div markdown="span" class="alert alert-primary">
+  :bulb: <strong>Tip:</strong> You can press Esc key to close the help window!
+</div>
 
 #### Exiting the Program: `exit`
 Shows an exit confirmation dialog.
