@@ -310,7 +310,7 @@ delete internship commands, i.e. by implementing delete internship command’s i
         internship command was executed directly by the user for the same internship.
         * Updating this behaviour will require updating code in both places rather than one centralised place.
 
-### User Profile feature
+### User profile feature
 
 #### What it is
 
@@ -359,7 +359,7 @@ containing a editProfileItemDescriptor. The following sequence diagram depicts h
  
 #### Design considerations
 
-##### Aspect: How EditProfileCommand Object interacts with Model
+##### Aspect: How Logic components interacts with Model
 
 **Alternatives considered**
 
@@ -370,9 +370,9 @@ containing a editProfileItemDescriptor. The following sequence diagram depicts h
      components of other objects. This reduces coupling which increases testability as `EditProfileCommand` only
      requires one model stub as opposed to more objects stubs of the model for testing.
     * This also increases maintainability as `EditProfileCommand` only has to be concerned with the methods that
-     `Model` interface provides and not the other implementation details should they be subjected to change.
+     Model interface provides and not the other implementation details should they be subjected to change.
   * Cons:
-    * This increases code volume within `Model` as the model interface needs to hold every method to interact with all
+    * This increases code volume within `Model` as the Model interface needs to hold every method to interact with all
      the collections it contains.
 
 * **Alternative 2 (used in v1.2)**: The model acts as a container for its collections, allowing clients to retrieve
@@ -392,7 +392,7 @@ containing a editProfileItemDescriptor. The following sequence diagram depicts h
     ` and `FilteredList` directly.
   * Cons:
     * This exposes the internal components of the `Model` which increases coupling as `EditProfileCommand` is now
-     dependent on `FilteredList` and of the `ItemListManager` reduces testability and maintainability.
+     dependent on `FilteredList` and the `ItemListManager` which reduces testability and maintainability.
 
 ### Switch screen feature
 
@@ -471,7 +471,7 @@ The above activity diagram shows the logic and the path execution when the switc
 
 #### What it is
 After a command is successfully executed, InternHunter automatically saves users' data to JSON files. Moreover, 
-everytime the `GuiSettings` is modified, InternHunter updates the user preferences JSON file. Users can transfer or 
+every time the `GuiSettings` is modified, InternHunter updates the user preferences JSON file. Users can transfer or 
 backup the JSON files manually. The storage component is responsible for both reading and saving the data.
 
 #### Implementation
@@ -491,7 +491,7 @@ object.
  
  ![JsonAdaptedItemClassDiagram](images/JsonAdaptedItemClassDiagram.png)
  
- `JsonAdaptedItem` is an abstract class representing Jackson-friendly version of the `Item` class in the model component.
+ `JsonAdaptedItem` is an abstract class representing a Jackson-friendly version of the `Item` class in the model component.
   It has one method `toModelType()` which convert itself to an `Item` object. There are 4 classes extending 
   `JsonAdaptedItem`:
   * `JsonAdaptedApplicationItem` the Jackson-friendly version of `ApplicationItem`.
@@ -516,7 +516,7 @@ Both `ItemListStorage` and `JsonSerializableItemList` use  the same logic regard
 * **Alternative 1: current choice**: Creates a base abstract class `JsonAdaptedItem` and makes `ItemListStorage` 
 and `JsonSerializableItemList` use generics.
     * Pros: 
-        * Adheres to OOP principle, polymorphism.
+        * Adheres to OOP principle, specifically polymorphism.
         * Less code duplication.
         * Makes adding a new `Item` type easy. To be able to save and read a new `Item` type, only a new 
         class representing its Jackson-friendly version needs to be created.
@@ -538,16 +538,16 @@ and `JsonSerializableItemList` use generics.
 ### Clear Feature
 
 #### What it is
-In the beginning, user can see how the app works with sample data. After that, user can decide to 
+In the beginning, users can see how the app works with sample data. After that, users can decide to 
 clear all the entries in InternHunter with just a `clear` command.
 
 #### Implementation
 
-The following diagram illustrates whether InternHunter use sample data.
+The following diagram illustrates whether InternHunter uses sample data.
 
 ![SampleDataActivityDiagram](images/SampleDataActivityDiagram.png)
 
-When user enters the `clear` command, InternHunter will reset all three lists. Here is a sequence diagram showcasing how
+When users enters the `clear` command, InternHunter will reset all three lists. Here is a sequence diagram showcasing how
 InternHunter does it.
 
 ![ClearCommandSequenceDiagram](images/ClearCommandSequenceDiagram.png)
@@ -556,7 +556,9 @@ InternHunter does it.
 
 ##### Aspect: How to clear the lists
 
-InternHunter only lets users create applications for internships already added to companies.
+InternHunter only lets users create applications for internships already added to companies. When users apply for an internship,
+ InternHunter will create an `ApplicationItem` with the given `InternsipItem`. Hence, InternHunter needs to
+check whether the internships in both lists are consistent.
 
 **Alternatives Considered**
 
@@ -565,11 +567,11 @@ InternHunter only lets users create applications for internships already added t
         * Guarantees data consistency.
         
     * Cons:
-        * Less freedom for the users.
+        * Less freedom for users.
 
-* **Alternative 2**: Each list can be cleared individually.
+* **Alternative 2**: Clear each list individually.
     * Pros:
-        * Users can choose which lists to be cleared.
+        * Users can choose which list to be cleared.
     
     * Cons:
         * High risk of data inconsistency due to the linkage between company and application lists.
@@ -1103,7 +1105,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Editing some fields in company.
    
-   1. Prerequisites: The company must exist and access via a valid index.
+   1. Prerequisites: The company must exist and be accessed via a valid index.
    
    1. Test case: `edit com 1 t/Frontend developer t/Backend developer t/Fullstack developer` <br>
    Expected: The tags that are in the blue box will be changed to Frontend developer, Backend developer, Fullstack developer.
@@ -1122,7 +1124,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Editing some fields in internship.
 
-   1. Prerequisites: The internship must exist and access via a valid index.
+   1. Prerequisites: The internship must exist and be accessed via a valid index.
    
    1. Test case: `edit int 1 i/1 r/Java r/Python` <br>
    Expected: The 1st internship at the first company will have the requirement java and python. Note that it overrides any existing requirements in that internship. (Note that if an application for this internship exist, these changes will be reflected as tags in blue boxes on the card in the application tab)
@@ -1138,7 +1140,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Editing some fields in application.
 
-   1. Prerequisites: The application must exist and access via a valid index.
+   1. Prerequisites: The application must exist and be accessed via a valid index.
    
    1. Test case: `edit app 1 s/accepted` <br>
    Expected: The status that was on the card will be changed into a green status with the word accepted.
@@ -1150,7 +1152,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Editing some fields in the profile item.
 
-   1. Prerequisites: The profile item must exist and access via a valid index.
+   1. Prerequisites: The profile item must exist and be accessed via a valid index.
    
    1. Test case: `edit me 1 c/achievement t/Hackathon at Shoppee d/2nd place` <br>
    Expected: The image on the card will be changed into a trophy with the title being Hackathon.

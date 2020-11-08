@@ -2,12 +2,9 @@ package seedu.internhunter.model.profile;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.internhunter.testutil.Assert.assertThrows;
+import static seedu.internhunter.testutil.profile.ProfileItemFieldsUtil.INVALID_DOUBLE_SPACE_TITLE;
 import static seedu.internhunter.testutil.profile.ProfileItemFieldsUtil.INVALID_EMPTY_TITLE;
 import static seedu.internhunter.testutil.profile.ProfileItemFieldsUtil.INVALID_SPACE_TITLE;
-import static seedu.internhunter.testutil.profile.ProfileItemFieldsUtil.INVALID_SYMBOL_TITLE;
-import static seedu.internhunter.testutil.profile.ProfileItemFieldsUtil.INVALID_SYMBOL_WITH_ALPHANUMERIC_TITLE;
-import static seedu.internhunter.testutil.profile.ProfileItemFieldsUtil.INVALID_TITLE_LEADING_SPACES;
-import static seedu.internhunter.testutil.profile.ProfileItemFieldsUtil.INVALID_TITLE_WITH_LEADING_AND_TRAILING_SPACES;
 import static seedu.internhunter.testutil.profile.ProfileItemFieldsUtil.VALID_TITLE_FACEBOOK_INTERNSHIP_LOWERCASE;
 
 import org.junit.jupiter.api.Test;
@@ -24,10 +21,7 @@ public class TitleTest {
     public void constructor_invalidJobTitle_throwsIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class, () -> new Title(INVALID_EMPTY_TITLE));
         assertThrows(IllegalArgumentException.class, () -> new Title(INVALID_SPACE_TITLE));
-        assertThrows(IllegalArgumentException.class, () -> new Title(INVALID_SYMBOL_TITLE));
-        assertThrows(IllegalArgumentException.class, () -> new Title(INVALID_SYMBOL_WITH_ALPHANUMERIC_TITLE));
-        assertThrows(IllegalArgumentException.class, () -> new Title(INVALID_TITLE_LEADING_SPACES));
-        assertThrows(IllegalArgumentException.class, () -> new Title(INVALID_TITLE_WITH_LEADING_AND_TRAILING_SPACES));
+        assertThrows(IllegalArgumentException.class, () -> new Title(INVALID_DOUBLE_SPACE_TITLE));
     }
 
     @Test

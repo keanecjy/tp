@@ -27,7 +27,7 @@ public class ProfileParserUtil {
     public static Title parseTitle(String name) throws ParseException {
         requireNonNull(name);
         String trimmedTitle = name.trim();
-        if (!Title.isValidAlphaNumericWord(trimmedTitle)) {
+        if (!Title.isValidNonEmptyString(trimmedTitle)) {
             throw new ParseException(Title.MESSAGE_CONSTRAINTS);
         }
         return new Title(trimmedTitle);

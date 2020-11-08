@@ -58,7 +58,7 @@ public class JsonAdaptedProfileItem extends JsonAdaptedItem {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Title.class.getSimpleName()));
         }
-        if (!Title.isValidAlphaNumericWord(title)) {
+        if (!Title.isValidNonEmptyString(title)) {
             throw new IllegalValueException(Title.MESSAGE_CONSTRAINTS);
         }
         final Title itemTitle = new Title(title);

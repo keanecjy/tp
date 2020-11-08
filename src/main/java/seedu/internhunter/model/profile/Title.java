@@ -1,15 +1,14 @@
 package seedu.internhunter.model.profile;
 
-import seedu.internhunter.model.wrapper.AlphaNumericWord;
+import seedu.internhunter.model.wrapper.NonEmptyString;
 
 /**
  * Represents a title of a field in a {@code ProfileItem}
- * Guarantees: immutable; is valid as declared in {@link #isValidAlphaNumericWord(String)}
+ * Guarantees: immutable; is valid as declared in {@link #isValidNonEmptyString(String)}
  */
-public class Title extends AlphaNumericWord {
+public class Title extends NonEmptyString {
 
-    public static final String MESSAGE_CONSTRAINTS =
-            "Profile Item Titles should only contain alphanumeric characters and spaces, and it should not be blank";
+    public static final String MESSAGE_CONSTRAINTS = "Profile Item Titles should not be blank";
 
     /**
      * Constructs a {@code Title} for the {@code ProfileItem}

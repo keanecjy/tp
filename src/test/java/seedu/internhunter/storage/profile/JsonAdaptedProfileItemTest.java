@@ -18,7 +18,7 @@ import seedu.internhunter.model.profile.ProfileItemCategory;
 import seedu.internhunter.model.profile.Title;
 
 public class JsonAdaptedProfileItemTest {
-    public static final String INVALID_TITLE = "@w350M3";
+    public static final String INVALID_TITLE = " ";
     public static final String INVALID_DESCRIPTOR = "";
 
     public static final String VALID_TITLE = HTML_SKILL.getTitle().toString();

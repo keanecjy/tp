@@ -5,6 +5,7 @@ import static seedu.internhunter.logic.parser.clisyntax.ProfileCliSyntax.PREFIX_
 import static seedu.internhunter.logic.parser.clisyntax.ProfileCliSyntax.PREFIX_DESCRIPTOR;
 import static seedu.internhunter.logic.parser.clisyntax.ProfileCliSyntax.PREFIX_TITLE;
 import static seedu.internhunter.model.util.ItemUtil.PROFILE_NAME;
+import static seedu.internhunter.testutil.profile.ProfileItemFieldsUtil.INVALID_SPACE_TITLE;
 import static seedu.internhunter.testutil.profile.ProfileItemFieldsUtil.VALID_CATEGORY_ACHIEVEMENT_INPUT;
 import static seedu.internhunter.testutil.profile.ProfileItemFieldsUtil.VALID_CATEGORY_EXPERIENCE_INPUT;
 import static seedu.internhunter.testutil.profile.ProfileItemFieldsUtil.VALID_CATEGORY_SKILL_INPUT;
@@ -35,7 +36,7 @@ public class ProfileCommandTestUtil {
     public static final String DESCRIPTOR_DESC_LEARN = " " + PREFIX_DESCRIPTOR + VALID_DESCRIPTOR_LEARN;
 
     // Invalid parameters
-    public static final String INVALID_TITLE_DESC = " " + PREFIX_TITLE + "Internship at cre@tive"; // '@' is not a
+    public static final String INVALID_TITLE_DESC = " " + PREFIX_TITLE + INVALID_SPACE_TITLE;
     public static final String INVALID_CATEGORY_DESC = " " + PREFIX_CATEGORY + "awards";
     public static final String INVALID_DESCRIPTOR_DESC = " " + PREFIX_DESCRIPTOR + "hubby*"; //
 

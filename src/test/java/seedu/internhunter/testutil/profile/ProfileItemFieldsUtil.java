@@ -20,10 +20,7 @@ public class ProfileItemFieldsUtil {
     // Invalid titles
     public static final String INVALID_EMPTY_TITLE = "";
     public static final String INVALID_SPACE_TITLE = " ";
-    public static final String INVALID_SYMBOL_TITLE = "?";
-    public static final String INVALID_SYMBOL_WITH_ALPHANUMERIC_TITLE = "C++";
-    public static final String INVALID_TITLE_LEADING_SPACES = "  Learn CSS";
-    public static final String INVALID_TITLE_WITH_LEADING_AND_TRAILING_SPACES = " Learn CSS ";
+    public static final String INVALID_DOUBLE_SPACE_TITLE = "  ";
 
     // Valid categories for ProfileItemCategory, only upper case
     public static final String VALID_CATEGORY_SKILL = "SKILL";

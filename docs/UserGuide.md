@@ -21,9 +21,9 @@ title: User Guide
   [4.1.5. Finding companies: `find com`](#finding-companies-find-com) <br />
   [4.1.6. Listing all companies: `list com`](#listing-all-companies-list-com) <br />
  [4.2. Internship](#internship) <br />
-  [4.2.1. Adding an internship: `add int`](#adding-an-internship-add-int) <br />
-  [4.2.2. Deleting an internship: `delete int`](#deleting-an-internship-delete-int) <br />
-  [4.2.3. Editing an internship: `edit int`](#editing-an-internship-edit-int) <br />
+  [4.2.1. Adding an internship to a company: `add int`](#adding-an-internship-to-a-company-add-int) <br />
+  [4.2.2. Deleting an internship from a company: `delete int`](#deleting-an-internship-from-a-company-delete-int) <br />
+  [4.2.3. Modifying an internship's details: `edit int`](#modifying-an-internships-details-edit-int) <br />
  [4.3. Application](#application) <br />
   [4.3.1. Applying for an internship: `add app`](#applying-for-an-internship-add-app) <br />
   [4.3.2. Deleting an application: `delete app`](#deleting-an-application-delete-app) <br />
@@ -32,10 +32,10 @@ title: User Guide
   [4.3.5. Finding applications: `find app`](#finding-applications-find-app) <br />
   [4.3.6. Listing all applications: `list app`](#listing-all-applications-list-app) <br />
  [4.4. Profile](#profile) <br />
-  [4.4.1. Adding item to profile: `add me`](#adding-item-to-profile-add-me) <br />
-  [4.4.2. Deleting item in profile: `delete me`](#deleting-item-in-profile-delete-me) <br />
-  [4.4.3. Editing item in profile: `edit me`](#editing-item-in-profile-edit-me) <br />
-  [4.4.4. Viewing item in profile: `view me`](#viewing-item-in-profile-view-me) <br />
+  [4.4.1. Adding an item to profile: `add me`](#adding-an-item-to-your-profile-add-me) <br />
+  [4.4.2. Deleting an item from your profile: `delete me`](#deleting-an-item-from-your-profile-delete-me) <br />
+  [4.4.3. Updating profile item details: `edit me`](#updating-profile-item-details-edit-me) <br />
+  [4.4.4. Viewing a profile item's details in full: `view me`](#viewing-a-profile-items-details-in-full-view-me) <br />
   [4.4.5. Finding items in profile: `find me`](#finding-items-in-profile-find-me) <br />
   [4.4.6. Listing all profile items: `list me`](#listing-all-items-in-profile-list-me) <br />
  [4.5 General](#general) <br />
@@ -319,12 +319,13 @@ Example:
 
 ### **Internship**
 
-#### Adding an internship: `add int`
+#### Adding an internship to a company: `add int`
 
 Adds an internship to a company.
 
 Format: `add int INDEX j/JOB_TITLE [w/WAGE] [p/PERIOD] [r/REQUIREMENT]...`
 - `PERIOD` can refer to any word (e.g. `3 months`, `Summer break`, `Jun - Aug 2021`).
+- 'WAGE' must be a positive integer.
 
 Examples:
 - `add int 3 j/Web Developer w/3000 p/30 May to 30 Aug r/React r/HTML5`
@@ -332,7 +333,7 @@ Examples:
 
 ![AddInternship](images/AddInternship.png)
 
-#### Deleting an internship: `delete int`
+#### Deleting an internship from a company: `delete int`
 
 Deletes an internship from a company. The application (if any) made with this internship will also be deleted.
  
@@ -343,14 +344,17 @@ internship in the company’s list of internships.
 Example:
 - `delete int 3 i/2`
 
-#### Editing an internship: `edit int`
+#### Modifying an internship's details: `edit int`
 
 Edits an internship from a company. The application (if any) made with this internship will also be edited.
 
 Format:  `edit int INDEX i/INDEX [j/JOB_TITLE] [w/WAGE] [p/PERIOD] [r/REQUIREMENT]...`
 - `INDEX` refers to the index of the company in the company list, and `i/INDEX` refers to the index of the
 internship in the company’s list of internships.
-- At least one of the optional fields must be provided.
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When editing `REQUIREMENTS`, all existing requirements get replaced by the new specified requirements.
+* You can remove all `REQUIREMENTS` by adding r/ without anything after it.
 
 Examples:
 - `edit int 3 i/1 j/Frontend Developer`
@@ -563,13 +567,13 @@ display.
 <div markdown="span" class="alert alert-primary">
 
   :bulb: **Tip:** If you want to store multiple experiences or achievements of the same name, for example taking part
-   in the Open Hack Hackathon in 2 different years, since profile items cannot have identical titles, you can simply
-    include when the event occurred in the title. (e.g. `t/Participated in Open Hack 2020` and `t/Participated in
-     Open Hack 2019`)!
+   in the Open Hack Hackathon in 2 different years, since profile items cannot have identical titles of the same
+    category, you can simply include when the event occurred in the title. (e.g. `t/Participated in Open Hack 2020
+    ` and `t/Participated in Open Hack 2019`)!
      
 </div>
 
-#### Adding item to profile: `add me`
+#### Adding an item to your profile: `add me`
 
 Adds a profile item to your profile.
 
@@ -584,7 +588,7 @@ Examples:
  
 ![AddProfileSS](images/ug-profile/AddProfile.png)
 
-#### Deleting item in profile: `delete me`
+#### Deleting an item from your profile: `delete me`
 
 Deletes experience, skills or achievements from your profile.
 
@@ -596,7 +600,7 @@ Example:
 
 ![DeleteProfile](images/ug-profile/DeleteProfile.png)
 
-#### Editing item in profile: `edit me`
+#### Updating profile item details: `edit me`
 
 Edit the experience, skills or achievements of your profile.
 
@@ -613,7 +617,7 @@ Examples:
 ![EditProfile](images/ug-profile/EditProfile.png)<br />
  *(Note that the existing descriptors get replaced)*
  
-#### Viewing item in profile: `view me`
+#### Viewing a profile item's details in full: `view me`
 
 Selects an item in the profile to show in detail on the right panel.
 
@@ -766,7 +770,7 @@ Example:
 
 <p align="center"><img src="images/ug-general/clearResult.png" width="70%" height="70%"/></p>
 
-#### Viewing Help: `help`
+#### Viewing help: `help`
 
 Displays a link to the InternHunter user guide.
 
@@ -791,7 +795,7 @@ Example:
 
 
 
-#### Exiting the Program: `exit`
+#### Exiting the program: `exit`
 
 Shows an exit confirmation dialog.
 
@@ -850,6 +854,13 @@ Make sure your json files are in the correct folder and format. If not, InternHu
 
 ## **Command summary**
 
+### Navigating InternHunter
+
+Action     | Format
+-----------|------------------
+**Switch** | `switch TYPE`
+
+
 ### Company
 
 Action     | Format
@@ -891,12 +902,16 @@ Action     | Format
 **Find**   | `find me KEYWORD [ANOTHER_KEYWORD]...`
 **List**   | `list me`
 
-### General
+### Finding the most suitable internships
 
 Action     | Format
 -----------|------------------
 **Match**  | `match`
-**Switch** | `switch TYPE`
+
+### General
+
+Action     | Format
+-----------|------------------
 **Clear**  | `clear`
 **Help**   | `help`
 **Exit**   | `exit`
