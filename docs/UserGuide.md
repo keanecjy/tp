@@ -92,7 +92,7 @@ And here's what you can do:
 1. When you find a company that you are interested in, add it to your list of companies with the: <br />
 [`add com` command](#adding-a-company-add-com)
 2. Next, note down the internships offered by that company that interest you with the: <br />
-[`add int` command](#adding-an-internship-add-int)
+[`add int` command](#adding-an-internship-to-a-company-add-int)
 3. And once you've applied for an internship, record it down to keep track of it with the: <br />
 [`add app` command](#applying-for-an-internship-add-app)
 
@@ -325,7 +325,7 @@ Adds an internship to a company.
 
 Format: `add int INDEX j/JOB_TITLE [w/WAGE] [p/PERIOD] [r/REQUIREMENT]...`
 - `PERIOD` can refer to any word (e.g. `3 months`, `Summer break`, `Jun - Aug 2021`).
-- 'WAGE' must be a positive integer.
+- `WAGE` must be a positive integer (without leading zeroes or + symbol).
 
 Examples:
 - `add int 3 j/Web Developer w/3000 p/30 May to 30 Aug r/React r/HTML5`
@@ -649,7 +649,7 @@ Format: `find me KEYWORD [ANOTHER_KEYWORD]...`
 Upon successful execution of this command, your profile list will be updated to only show matching results. All 
 subsequent delete, edit and view application commands will use indexing based on this updated list. Switching tabs will 
 not return the list to its full state. If you wish to return to seeing all the profile items in your list, 
-execute [`list me`](#listing-all-items-profile).
+execute [`list me`](#listing-all-items-in-profile-list-me).
 
 </div>
 
