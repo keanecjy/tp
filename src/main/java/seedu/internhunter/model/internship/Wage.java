@@ -10,8 +10,8 @@ import static seedu.internhunter.commons.util.AppUtil.checkArgument;
 public class Wage {
 
     public static final String WAGE_SYMBOL = "$";
-    public static final String MESSAGE_CONSTRAINTS = "Wage should only contain a positive integer with no leading"
-            + "zeroes.";
+    public static final String MESSAGE_CONSTRAINTS = "Wage should only contain a non-zero unsigned integer with no"
+            + "leading zeroes.";
     public static final String VALIDATION_REGEX = "^[1-9]\\d*";
 
     // Default wage of the internship is only set when the user does not input the wage of the internship.
