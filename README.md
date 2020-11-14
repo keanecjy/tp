@@ -24,9 +24,9 @@ internships. It lets users manage their own customizable collection of companies
 and their own user profile, so that they can keep track of internships that they are interested in.
 
 ## Site Map
-- [User Guide](https://github.com/AY2021S1-CS2103T-T15-4/tp/blob/master/docs/UserGuide.md)
-- [Developer Guide](https://github.com/AY2021S1-CS2103T-T15-4/tp/blob/master/docs/DeveloperGuide.md)
-- [About Us](https://github.com/AY2021S1-CS2103T-T15-4/tp/blob/master/docs/AboutUs.md)
+- [User Guide](https://ay2021s1-cs2103t-t15-4.github.io/tp/UserGuide.html)
+- [Developer Guide](https://ay2021s1-cs2103t-t15-4.github.io/tp/DeveloperGuide.html)
+- [About Us](https://ay2021s1-cs2103t-t15-4.github.io/tp/AboutUs.html)
  
 ## Acknowledgements
 - This project was extended from AddressBook-Level3 project created by [SE-EDU initiative](https://se-education.org).
